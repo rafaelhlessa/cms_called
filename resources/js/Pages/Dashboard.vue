@@ -54,21 +54,22 @@
                                     </div>
                                     <div>
                                         <div class="-mt-px flex divide-x divide-gray-200">
-                                            <div class="flex w-0 flex-1">
+                                            <button @click="openModal1()"
+                                                    class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
+                                                    Laudo
+                                                </button>
+                                            <!-- <div class="flex w-0 flex-1">
                                                 <a
                                                     class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
                                                     Fechar
                                                 </a>
                                             </div>
-                                            <div class="-ml-px flex w-0 flex-1">
+                                            <div class="-ml-px flex w-0 flex-1"> -->
                                                 <!-- <a :href="route('users.edit', police.id)" type="button"  class="rounded-md border border-gray-200 p-2 bg-white font-medium text-red-600 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2">
                                                         Laudo<span class="sr-only">, {{ police.id }}</span>
-                                        </a> -->
-                                                <a href="#"
-                                                    class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900">
-                                                    Laudo
-                                                </a>
-                                            </div>
+                                                </a> -->
+                                                
+                                            <!-- </div> -->
                                         </div>
                                     </div>
                                 </li>
@@ -129,7 +130,7 @@
                             <div class="ring-1 ring-gray-400 rounded rounded-md">
                                 <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 p-2 md:col-span-2">
                                     <div class="sm:col-span-3">
-                                        <label for="country"
+                                        <label for="status"
                                             class="block text-sm font-medium leading-6 text-gray-900">Técnico</label>
                                         <div class="mt-2">
                                             <select id="technic_id" name="technic_id" v-model="form.technic_id" class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
@@ -138,7 +139,7 @@
                                         </div>
                                     </div>
                                     <div class="sm:col-span-3">
-                                        <label for="country"
+                                        <label for="status"
                                             class="block text-sm font-medium leading-6 text-gray-900">Status</label>
                                         <div class="mt-2">
                                             <select id="status_id" name="status_id" v-model="form.status_id" class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
@@ -157,6 +158,70 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Laudo Técnico -->
+        <div class="fixed z-10 inset-0 overflow-y-auto ease-out duration-400" v-if="isOpen1">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+
+                <div class="fixed inset-0 transition-opacity">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+                <!-- This element is to trick the browser into centering the modal contents. -->
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>​
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                    role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                    <form>
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div class="ring-1 ring-gray-400 rounded rounded-md">
+                                <div class="px-4 py-6 sm:p-8">
+                                    <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                        <div class="sm:col-span-3">
+                                        <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Nome</label>
+                                        <div class="mt-2">
+                                            <input type="text" v-model="form.name" name="name" id="name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                        </div>
+                                        </div>
+
+                                        <div class="sm:col-span-3">
+                                        <label for="phone" class="block text-sm font-medium leading-6 text-gray-900">Telefone</label>
+                                        <div class="mt-2">
+                                            <input type="text" v-model="form.phone" name="phone" id="phone" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                        </div>
+                                        </div>
+
+                                        <div class="sm:col-span-3">
+                                        <label for="glpi" class="block text-sm font-medium leading-6 text-gray-900">Nº Chamado GLPI</label>
+                                        <div class="mt-2">
+                                            <input type="text" v-model="form.glpi" id="glpi" name="glpi" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                        </div>
+                                        </div>
+
+                                        <div class="sm:col-span-3">
+                                        <label for="pim" class="block text-sm font-medium leading-6 text-gray-900">Nº do PIM</label>
+                                        <div class="mt-2">
+                                            <input type="text" v-model="form.pim" id="pim" name="pim" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                        </div>
+                                        </div>
+
+                                        <div class="col-span-full">
+                                        <label for="service" class="block text-sm font-medium leading-6 text-gray-900">Serviços</label>
+                                        <div class="mt-2">
+                                            <textarea v-model="form.service" name="service" id="service" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                    <button @click="closeModal1()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
+                                    <button @click="update(form)" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Atribuir</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
 
     </AuthenticatedLayout>
 </template>
@@ -177,6 +242,7 @@ export default {
         return {
             editMode: false,
             isOpen: false,
+            isOpen1: false,
             loading: false,
             form: {
                 technic_id: null,
@@ -188,8 +254,16 @@ export default {
         openModal: function () {
             this.isOpen = true;
         },
+        openModal1: function () {
+            this.isOpen1 = true;
+        },
         closeModal: function () {
             this.isOpen = false;
+            this.reset();
+            this.editMode = false;
+        },
+        closeModal1: function () {
+            this.isOpen1 = false;
             this.reset();
             this.editMode = false;
         },

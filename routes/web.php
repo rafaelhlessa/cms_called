@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CalledController;
+use App\Http\Controllers\PartsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,8 +33,10 @@ Route::get('/dashboard', function () {
 
 Route::resource('call', CalledController::class);
 Route::get('/called', [CalledController::class, 'index'])->name('called');
+
+Route::get('/parts', [PartsController::class, 'index'])->name('parts');
 // Route::get('/entrada', function () {
-//     return Inertia::render('Entrada');
+//     return Inertia::render('Pecas');
 // })->middleware(['auth', 'verified'])->name('entrada');
 
 Route::get('/cadastros', function () {

@@ -15,18 +15,27 @@ return new class extends Migration
             $table->engine = 'InnoDB';
             $table->id();
             $table->string('description', 200);
-            $table->string('price', 45)->nullable();
+            $table->decimal('price', 10,2)->nullable();
             $table->date('buy_date')->nullable();
-            $table->unsignedBigInteger('parts_type_id');
+            $table->integer('amount');
+            $table->integer('pm_parts');
+            // $table->unsignedBigInteger('equipament_type_id');
+            // $table->unsignedBigInteger('parts_type_id');
+            $table->foreignId('equipament_id')
+                ->references('id')->on('equipament')
+                ->onDelete('no action')
+                ->onUpdate('no action');
 
+            $table->foreignId('parts_type_id')
+                ->references('id')->on('parts_type')
+                ->onDelete('no action')
+                ->onUpdate('no action');    
 
+            $table->index(["equipament_id"]);
             $table->index(["parts_type_id"]);
 
 
-            // $table->foreign('parts_type_id')
-            //     ->references('id')->on('parts_type')
-            //     ->onDelete('no action')
-            //     ->onUpdate('no action');
+            
             $table->timestamps();
         });
     }

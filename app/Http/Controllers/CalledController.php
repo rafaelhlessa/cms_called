@@ -98,7 +98,7 @@ class CalledController extends Controller
             'status_id' => $calledit['status_id'],
             'technic_id' => $calledit['technic_id'],
         ]);
-        return redirect('/dashboard')->with(['message' => 'Alterado status do equipamento!']);
+        return redirect('/called')->with(['message' => 'Alterado status do equipamento!']);
 
     }
 
