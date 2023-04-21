@@ -17,42 +17,42 @@
 
                     <form class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
                         <div class="px-4 py-6 sm:p-8">
-                        <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                            <div class="sm:col-span-3">
-                            <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Nome</label>
-                            <div class="mt-2">
-                                <input type="text" v-model="form.name" name="name" id="name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
-                            </div>
+                            <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                <div class="sm:col-span-3">
+                                <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Nome</label>
+                                <div class="mt-2">
+                                    <input type="text" v-model="form.name" name="name" id="name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                </div>
+                                </div>
 
-                            <div class="sm:col-span-3">
-                            <label for="phone" class="block text-sm font-medium leading-6 text-gray-900">Telefone</label>
-                            <div class="mt-2">
-                                <input type="text" v-model="form.phone" name="phone" id="phone" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
-                            </div>
+                                <div class="sm:col-span-3">
+                                <label for="phone" class="block text-sm font-medium leading-6 text-gray-900">Telefone</label>
+                                <div class="mt-2">
+                                    <input type="text" v-model="form.phone" name="phone" id="phone" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                </div>
+                                </div>
 
-                            <div class="sm:col-span-3">
-                            <label for="glpi" class="block text-sm font-medium leading-6 text-gray-900">Nº Chamado GLPI</label>
-                            <div class="mt-2">
-                                <input type="text" v-model="form.glpi" id="glpi" name="glpi" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
-                            </div>
+                                <div class="sm:col-span-3">
+                                <label for="glpi" class="block text-sm font-medium leading-6 text-gray-900">Nº Chamado GLPI</label>
+                                <div class="mt-2">
+                                    <input type="text" v-model="form.glpi" id="glpi" name="glpi" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                </div>
+                                </div>
 
-                            <div class="sm:col-span-3">
-                            <label for="pim" class="block text-sm font-medium leading-6 text-gray-900">Nº do PIM</label>
-                            <div class="mt-2">
-                                <input type="text" v-model="form.pim" id="pim" name="pim" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                            </div>
-                            </div>
+                                <div class="sm:col-span-3">
+                                <label for="pim" class="block text-sm font-medium leading-6 text-gray-900">Nº do PIM</label>
+                                <div class="mt-2">
+                                    <input type="text" v-model="form.pim" id="pim" name="pim" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                </div>
+                                </div>
 
-                            <div class="col-span-full">
-                            <label for="service" class="block text-sm font-medium leading-6 text-gray-900">Serviços</label>
-                            <div class="mt-2">
-                                <textarea v-model="form.service" name="service" id="service" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                <div class="col-span-full">
+                                <label for="service" class="block text-sm font-medium leading-6 text-gray-900">Serviços</label>
+                                <div class="mt-2">
+                                    <textarea v-model="form.service" name="service" id="service" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                </div>
+                                </div>
                             </div>
-                            </div>
-                        </div>
                         </div>
                         <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
                         <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancelar</button>
