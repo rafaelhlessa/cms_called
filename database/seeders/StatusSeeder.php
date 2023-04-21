@@ -19,25 +19,32 @@ class StatusSeeder extends Seeder
         Status::create(
         [
             'situation' => 'Aberto',
-        ],
+        ]);
+        Status::create(
         [
             'situation' => 'Bancada',
-        ],
+        ]);
+        Status::create(
         [
             'situation' => 'Aguardando Peças',
-        ],
+        ]);
+        Status::create(
         [
             'situation' => 'Garantia',
-        ],
+        ]);
+        Status::create(
         [
             'situation' => 'Pendente',
-        ],
+        ]);
+        Status::create(
         [
             'situation' => 'Concluído',
-        ],
+        ]);
+        Status::create(
         [
             'situation' => 'Entregue',
-        ],
+        ]);
+        Status::create(
         [
             'situation' => 'Baixa',
         ]

@@ -16,7 +16,8 @@ class EquipamentSeeder extends Seeder
         Equipament::create(
         [
             'description' => 'Microcomputador'
-        ],
+        ]);
+        Equipament::create(
         [
             'description' => 'Notebook'
         ]

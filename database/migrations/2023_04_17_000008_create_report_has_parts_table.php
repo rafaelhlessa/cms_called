@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('report_has_parts', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            // $table->unsignedBigInteger('reports_id');
-            // $table->unsignedBigInteger('parts_id');
             $table->integer('amount');
-
+            $table->date('sell_date')->nullable();
+            $table->decimal(10,2)->nullable();
+            $table->integer('over');
             $table->foreignId('parts_id')
                 ->references('id')->on('parts')
                 ->onDelete('no action')
@@ -27,7 +27,7 @@ return new class extends Migration
                 ->references('id')->on('report')
                 ->onDelete('no action')
                 ->onUpdate('no action');
-    
+
             $table->index(["parts_id"]);
             $table->index(["report_id"]);
             $table->timestamps();

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 45);
             $table->string('phone', 45);
             $table->string('company', 100);
+            $table->timestamps();
         });
     }
 

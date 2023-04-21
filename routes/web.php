@@ -35,9 +35,10 @@ Route::resource('call', CalledController::class);
 Route::get('/called', [CalledController::class, 'index'])->name('called');
 
 Route::get('/parts', [PartsController::class, 'index'])->name('parts');
-// Route::get('/entrada', function () {
-//     return Inertia::render('Pecas');
-// })->middleware(['auth', 'verified'])->name('entrada');
+
+Route::get('/maintenance', function () {
+    return Inertia::render('Maintenance');
+})->middleware(['auth', 'verified'])->name('maintenance');
 
 Route::get('/cadastros', function () {
     return Inertia::render('Cadastros');
