@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Parts;
+use App\Models\PartsType;
+use App\Models\Equipament;
 use Inertia\Inertia;
 
 
@@ -17,7 +19,7 @@ class PartsController extends Controller
         $parts = Parts::all();
         // dd($parts);
 
-        return Inertia::render('Pecas',
+        return Inertia::render('Maintenance/Parts/ListParts',
         [
             'parts' => $parts
         ]);
@@ -28,7 +30,12 @@ class PartsController extends Controller
      */
     public function create()
     {
-        //
+
+        return Inertia::render('Maintenance/Parts/CreateParts',[
+            'partsType' => PartsType::all()->pluck('description', 'id')->prepend('Escolha fonte da peça', '')->toArray(),
+            'equipaments' => Equipament::all()->pluck('description', 'id')->prepend('Escolha o equipamento', '')->toArray(),
+        ]);
+
     }
 
     /**

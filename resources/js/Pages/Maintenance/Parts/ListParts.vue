@@ -1,9 +1,9 @@
 <template>
-    <Head title="Estoque" />
+    <Head title="Lista de Peças" />
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Estoque</h2>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Lista de Peças</h2>
         </template>
 
         <div class="py-12 p-2">
@@ -11,11 +11,11 @@
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
-                            
+
                         </div>
                         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                            <button type="button"
-                                class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Novo Item</button>
+                            <a :href="route('part.create')"
+                                class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Novo Item</a>
                         </div>
                     </div>
                     <div class="-mx-4 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg">
@@ -32,13 +32,8 @@
                                     <th scope="col"
                                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
                                         Tipo</th>
-                                    <th scope="col"
-                                        class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
-                                        Data Compra</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Preço
-                                    </th>
                                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                        <span class="sr-only">Select</span>
+                                        <span class="sr-only">Exibir</span>
                                     </th>
                                 </tr>
                             </thead>
@@ -58,13 +53,7 @@
                                         Peça PMSC</td>
                                     <td v-else
                                         class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        Peça Ilha Service</td>    
-                                    <td
-                                        class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        {{ plan.buy_date }}</td>
-                                    <td
-                                        class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        R$ {{ plan.price }}</td>
+                                        Peça Ilha Service</td>
                                     <td
                                         class="border-t border-transparentrelative py-3.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                         <button type="button"

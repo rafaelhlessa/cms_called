@@ -34,6 +34,7 @@ Route::get('/dashboard', function () {
 Route::resource('call', CalledController::class);
 Route::get('/called', [CalledController::class, 'index'])->name('called');
 
+Route::resource('part', PartsController::class);
 Route::get('/parts', [PartsController::class, 'index'])->name('parts');
 
 Route::get('/maintenance', function () {

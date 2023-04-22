@@ -47,6 +47,7 @@ export default {
             tabs:[
                 { name: 'Compras', href: '#', current: true },
                 { name: 'Garantias', href: '#', current: false },
+                { name: 'Peças', href: '/parts', current: false },
             ]
         }
     },

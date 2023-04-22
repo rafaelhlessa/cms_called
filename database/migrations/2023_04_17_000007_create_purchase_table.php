@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('purchase', function (Blueprint $table) {
             $table->id();
             $table->integer('amount');
-            $table->decimal('price', 10,2)->nullable();
+            $table->decimal('priceu', 10,2)->nullable();
             $table->date('buy_date')->nullable();
             $table->foreignId('parts_id')
                 ->references('id')->on('parts')
                 ->onDelete('no action')
                 ->onUpdate('no action');
             $table->index(["parts_id"]);
+            $table->decimal('pricet', 10,2)->nullable();
             $table->timestamps();
         });
     }
