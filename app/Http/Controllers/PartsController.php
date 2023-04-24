@@ -115,7 +115,9 @@ class PartsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $parts = Parts::findOrFail($id);
+
+        return Inertia::render('Maintenance/Parts/CreatePartsPM', ['parts' => $parts]);
     }
 
     /**
@@ -123,7 +125,7 @@ class PartsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd($request);
     }
 
     /**

@@ -64,22 +64,25 @@
                                     </td>
                                     <td v-if="plan.amount > 0"
                                         class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg">{{ plan.amount }}</b>
+                                        <span class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-lg font-medium text-gray-600">{{ plan.amount }}</span>
                                     </td>
                                     <td v-else-if="plan.amount === 0"
                                         class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg text-red-600">{{ plan.amount }}</b>
+                                        <span class="inline-flex items-center rounded-md bg-red-100 px-2 py-1 text-xs font-medium text-red-700">{{ plan.amount }}</span>
                                     </td>
                                     <td v-else
                                         class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg text-red-600">{{ plan.amount }}</b>
+                                        <span class="inline-flex items-center rounded-md bg-red-100 px-2 py-1 text-xs font-medium text-red-700">{{ plan.amount }}</span>
                                     </td>
                                     <td
-                                        class="border-t border-transparent relative py-3.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                        <button type="button"
+                                    class="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white">
+                                        <a :href="route('part.edit', plan.id)" class="text-indigo-600 hover:text-indigo-900">
+                                                        Adicionar Peça PM<span class="sr-only">, {{ plan.id }}</span>
+                                                    </a>
+                                        <!-- <button type="button"
                                             class="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white">
                                             Estoque<span class="sr-only">, {{ plan.id }}</span>
-                                        </button>
+                                        </button> -->
                                         <div class="absolute left-0 h-px bg-gray-200 -top-px right-6" />
                                     </td>
                                 </tr>
