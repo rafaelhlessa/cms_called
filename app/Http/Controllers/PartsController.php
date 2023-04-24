@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Parts;
 use App\Models\PartsType;
 use App\Models\Equipament;
+use App\Models\IslandStore;
+use App\Models\PMStore;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 
 class PartsController extends Controller
@@ -17,11 +20,15 @@ class PartsController extends Controller
     public function index()
     {
         $parts = Parts::all();
-        // dd($parts);
+
+        $pmStore = PMStore::all();
+        $islandStore = IslandStore::all();
 
         return Inertia::render('Maintenance/Parts/ListParts',
         [
-            'parts' => $parts
+            'parts' => $parts,
+            'pmStore' => $pmStore,
+            'islandStore' => $islandStore,
         ]);
     }
 
@@ -30,11 +37,14 @@ class PartsController extends Controller
      */
     public function create()
     {
+        $partsType = PartsType::all();
+        $equipaments = Equipament::all();
+
 
         return Inertia::render('Maintenance/Parts/CreateParts',[
-            'partsType' => PartsType::all()->pluck('description', 'id')->prepend('Escolha fonte da peça', '')->toArray(),
-            'equipaments' => Equipament::all()->pluck('description', 'id')->prepend('Escolha o equipamento', '')->toArray(),
-        ]);
+            'partsType' => $partsType,
+            'equipaments' => $equipaments
+            ]);
 
     }
 
@@ -43,7 +53,53 @@ class PartsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $parts = $request->validate([
+                'description' => ['required'],
+                'amount' => ['required'],
+                'equipament_id' => ['required'],
+            ]);
+
+
+            $part = Parts::create([
+                'description' => $parts['description'],
+                'amount' => $parts['amount'],
+                'equipament_id' => $parts['equipament_id'],
+                'parts_type_id' => 1,
+
+            ]);
+
+            $pmParts = PMStore::where('parts_id', $part->id)->first();
+
+            if(isset($pmParts->amount)){
+                $over = $pmParts->amount+$part->amount;
+
+                PMStore::findOrFail($pmParts->id)->update([
+                        'amount' => $over,
+
+                ]);
+
+            }else{
+                $over = $part->amount;
+
+                PMStore::create([
+                    'amount' => $over,
+                    'parts_id' => $part->id,
+                ]);
+
+            }
+
+            DB::commit();
+
+            return redirect('/parts')->with(['message' => 'Novo produto criado com sucesso!']);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return redirect('/parts')->with(['error' => 'Não foi possível registrar produto, tente novamente mais tarde.']);
+        }
     }
 
     /**

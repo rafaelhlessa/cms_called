@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->integer('amount');
             $table->date('sell_date')->nullable();
-            $table->decimal(10,2)->nullable();
+            $table->decimal('price',10,2)->nullable();
             $table->integer('over');
             $table->foreignId('parts_id')
                 ->references('id')->on('parts')

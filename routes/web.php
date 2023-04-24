@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CalledController;
 use App\Http\Controllers\PartsController;
+use App\Http\Controllers\PurchaseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,6 +37,9 @@ Route::get('/called', [CalledController::class, 'index'])->name('called');
 
 Route::resource('part', PartsController::class);
 Route::get('/parts', [PartsController::class, 'index'])->name('parts');
+
+Route::resource('purchase', PurchaseController::class);
+Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases');
 
 Route::get('/maintenance', function () {
     return Inertia::render('Maintenance');

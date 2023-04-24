@@ -10,4 +10,5 @@ class Equipament extends Model
     use HasFactory;
 
     public $table = 'equipament';
+
 }

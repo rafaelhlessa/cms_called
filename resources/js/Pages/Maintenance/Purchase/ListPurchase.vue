@@ -3,7 +3,7 @@
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Lista de Peças</h2>
+            <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Lista de Compras</h2>
         </template>
 
         <div class="p-2 py-12">
@@ -14,7 +14,7 @@
 
                         </div>
                         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                            <a :href="route('part.create')"
+                            <a :href="route('purchase.create')"
                                 class="block px-3 py-2 text-sm font-semibold text-center text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Novo Item</a>
                         </div>
                     </div>
@@ -24,56 +24,48 @@
                                 <tr>
                                     <th scope="col"
                                         class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                        Descrição
+                                        Peça
                                     </th>
                                     <th scope="col"
                                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
-                                        Estoque Peças PMSC</th>
+                                        Quantidade</th>
                                     <th scope="col"
                                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
-                                        Estoque Peças Ilha Service</th>
+                                        Data Compra</th>
                                     <th scope="col"
                                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
-                                        Total Em Estoque</th>
+                                        Preço Unitário</th>
+                                    <th scope="col"
+                                        class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
+                                        Preço Total</th>
                                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                         <span class="sr-only">Exibir</span>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="plan in parts" :key="plan.id">
+                                <tr v-for="plan in purchase" :key="plan.id">
                                     <td class="relative py-4 pl-4 pr-3 text-sm border-t border-transparent sm:pl-6">
+                                        <!-- <div v-if="plan.parts.description == null" class="font-medium text-gray-900">
+                                            Não tem
+                                        </div> -->
                                         <div class="font-medium text-gray-900">
-                                            {{ plan.description }}
+                                            {{ plan.parts.description}}
                                         </div>
                                         <div class="absolute right-0 h-px bg-gray-200 -top-px left-6" />
                                     </td>
-                                    <td v-if="plan.pm_store != null"
+                                    <td
                                         class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg">{{ plan.pm_store.amount }}</b></td>
-                                    <td v-else
+                                        <b class="text-lg">{{ plan.amount }}</b>  Peças</td>
+                                    <td
                                         class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg">Sem Estoque</b>
-                                    </td>
-                                    <td v-if="plan.island_store != null"
+                                        {{ plan.buy_date }}</td>
+                                    <td
                                         class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg">{{ plan.island_store.amount }}</b></td>
-                                    <td v-else
+                                        R$ {{ plan.priceu }}</td>
+                                    <td
                                         class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg">Sem Estoque</b>
-                                    </td>
-                                    <td v-if="plan.amount > 0"
-                                        class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg">{{ plan.amount }}</b>
-                                    </td>
-                                    <td v-else-if="plan.amount === 0"
-                                        class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg text-red-600">{{ plan.amount }}</b>
-                                    </td>
-                                    <td v-else
-                                        class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg text-red-600">{{ plan.amount }}</b>
-                                    </td>
+                                        R$ {{ plan.pricet }}</td>
                                     <td
                                         class="border-t border-transparent relative py-3.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                         <button type="button"
@@ -103,18 +95,42 @@ export default {
         AuthenticatedLayout,
         Head
     },
-    props: ['errors', 'data', 'parts', 'pmStore', 'islandStore', 'amountt'],
+    props: ['errors', 'data', 'parts', 'purchase'],
 
     data() {
         return {
             editMode: false,
             errors: [],
+            // form: {
+            //     name: null,
+            //     phone: null,
+            //     glpi: null,
+            //     pim: null,
+            //     status_id: null,
+            //     service: null,
+            // },
+
         }
     },
     methods: {
-        total: function (){
-            console.log(this.pmStore);
-        }
+        // reset: function () {
+        //     this.form = {
+        //         name: null,
+        //         phone: null,
+        //         glpi: null,
+        //         pim: null,
+        //         status_id: null,
+        //         service: null,
+        //     }
+        // },
+        // save: function (data) {
+        //     console.log(data)
+        //     this.$inertia.post('/call', data)
+
+        //     // this.reset();
+        //     this.editMode = false;
+        // },
+
 
     },
 }
