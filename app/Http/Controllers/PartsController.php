@@ -126,6 +126,15 @@ class PartsController extends Controller
     public function update(Request $request, string $id)
     {
         dd($request);
+
+        $part = $request->validate([
+            'amount' => ['required'],
+        ]);
+
+        Parts::findOrFail($id)->update([
+            'amount' => $part['amount'],
+        ]);
+        return redirect('/team')->with(['message' => 'Time criado com sucesso!']);
     }
 
     /**

@@ -28,8 +28,14 @@ return new class extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
+            $table->foreignId('parts_type_id')
+                ->references('id')->on('parts_type')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
             $table->index(["parts_id"]);
             $table->index(["report_id"]);
+            $table->index(["parts_type_id"]);
             $table->timestamps();
         });
     }

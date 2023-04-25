@@ -15,7 +15,7 @@
                         <p class="mt-1 text-sm leading-6 text-gray-600">Entrada de peças PMSC para estoque.</p>
                     </div>
 
-                    <form @submit.prevent="submit" class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
+                    <form class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
                         <div class="px-4 py-6 sm:p-8">
                             <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                 <div class="sm:col-span-3">
@@ -61,21 +61,22 @@ export default {
 
     data() {
         return {
+            form: this.$inertia.form({
+                _method: 'put',
+                amount: null,
+            }),
         }
     },
     methods: {
-        setup(props){
-            const form = useForm({
-                amount: props.parts.amount,
-            })  ;
-            return {form}
-        },
-        methods:{
-            submit() {
-                this.form.put(route("part.update", this.parts.id));
-            },
-        },
-
+        submit() {
+        this.form.put(`/part/${this.parts.id}`, {
+            // onSuccess: () => this.form.reset('password', 'photo'),
+        })
+    },
+        // submit(data) {
+        //     console.log(data)
+        //     this.form.put(route("part.update", this.parts.id));
+        // },
     },
 }
 </script>

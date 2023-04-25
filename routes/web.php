@@ -28,9 +28,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',[CalledController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('call', CalledController::class);
 Route::get('/called', [CalledController::class, 'index'])->name('called');
