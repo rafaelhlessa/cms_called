@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Called;
+use App\Models\Parts;
 use App\Models\Status;
 use App\Models\Technic;
 use Illuminate\Http\Request;
@@ -20,14 +21,18 @@ class CalledController extends Controller
         $callOpen = Called::where('status_id', '<', 5)->where('status_id', '!=', 2)->limit(10)->get();
         $called = Called::where('status_id', 2)->get();
         $status = Status::where('id', '<', 5)->get();
+        $statusReport = Status::where('id', '>', 4)->where('id', '<', 7)->get();
         $technic = Technic::all();
+        $part = Parts::all();
         return Inertia::render('Dashboard',
         [
             'callclose' => $callClose,
             'callOpen' => $callOpen,
             'status' => $status,
+            'statusReport' => $statusReport,
             'technic' => $technic,
-            'called' => $called
+            'called' => $called,
+            'parts' => $part,
         ]);
 
     }
@@ -100,6 +105,11 @@ class CalledController extends Controller
         ]);
         return redirect('/called')->with(['message' => 'Alterado status do equipamento!']);
 
+    }
+
+    public function report(Request $request, $id)
+    {
+        dd($request);
     }
 
     /**

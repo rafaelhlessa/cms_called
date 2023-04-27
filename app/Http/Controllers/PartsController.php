@@ -75,23 +75,23 @@ class PartsController extends Controller
             if($pmParts != null){
                 if(isset($pmParts->amount)){
                     $over = $pmParts->amount+$part->amount;
-    
+
                     PMStore::findOrFail($pmParts->id)->update([
                             'amount' => $over,
-    
+
                     ]);
-    
+
                 }else{
                     $over = $part->amount;
-    
+
                     PMStore::create([
                         'amount' => $over,
                         'parts_id' => $part->id,
                     ]);
-    
+
                 }
             }
-            
+
 
             DB::commit();
 
@@ -136,29 +136,30 @@ class PartsController extends Controller
             if($pmParts != null){
                 if(isset($pmParts->amount)){
                     $over = $pmParts->amount+$request->amount;
-    
+                    $overp = $parts->amount+$request->amount;
+
                     PMStore::findOrFail($pmParts->id)->update([
                             'amount' => $over,
                     ]);
-                    
+
                     Parts::findOrFail($id)->update([
-                        'amount' => $over,
+                        'amount' => $overp,
                     ]);
-    
+
                 }
             } else {
                 $over = $request->amount;
 
                     Parts::findOrFail($id)->update([
                         'amount' => $over,
-                    ]);    
-    
+                    ]);
+
                     PMStore::create([
                         'amount' => $over,
                         'parts_id' => $parts->id,
                     ]);
             }
-            
+
 
             DB::commit();
 
@@ -171,28 +172,6 @@ class PartsController extends Controller
             return redirect('/parts')->with(['error' => 'Não foi possível registrar produto, tente novamente mais tarde.']);
         }
 
-        // $parts = $request->validate([
-        //     'description' => ['required'],
-        //     // 'amount' => ['required'],
-        //     'equipament_id' => ['required'],
-        // ]);
-
-        // $part = Parts::create([
-        //     'description' => $parts['description'],
-        //     'amount' => $request['amount'],
-        //     'equipament_id' => $parts['equipament_id'],
-        //     'parts_type_id' => 1,
-
-        // ]);
-
-        // $part = $request->validate([
-        //     'amount' => ['required'],
-        // ]);
-
-        // Parts::findOrFail($id)->update([
-        //     'amount' => $part['amount'],
-        // ]);
-        // return redirect('/team')->with(['message' => 'Time criado com sucesso!']);
     }
 
     /**

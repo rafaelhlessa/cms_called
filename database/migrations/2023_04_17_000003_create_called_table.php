@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name', 45)->nullable();
             $table->string('phone', 45)->nullable();
             $table->text('service');
+            $table->boolean('parts');
 
             // $table->unsignedBigInteger('tecnic_id');
             // $table->unsignedBigInteger('status_id');
