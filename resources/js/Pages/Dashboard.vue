@@ -191,68 +191,59 @@
                                             </div>
                                         </div>
 
-                                        <div class="sm:col-span-3">
-                                            <div v-for="part in parts" :key="part.id">
-                                                <label :for="`part_${part.id}`">{{ part.description }}:</label>
-                                                <select :id="`part_${part.id}`" v-model="part.quantity">
-                                                    <option v-for="i in 10" :key="i" :value="i">{{ i }}</option>
+                                        <div class="sm:col-span-6">
+                                            <div>
+                                                <label for="parts">Parts:</label>
+                                                <select id="parts" v-model="form.selectedParts" multiple>
+                                                    <option v-for="part in parts" :key="part.id" :value="part.id">{{
+                                                        part.description }}</option>
                                                 </select>
                                             </div>
-                                            <div>
-                                                <button type="button" @click="addPart">Add Part</button>
+                                            <div v-for="part in selectedParts" :key="part">
+                                                <label :for="`quantity-${part}`">{{ part }}</label>
+                                                <input :id="`quantity-${part}`" type="number"
+                                                    v-model="form.partQuantities[part]">
                                             </div>
-                                            <div>
-                                                <label for="description">Description:</label>
-                                                <textarea id="description" v-model="description"></textarea>
-                                            </div>
-                                            <div>
-                                                <ul>
-                                                    <li v-for="(part, index) in selectedParts" :key="index">{{ part.name }}
-                                                        ({{ part.quantity }})</li>
-                                                </ul>
-                                            </div>
-                                            <div>
-                                            </div>
-
-                                            <div class="sm:col-span-3">
-                                                <label for="status"
-                                                    class="block text-sm font-medium leading-6 text-gray-900">Técnico</label>
-                                                <div class="mt-2">
-                                                    <select id="technic_id" name="technic_id" v-model="technicId"
-                                                        class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                                        <option v-for="option in technic" :key="option.id"
-                                                            :value="option.id">{{
-                                                                option.name }}</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="sm:col-span-3">
-                                                <label for="status"
-                                                    class="block text-sm font-medium leading-6 text-gray-900">Status</label>
-                                                <div class="mt-2">
-                                                    <select id="status_id" name="status_id" v-model="statusId"
-                                                        class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                                        <option v-for="option in statusReport" :key="option.id"
-                                                            :value="option.id">{{ option.situation }}</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
                                         </div>
+
+                                        <div class="sm:col-span-3">
+                                            <label for="status"
+                                                class="block text-sm font-medium leading-6 text-gray-900">Técnico</label>
+                                            <div class="mt-2">
+                                                <select id="technic_id" name="technic_id" v-model="form.technic_id"
+                                                    class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                                    <option v-for="option in technic" :key="option.id" :value="option.id">{{
+                                                        option.name }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="sm:col-span-3">
+                                            <label for="status"
+                                                class="block text-sm font-medium leading-6 text-gray-900">Status</label>
+                                            <div class="mt-2">
+                                                <select id="status_id" name="status_id" v-model="form.status_id"
+                                                    class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                                    <option v-for="option in statusReport" :key="option.id"
+                                                        :value="option.id">{{ option.situation }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div
-                                        class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                        <button @click="closeModal1()" type="button"
-                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
-                                        <button @click="report(form)" type="button"
-                                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Atribuir</button>
-                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                    <button @click="closeModal1()" type="button"
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
+                                    <button @click="report(form)" type="button"
+                                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Atribuir</button>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
+
+                </form>
             </div>
+        </div>
         </div>
 
 
@@ -280,10 +271,10 @@ export default {
             form: {
                 technic_id: null,
                 status_id: null,
-
+                selectedParts: [],
+                partQuantities: {}
             },
-            selectedParts: [],
-            description: ''
+
         }
     },
     methods: {
@@ -344,14 +335,14 @@ export default {
         },
         addPart() {
             for (let i = 0; i < this.parts.length; i++) {
-            const part = this.parts[i]
-            if (part.selected && !this.selectedParts.includes(part)) {
-                this.selectedParts.push({
-                id: part.id,
-                name: part.name,
-                quantity: 1
-                })
-            }
+                const part = this.parts[i]
+                if (part.selected && !this.selectedParts.includes(part)) {
+                    this.selectedParts.push({
+                        id: part.id,
+                        name: part.name,
+                        quantity: 1
+                    })
+                }
             }
         },
         report: function (a) {
