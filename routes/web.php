@@ -44,6 +44,10 @@ Route::get('/maintenance', function () {
     return Inertia::render('Maintenance');
 })->middleware(['auth', 'verified'])->name('maintenance');
 
+Route::get('/test', function () {
+    return Inertia::render('TEst');
+})->middleware(['auth', 'verified'])->name('test');
+
 Route::get('/cadastros', function () {
     return Inertia::render('Cadastros');
 })->middleware(['auth', 'verified'])->name('cadastros');

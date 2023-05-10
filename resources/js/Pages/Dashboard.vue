@@ -177,7 +177,7 @@
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>​
                 <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
                     role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                    <form @submit.prevent="submitForm">
+                    <form @submit.prevent>
                         <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
                             <div class="rounded rounded-md ring-1 ring-gray-400">
                                 <div class="px-4 py-6 sm:p-8">
@@ -191,32 +191,37 @@
                                             </div>
                                         </div>
 
-                                        <div class="sm:col-span-6">
-                                            <div>
-                                                <label for="parts">Parts:</label>
-                                                <select id="parts" v-model="form.selectedParts" multiple>
-                                                    <option v-for="part in parts" :key="part.id" :value="part.id">{{
-                                                        part.description }}</option>
+                                        <div>
+                                            <button @click.prevent="partsOpen()"
+                                                class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3">
+                                                Peças
+                                            </button>
+                                        </div>
+
+                                        <div class="sm:col-span-6" v-if="partsOn">
+                                            <div class="sm:col-span-3">
+                                                <label for="menu">Select an item:</label>
+                                                <select id="menu" v-model="selectedItem" class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                                    <option value="">Please select an item</option>
+                                                    <option v-for="(item, index) in parts" :key="index"
+                                                        :value="item.id">{{ item.description }}
+                                                    </option>
                                                 </select>
                                             </div>
-                                            <div v-for="part in selectedParts" :key="part">
-                                                <label :for="`quantity-${part}`">{{ part }}</label>
-                                                <input :id="`quantity-${part}`" type="number"
-                                                    v-model="form.partQuantities[part]">
+                                            <div class="sm:col-span-3">
+                                                <label for="quantity">Quantity:</label>
+                                                <input type="number" id="quantity" v-model.number="quantity" min="1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                                <button @click.prevent="addItem">Add Item</button>
                                             </div>
                                         </div>
 
-                                        <div class="sm:col-span-3">
-                                            <label for="status"
-                                                class="block text-sm font-medium leading-6 text-gray-900">Técnico</label>
-                                            <div class="mt-2">
-                                                <select id="technic_id" name="technic_id" v-model="form.technic_id"
-                                                    class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                                    <option v-for="option in technic" :key="option.id" :value="option.id">{{
-                                                        option.name }}</option>
-                                                </select>
-                                            </div>
+                                        <div class="sm:col-span-6">
+                                            <ul>
+                                                <li v-for="(item, index) in itemList" :key="index">{{ item.name }} -
+                                                    Quantity: {{ item.quantity }}</li>
+                                            </ul>
                                         </div>
+
                                         <div class="sm:col-span-3">
                                             <label for="status"
                                                 class="block text-sm font-medium leading-6 text-gray-900">Status</label>
@@ -241,9 +246,9 @@
                             </div>
                         </div>
 
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
         </div>
 
 
@@ -267,17 +272,30 @@ export default {
             editMode: false,
             isOpen: false,
             isOpen1: false,
+            partsOn: false,
             loading: false,
             form: {
                 technic_id: null,
                 status_id: null,
-                selectedParts: [],
-                partQuantities: {}
+
             },
+            selectedItem: '',
+            quantity: 1,
+            // menuItems: [
+            //     { id: 1, name: 'Item 1' },
+            //     { id: 2, name: 'Item 2' },
+            //     { id: 3, name: 'Item 3' },
+            // ],
+            itemList: [],
+
 
         }
     },
     methods: {
+        updateItemValue(event) {
+
+            this.selectedItemValue = event.target.value;
+        },
         openModal: function () {
             this.isOpen = true;
         },
@@ -293,6 +311,9 @@ export default {
             this.isOpen1 = false;
             this.reset();
             this.editMode = false;
+        },
+        partsOpen: function () {
+            this.partsOn = true;
         },
         reset: function () {
             this.form = {
@@ -333,83 +354,20 @@ export default {
             //     console.error(error);
             //     });
         },
-        addPart() {
-            for (let i = 0; i < this.parts.length; i++) {
-                const part = this.parts[i]
-                if (part.selected && !this.selectedParts.includes(part)) {
-                    this.selectedParts.push({
-                        id: part.id,
-                        name: part.name,
-                        quantity: 1
-                    })
-                }
+        addItem() {
+            const selectedItem = this.parts.find(item => item.id === Number(this.selectedItem));
+            if (!selectedItem) {
+                return;
             }
-        },
-        report: function (a) {
-            console.log(a)
-            const { $inertia } = usePage()
-
-            const state = reactive({
-                selectedParts: [],
-                partQuantities: {}
-            })
-
-            function addParts() {
-                const parts = state.selectedParts.map(partId => {
-                    return {
-                        id: partId,
-                        quantity: state.partQuantities[partId]
-                    }
-                })
-                $inertia.post('/addParts', { parts })
-            }
-        },
-        setup(props) {
-            const serviceType = ref('');
-            const technicianId = ref(null);
-            const statusId = ref(null);
-            const selectedParts = ref([]);
-            const partQuantities = ref({});
-            const { inertia } = usePage();
-
-            const technicians = [
-                { id: 1, name: 'Technician 1' },
-                { id: 2, name: 'Technician 2' },
-                { id: 3, name: 'Technician 3' },
-            ];
-
-            const statuses = [
-                { id: 1, name: 'Status 1' },
-                { id: 2, name: 'Status 2' },
-                { id: 3, name: 'Status 3' },
-            ];
-
-            const submitForm = () => {
-                const partsData = selectedParts.value.map((part) => {
-                    return {
-                        part_id: part.id,
-                        quantity: partQuantities.value[part.id],
-                    };
-                });
-                inertia.post('/submit-form', {
-                    service_type: serviceType.value,
-                    technician_id: technicianId.value,
-                    status_id: statusId.value,
-                    parts: partsData,
-                });
+            const newItem = {
+                name: selectedItem.description,
+                quantity: this.quantity,
             };
-
-            return {
-                serviceType,
-                technicianId,
-                statusId,
-                selectedParts,
-                partQuantities,
-                technicians,
-                statuses,
-                submitForm,
-            };
+            this.itemList.push(newItem);
+            this.selectedItem = '';
+            this.quantity = 1;
         },
+
 
 
     },
