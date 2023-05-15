@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Called;
 use App\Models\Parts;
+use App\Models\PMStore;
 use App\Models\Status;
 use App\Models\Technic;
 use Illuminate\Http\Request;
@@ -23,7 +24,12 @@ class CalledController extends Controller
         $status = Status::where('id', '<', 5)->get();
         $statusReport = Status::where('id', '>', 4)->where('id', '<', 7)->get();
         $technic = Technic::all();
-        $part = Parts::all();
+        $part = Parts::with('pmStore')->with('islandStore')->get();
+
+        // foreach($part as $parts){
+        //     dd($parts->pmStore->amount);
+        // }
+
         return Inertia::render('Dashboard',
         [
             'callclose' => $callClose,
@@ -33,6 +39,8 @@ class CalledController extends Controller
             'technic' => $technic,
             'called' => $called,
             'parts' => $part,
+            // 'partPm' => $partPm,
+            // 'partIsland' => $partIsland
         ]);
 
     }

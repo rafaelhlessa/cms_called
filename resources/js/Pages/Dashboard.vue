@@ -193,32 +193,33 @@
 
                                         <div>
                                             <button @click.prevent="partsOpen()"
-                                                class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3">
+                                                class="relative inline-flex items-center justify-center flex-1 w-0 py-1 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3">
                                                 Peças
                                             </button>
                                         </div>
 
                                         <div class="sm:col-span-6" v-if="partsOn">
-                                            <div class="sm:col-span-3">
-                                                <label for="menu">Select an item:</label>
+
+                                        </div>
+                                        <div class="sm:col-span-3" v-if="partsOn">
+                                                <label for="menu">Escolha um item:</label>
                                                 <select id="menu" v-model="selectedItem" class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                                    <option value="">Please select an item</option>
+                                                    <option value="">Escolha a peça</option>
                                                     <option v-for="(item, index) in parts" :key="index"
-                                                        :value="item.id">{{ item.description }}
+                                                        :value="item.id">{{ item.description }} (PM-{{ item.pm_store !== null ?  item.pm_store.amount : 'N/A'}} | Ilha-{{ item.island_store !== null ?  item.island_store.amount : 'N/A'}})
                                                     </option>
                                                 </select>
                                             </div>
-                                            <div class="sm:col-span-3">
-                                                <label for="quantity">Quantity:</label>
+                                            <div class="sm:col-span-3" v-if="partsOn">
+                                                <label for="quantity">Quantidade:</label>
                                                 <input type="number" id="quantity" v-model.number="quantity" min="1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                                <button @click.prevent="addItem">Add Item</button>
+                                                <button @click.prevent="addItem">Adicionar Item</button>
                                             </div>
-                                        </div>
 
-                                        <div class="sm:col-span-6">
+                                        <div class="p-2 rounded rounded-md sm:col-span-6 ring-1 ring-gray-400">
                                             <ul>
                                                 <li v-for="(item, index) in itemList" :key="index">{{ item.name }} -
-                                                    Quantity: {{ item.quantity }}</li>
+                                                    Quantidade: {{ item.quantity }}</li>
                                             </ul>
                                         </div>
 
