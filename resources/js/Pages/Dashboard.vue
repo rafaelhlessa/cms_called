@@ -191,9 +191,9 @@
                                             </div>
                                         </div>
 
-                                        <div>
+                                        <div class="pb-4">
                                             <button @click.prevent="partsOpen()"
-                                                class="relative inline-flex items-center justify-center flex-1 w-0 py-1 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3">
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                                 Peças
                                             </button>
                                         </div>
@@ -202,28 +202,35 @@
 
                                         </div>
                                         <div class="sm:col-span-3" v-if="partsOn">
-                                                <label for="menu">Escolha um item:</label>
-                                                <select id="menu" v-model="selectedItem" class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                                    <option value="">Escolha a peça</option>
-                                                    <option v-for="(item, index) in parts" :key="index"
-                                                        :value="item.id">{{ item.description }} (PM-{{ item.pm_store !== null ?  item.pm_store.amount : 'N/A'}} | Ilha-{{ item.island_store !== null ?  item.island_store.amount : 'N/A'}})
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <div class="sm:col-span-3" v-if="partsOn">
-                                                <label for="quantity">Quantidade:</label>
-                                                <input type="number" id="quantity" v-model.number="quantity" min="1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                                <button @click.prevent="addItem">Adicionar Item</button>
-                                            </div>
+                                            <label for="menu">Escolha um item:</label>
+                                            <select id="menu" v-model="selectedItem"
+                                                class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                                <option value="">Escolha a peça</option>
+                                                <option v-for="(item, index) in parts" :key="index" :value="item.id">{{
+                                                    item.description }}
+                                                    (PM-{{ item.pm_store !== null ? item.pm_store.amount : 'N/A' }} |
+                                                    Ilha-{{ item.island_store !== null ? item.island_store.amount : 'N/A' }})
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="sm:col-span-3" v-if="partsOn">
+                                            <label for="quantity">Quantidade:</label>
+                                            <input type="number" id="quantity" v-model.number="quantity" min="1"
+                                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                            <button @click.prevent="addItem">Adicionar Item</button>
+                                        </div>
 
-                                        <div class="p-2 rounded rounded-md sm:col-span-6 ring-1 ring-gray-400">
+                                        <div id="target" class="sm:col-span-6" v-if="partsOn">
                                             <ul>
-                                                <li v-for="(item, index) in itemList" :key="index">{{ item.name }} -
-                                                    Quantidade: {{ item.quantity }}</li>
+                                                <div v-if="partsOn" class="p-2 rounded rounded-md sm:col-span-6 ring-1 ring-gray-400">
+                                                    <li v-for="(item, index) in itemList" :key="index">
+                                                    {{ item.name }} - Quantidade: {{ item.quantity }}
+                                                    </li>
+                                                </div>
                                             </ul>
                                         </div>
 
-                                        <div class="sm:col-span-3">
+                                        <div class="col-span-full">
                                             <label for="status"
                                                 class="block text-sm font-medium leading-6 text-gray-900">Status</label>
                                             <div class="mt-2">
@@ -278,18 +285,12 @@ export default {
             form: {
                 technic_id: null,
                 status_id: null,
-
+                service: null,
+                itemList: [],
             },
             selectedItem: '',
             quantity: 1,
-            // menuItems: [
-            //     { id: 1, name: 'Item 1' },
-            //     { id: 2, name: 'Item 2' },
-            //     { id: 3, name: 'Item 3' },
-            // ],
             itemList: [],
-
-
         }
     },
     methods: {
@@ -312,6 +313,8 @@ export default {
             this.isOpen1 = false;
             this.reset();
             this.editMode = false;
+            this.clear();
+            this.partsOn = false;
         },
         partsOpen: function () {
             this.partsOn = true;
@@ -320,7 +323,15 @@ export default {
             this.form = {
                 status_id: null,
                 technic_id: null,
+                service: null,
+                itemList: [],
             }
+        },
+        clear: function () {
+            let target = document.getElementById("target");
+
+            target.innerText = "";
+            this.itemList.splice(0)
         },
         edit: function (data) {
             this.form = Object.assign(data);
@@ -361,13 +372,32 @@ export default {
                 return;
             }
             const newItem = {
+                id: selectedItem.id,
                 name: selectedItem.description,
                 quantity: this.quantity,
             };
             this.itemList.push(newItem);
+            this.form.itemList.push(newItem);
             this.selectedItem = '';
             this.quantity = 1;
         },
+        report: function (e) {
+            console.log(e)
+            e._method = 'POST';
+
+            // Save the status_id and technic_id fields
+            const payload = {
+                status_id: e.status_id,
+                technic_id: 1,
+                service: e.service,
+                items: this.itemList,
+            };
+
+            this.$inertia.post('/reportCall/', payload);
+            this.reset();
+            this.closeModal1();
+            // location.reload()
+        }
 
 
 
