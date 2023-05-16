@@ -115,8 +115,19 @@ class CalledController extends Controller
 
     }
 
-    public function report(Request $request, $id)
+    public function report(Request $request)
     {
+        // dd($request);
+        foreach($request->items as $item){
+            $idPart = $item["id"];
+            $amountPart = $item["quantity"];
+        }
+        $amount = $request;
+        $parts = Parts::with('pmStore')->with('islandStore')->get();
+        foreach($parts as $part){
+            dd($part);
+        }
+
         dd($request);
     }
 
