@@ -54,7 +54,7 @@
                                     </div>
                                     <div>
                                         <div class="flex -mt-px divide-x divide-gray-200">
-                                            <button @click="openModal1()"
+                                            <button @click="edit1(person), openModal1()"
                                                 class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3">
                                                 Laudo
                                             </button>
@@ -183,10 +183,10 @@
                                 <div class="px-4 py-6 sm:p-8">
                                     <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                         <div class="col-span-full">
-                                            <label for="service"
+                                            <label for="solution"
                                                 class="block text-sm font-medium leading-6 text-gray-900">Serviços</label>
                                             <div class="mt-2">
-                                                <textarea v-model="form.service" name="service" id="service"
+                                                <textarea v-model="form.solution" name="solution" id="solution"
                                                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                             </div>
                                         </div>
@@ -286,6 +286,7 @@ export default {
                 technic_id: null,
                 status_id: null,
                 service: null,
+                solution: null,
                 itemList: [],
             },
             selectedItem: '',
@@ -381,16 +382,23 @@ export default {
             this.selectedItem = '';
             this.quantity = 1;
         },
+        edit1: function (data) {
+            // console.log(data)
+            this.form = Object.assign(data);
+            this.editMode = true;
+            this.openModal1();
+        },
         report: function (e) {
             console.log(e)
             e._method = 'POST';
 
             // Save the status_id and technic_id fields
             const payload = {
+                called_id: e.id,
                 status_id: e.status_id,
-                technic_id: 1,
-                service: e.service,
-                items: this.itemList,
+                technic_id: e.technic_id,
+                solution: e.solution,
+                item: this.itemList,
             };
 
             this.$inertia.post('/reportCall/', payload);

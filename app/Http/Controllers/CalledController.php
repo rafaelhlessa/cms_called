@@ -7,9 +7,14 @@ use App\Models\Parts;
 use App\Models\PMStore;
 use App\Models\Status;
 use App\Models\Technic;
+use App\Models\Report;
+use App\Models\ReportCalled;
+use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 class CalledController extends Controller
 {
@@ -117,18 +122,56 @@ class CalledController extends Controller
 
     public function report(Request $request)
     {
-        // dd($request);
-        foreach($request->items as $item){
-            $idPart = $item["id"];
-            $amountPart = $item["quantity"];
-        }
-        $amount = $request;
-        $parts = Parts::with('pmStore')->with('islandStore')->get();
-        foreach($parts as $part){
-            dd($part);
+
+        $report = $request->validate([
+            'called_id' => ['required'],
+            'status_id' => ['required'],
+            'solution' => ['required'],
+            'technic_id' => ['required'],
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $calledReport = ReportCalled::create([
+                'called_id' => $report['called_id'],
+                'status_id' => $report['status_id'],
+                'solution' => $report['solution'],
+                'tech_report' => $request['tech_report'],
+                'technic_id' => $report['technic_id'],
+
+            ]);
+
+            $items = collect($request['item']) ?? null;
+            $items->each(function ($item) use ($calledReport) {
+
+                $partPm = PMStore::where('amount', '>', 0)->where('parts_id', $item['id'])->get();
+                dd($partPm);
+
+                // DB::commit();
+            });
+
+            return redirect('/called')->with(['message' => 'Serviço Realizado!']);
+        } catch (Exception $e){
+            echo 'Exceção capturada: ',  $e->getMessage(), "\n";
+
+            DB::rollback();
         }
 
-        dd($request);
+
+
+
+        // foreach($request->items as $item){
+        //     $idPart = $item["id"];
+        //     $amountPart = $item["quantity"];
+        // }
+        // $amount = $request;
+        // $parts = Parts::with('pmStore')->with('islandStore')->get();
+        // foreach($parts as $part){
+        //     dd($part);
+        // }
+
+        // dd($request);
     }
 
     /**

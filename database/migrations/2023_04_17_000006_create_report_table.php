@@ -13,9 +13,16 @@ return new class extends Migration
     {
         Schema::create('report', function (Blueprint $table) {
             $table->id();
+            $table->index(["called_id"]);
             $table->text('service')->nullable();
             $table->string('tech_report', 150)->nullable();
             $table->index(["technic_id"]);
+
+            $table->foreignId('called_id')
+                ->nullable()
+                ->references('id')->on('called')
+                ->onDelete('no action')
+                ->onUpdate('no action');
 
             $table->foreignId('technic_id')
                 ->nullable()
