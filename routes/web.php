@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CalledController;
 use App\Http\Controllers\PartsController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -48,9 +49,11 @@ Route::get('/test', function () {
     return Inertia::render('TEst');
 })->middleware(['auth', 'verified'])->name('test');
 
-Route::get('/cadastros', function () {
-    return Inertia::render('Cadastros');
-})->middleware(['auth', 'verified'])->name('cadastros');
+// Route::get('/cadastros', function () {
+//     return Inertia::render('Cadastros');
+// })->middleware(['auth', 'verified'])->name('cadastros');
+Route::get('/cadastros', [AuthController::class, 'getTickets'])->name('cadastros');
+Route::post('cad', [AuthController::class, 'create']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

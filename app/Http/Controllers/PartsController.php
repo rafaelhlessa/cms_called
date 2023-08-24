@@ -181,4 +181,9 @@ class PartsController extends Controller
     {
         //
     }
+
+    public function check(string $id)
+    {
+        //
+    }
 }

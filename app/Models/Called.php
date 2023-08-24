@@ -11,9 +11,9 @@ class Called extends Model
 
     public $table = 'called';
 
-    protected $fillable = ['glpi', 'pim', 'name', 'phone', 'service', 'status_id', 'technic_id'];
+    protected $fillable = ['id', 'glpi', 'pim', 'name', 'phone', 'service', 'status_id', 'technic_id'];
 
-    protected $with = ['status', 'technic'];
+    protected $with = ['status', 'technic', 'pmStore', 'islandStore'];
 
     public $timestamps = true;
 
@@ -25,5 +25,15 @@ class Called extends Model
     public function technic()
     {
         return $this->hasOne('App\Models\Technic', 'id', 'technic_id');
+    }
+
+    public function pmStore()
+    {
+        return $this->hasOne('App\Models\PMStore', 'parts_id', 'id');
+    }
+
+    public function islandStore()
+    {
+        return $this->hasOne('App\Models\IslandStore', 'parts_id', 'id');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Called;
+use App\Models\IslandStore;
 use App\Models\Parts;
 use App\Models\PMStore;
 use App\Models\Status;
@@ -26,7 +27,7 @@ class CalledController extends Controller
         $callClose = Called::where('status_id', '>', 4)->get();
         $callOpen = Called::where('status_id', '<', 5)->where('status_id', '!=', 2)->limit(10)->get();
         $called = Called::where('status_id', 2)->get();
-        $status = Status::where('id', '<', 5)->get();
+        $status = Status::where('id', '>', 1)->where('id', '<', 5)->get();
         $statusReport = Status::where('id', '>', 4)->where('id', '<', 7)->get();
         $technic = Technic::all();
         $part = Parts::with('pmStore')->with('islandStore')->get();
@@ -145,10 +146,47 @@ class CalledController extends Controller
             $items = collect($request['item']) ?? null;
             $items->each(function ($item) use ($calledReport) {
 
-                $partPm = PMStore::where('amount', '>', 0)->where('parts_id', $item['id'])->get();
-                dd($partPm);
+                // dd($item);
 
-                // DB::commit();
+                // $part = Parts::with('pmStore')->with('islandStore')->where('parts_id', '=', $item['id'])->get();
+                $storage = Parts::findOrFail($item['id']);
+
+                if ($storage->amount > $item['quantity']){
+                    $part = Parts::where('amount', '>', 0)->where('id', $item['id'])->first();
+                    $partPm = PMStore::where('amount', '>', 0)->where('parts_id', $item['id'])->first();
+                    $partIsland = IslandStore::where('amount', '>', 0)->where('parts_id', $item['id'])->first();
+                    if($partPm->amount > $item['quantity']){
+                        $over = $partPm->amount - $item['quantity'];
+                        $overp = $part->amount - $item['quantity'];
+
+                        echo "Tem mais peça PM do que a quantidade ". $over;
+
+                        PMStore::findOrFail($partPm->id)->update([
+                            'amount' => $over,
+                        ]);
+                        Parts::findOrFail($part->id)->update([
+                            'amount' => $overp,
+                        ]);
+
+                        // dd($partPm->id);
+                    } else {
+                        $saldo = $item['quantity'] - $partPm->amount;
+                        //
+                        echo "Tem menos peça PM do que a quantidade ". $saldo;
+                        dd($partPm->id);
+                        dd($saldo);
+                    }
+
+                    echo "Tem em ". $storage->amount . " estoque";
+                } else {
+
+                    echo "Não tem em estoque";
+                }
+
+                // $partPm = PMStore::where('amount', '>', 0)->where('parts_id', $item['id'])->get();
+                // dd($partPm);
+
+                DB::commit();
             });
 
             return redirect('/called')->with(['message' => 'Serviço Realizado!']);

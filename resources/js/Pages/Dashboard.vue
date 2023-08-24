@@ -4,6 +4,12 @@
     <AuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Dashboard</h2>
+            <p v-if="errors.length">
+                <b>Por favor, corrija o(s) seguinte(s) erro(s):</b>
+            <ul>
+                <li v-for="error in errors" :key="error">{{ error }}</li>
+            </ul>
+            </p>
         </template>
 
         <div class="p-2 py-12">
@@ -156,7 +162,7 @@
                                     class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                                     <button @click="closeModal()" type="button"
                                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
-                                    <button @click="update(form)" type="button"
+                                    <button @click="update(form), checkForm()" type="button"
                                         class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Atribuir</button>
                                 </div>
                             </div>
@@ -193,7 +199,7 @@
 
                                         <div class="pb-4">
                                             <button @click.prevent="partsOpen()"
-                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                                 Peças
                                             </button>
                                         </div>
@@ -209,7 +215,8 @@
                                                 <option v-for="(item, index) in parts" :key="index" :value="item.id">{{
                                                     item.description }}
                                                     (PM-{{ item.pm_store !== null ? item.pm_store.amount : 'N/A' }} |
-                                                    Ilha-{{ item.island_store !== null ? item.island_store.amount : 'N/A' }})
+                                                    Ilha-{{ item.island_store !== null ? item.island_store.amount : 'N/A'
+                                                    }})
                                                 </option>
                                             </select>
                                         </div>
@@ -222,9 +229,10 @@
 
                                         <div id="target" class="sm:col-span-6" v-if="partsOn">
                                             <ul>
-                                                <div v-if="partsOn" class="p-2 rounded rounded-md sm:col-span-6 ring-1 ring-gray-400">
+                                                <div v-if="partsOn"
+                                                    class="p-2 rounded rounded-md sm:col-span-6 ring-1 ring-gray-400">
                                                     <li v-for="(item, index) in itemList" :key="index">
-                                                    {{ item.name }} - Quantidade: {{ item.quantity }}
+                                                        {{ item.name }} - Quantidade: {{ item.quantity }}
                                                     </li>
                                                 </div>
                                             </ul>
@@ -273,7 +281,7 @@ export default {
         AuthenticatedLayout,
         Head,
     },
-    props: ['errors', 'data', 'status', 'callClose', 'callOpen', 'technic', 'called', 'parts', 'statusReport'],
+    props: ['data', 'status', 'callClose', 'callOpen', 'technic', 'called', 'parts', 'statusReport'],
 
     data() {
         return {
@@ -292,6 +300,7 @@ export default {
             selectedItem: '',
             quantity: 1,
             itemList: [],
+            errors: [],
         }
     },
     methods: {
@@ -339,14 +348,31 @@ export default {
             this.editMode = true;
             this.openModal();
         },
+        checkForm: function (a) {
+            console.log(a)
+            if (this.form.status_id && this.form.technic_id) {
+                return true;
+            }
+
+            this.errors = [];
+
+            if (!this.form.status_id) {
+                this.errors.push('O Status é obrigatório.');
+            }
+            if (!this.form.technic_id) {
+                this.errors.push('O Técnico é obrigatório.');
+            }
+
+        },
         update: function (a) {
+            this.checkForm(a);
             // Validate the status_id and technic_id fields
-            if (!a.status_id || !a.technic_id) {
+            if (!this.form.status_id || !a.technic_id) {
                 console.error('status_id and technic_id are required.');
                 return;
             }
 
-            console.log(a);
+            // console.log(a);
             a._method = 'PUT';
 
             // Save the status_id and technic_id fields
