@@ -2,34 +2,85 @@
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Dashboard</h2>
-            <p v-if="errors.length">
-                <b>Por favor, corrija o(s) seguinte(s) erro(s):</b>
-            <ul>
-                <li v-for="error in errors" :key="error">{{ error }}</li>
-            </ul>
-        </template>
+        <div class="p-2 py-6">
+            <dl class="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-0">
+                <div class="px-4 py-5 sm:p-6 bg-green-200">
+                    <dt class="text-base font-normal text-gray-900">Chamados Encerrados</dt>
+                    <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-xl font-semibold text-gray-600">
+                            {{currentMonth}}
+                            <span class="ml-2 text-2xl font-semibold rounded-full py-1 px-1 bg-blue-200 text-indigo-600">{{ currentMonthCount }} </span>
+                            <span class="ml-2 text-sm font-medium text-gray-500">{{previousMonth}} </span>
+                            <span class="ml-2 text-sm font-semibold rounded-full py-1 px-1 bg-blue-200 text-gray-500">{{previousMonthCount}} </span>
+                        </div>
 
-        <div class="p-2 py-12">
+                        <div v-if="currentMonthCount > previousMonthCount" class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
+                            <ArrowUpIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+                            {{monthDifference}}
+                        </div>
+                        <div v-else class="bg-blue-100 text-blue-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
+                            <ArrowDownIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+                            {{monthDifference}}
+                        </div>
+                    </dd>
+                </div>
+
+                <div class="px-4 py-5 sm:p-6 bg-red-300">
+                    <dt class="text-base font-normal text-gray-900">Chamados Abertos</dt>
+                    <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+                            Este Mês {{ currentMonthCount }}
+                            <span class="ml-2 text-sm font-medium text-gray-500">Mês Anterior{{ previousMonthCount }}</span>
+                        </div>
+
+                        <div class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
+                            <ArrowUpIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+
+                            {{monthDifference}}
+                        </div>
+                    </dd>
+                </div>
+
+                <div class="px-4 py-5 sm:p-6 bg-amber-500">
+                    <dt class="text-base font-normal text-gray-900">Chamados Pendentes</dt>
+                    <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+                            Este Mês {{ currentMonthCount }}
+                            <span class="ml-2 text-sm font-medium text-gray-500">Mês Anterior{{ previousMonthCount }}</span>
+                        </div>
+
+                        <div class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
+                            <ArrowUpIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+
+                            {{monthDifference}}
+                        </div>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+
+        <div class="p-2 py-6">
             <div class="px-4 py-8 bg-white rounded rounded-lg shadow-2xl">
                 <div class="grid grid-cols-12 grid-rows-1 gap-3">
                     <div class="col-span-2 p-4 ring-1 ring-red-300 rounded-3xl xl:p-4">
                         <div class="col-span-3 p-4 ring-1 ring-red-300 bg-red-50 rounded-3xl xl:p-4">
-                            <h3 class="text-2xl font-bold text-center">Chamado Abertos</h3>
+                            <h3 class="text-2xl font-bold text-center">Chamados Abertos</h3>
                         </div>
+
                         <div class="inline">
-                            <ul class="grid grid-cols-1">
-                                <li v-for="cal in evenNumbers" :key="cal.id" class="w-full py-2">
-                                    <button v-if="cal.status === 2" @click="create(cal), edit(cal), openModal()"
-                                        class="w-full px-8 py-2 text-red-500 bg-red-100 border border-red-500 rounded rounded-lg btn">{{
-                                            cal.id }} - {{ cal.name }}</button>
-                                    <button v-else-if="cal.status === 3" @click="create(cal), edit(cal), openModal()"
-                                        class="w-full px-8 py-2 text-yellow-500 bg-yellow-100 border border-yellow-500 rounded rounded-lg btn">{{
-                                            cal.id }} - {{ cal.name }}</button>
-                                    <button v-else @click="create(cal), edit(cal), openModal()"
-                                        class="w-full px-8 py-2 text-indigo-500 bg-indigo-100 border border-indigo-500 rounded rounded-lg btn">{{
-                                            cal.id }} - {{ cal.name }}</button>
+                            <!--<ul v-for="cal in evenNumbers" :key="cal.name" class="grid grid-cols-1">-->
+                            <ul v-for="cal in evenNumbers" :key="cal.name" class="grid grid-cols-1">
+                                <li  v-if="cal.status === 2" @click="creat(cal), edit(cal), openModal()" class="w-full py-2">
+                                    <button
+                                        class="w-full px-8 py-2 text-red-500 bg-red-100 border border-red-500 rounded rounded-lg btn">
+                                        {{cal.id }} - {{ cal.name }}
+                                    </button>
+                                </li>
+                                <li  v-if="cal.status === 4" @click="creat(cal), edit(cal), openModal()" class="w-full py-2">
+                                    <button
+                                        class="w-full px-8 py-2 text-orange-500 bg-orange-100 border border-orange-500 rounded rounded-lg btn">
+                                        {{cal.id }} - {{ cal.name }}
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -43,7 +94,7 @@
                                 <li v-for="person in called" :key="person.id"
                                     class="flex flex-col col-span-1 text-center bg-white border divide-y divide-gray-200 rounded-lg shadow-md border-1">
                                     <div class="flex flex-col flex-1 p-8">
-                                        <!-- <img class="flex-shrink-0 w-32 h-32 mx-auto rounded-full" :src="person.imageUrl" alt="" /> -->
+<!--                                         <img class="flex-shrink-0 w-32 h-32 mx-auto rounded-full" :src="person.imageUrl" alt="" />-->
                                         <h2 class="mt-6 text-sm font-medium text-gray-900">{{ person.technic.name }}</h2>
                                         <dl class="flex flex-col justify-between flex-grow mt-1">
                                             <dt class="sr-only">Title</dt>
@@ -51,10 +102,15 @@
                                             <dt class="sr-only">Role</dt>
                                             <dd class="mt-3">
                                                 <span
-                                                    class="px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full">{{
-                                                        person.glpi }}</span>
+                                                    class="px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full">Chamado - {{person.glpi }}
+                                                </span>
                                             </dd>
-                                            <dd class="pt-2 text-sm font-bold text-gray-500"> * {{ person.service }}</dd>
+                                            <dd class="mt-3">
+                                                <span
+                                                    class="px-2 py-1 text-xs font-medium text-gray-800 bg-gray-100 rounded-full"> {{ shortName(person.name)}}
+                                                </span>
+                                            </dd>
+                                            <dd class="pt-2 text-sm text-gray-500"> <b>Problema:</b> {{ person.service }}</dd>
                                         </dl>
                                     </div>
                                     <div>
@@ -86,31 +142,10 @@
                             <h3 class="text-2xl font-bold text-center">Chamados Fechados</h3>
                         </div>
                         <div class="inline">
-                            <ul class="grid grid-cols-1">
-                                <li class="w-full py-2">
-                                    <button
-                                        class="w-full px-8 py-2 text-green-500 bg-green-100 border rounded rounded-lg btn border-emerald-500">ID
-                                        152282</button>
-                                </li>
-                                <li class="w-full py-2">
-                                    <button
-                                        class="w-full px-8 py-2 text-green-500 bg-green-100 border rounded rounded-lg btn border-emerald-500">ID
-                                        152283</button>
-                                </li>
-                                <li class="w-full py-2">
-                                    <button
-                                        class="w-full px-8 py-2 text-green-500 bg-green-100 border rounded rounded-lg btn border-emerald-500">ID
-                                        152232</button>
-                                </li>
-                                <li class="w-full py-2">
-                                    <button
-                                        class="w-full px-8 py-2 text-green-500 bg-green-100 border rounded rounded-lg btn border-emerald-500">ID
-                                        152215</button>
-                                </li>
-                                <li class="w-full py-2">
-                                    <button
-                                        class="w-full px-8 py-2 text-green-500 bg-green-100 border rounded rounded-lg btn border-emerald-500">ID
-                                        152275</button>
+                            <ul v-for="cal in evenReady" :key="cal.name" class="grid grid-cols-1">
+                                <li v-if="cal.status === 6" class="w-full py-2">
+                                    <button class="w-full px-8 py-2 text-green-500 bg-green-100 border rounded rounded-lg btn border-emerald-500">
+                                        {{ cal.id }} - {{ cal.name }}</button>
                                 </li>
                             </ul>
                         </div>
@@ -273,12 +308,15 @@
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import {ArrowUpIcon, ArrowDownIcon} from "heroicons-vue3/solid";
 
 export default {
     name: "EntranceCreate",
     components: {
         AuthenticatedLayout,
         Head,
+        ArrowUpIcon,
+        ArrowDownIcon
     },
     props: ['data', 'status', 'callClose', 'callOpen', 'technic', 'called', 'call', 'parts', 'statusReport'],
 
@@ -301,6 +339,13 @@ export default {
             quantity: 1,
             itemList: [],
             errors: [],
+            currentMonthItems: [],
+            count: 0,
+            previousMonthCount: 0,
+            currentMonthCount: 0,
+            monthDifference: 0,
+            currentMonth: '',
+            previousMonth: '',
         }
     },
     methods: {
@@ -381,7 +426,7 @@ export default {
             // console.log(a);
             a._method = 'PUT';
 
-            console.log(a.id)
+            //console.log(a.id)
 
             // Save the status_id and technic_id fields
             const payload = {
@@ -433,17 +478,163 @@ export default {
             this.reset();
             this.closeModal1();
             // location.reload()
-        }
+        },
+        shortName(name) {
+            // Check if name contains "Maintenance |"
+            if (name.includes("Manutenção |")) {
+                // Split the name by "Maintenance |"
+                const parts = name.split("Manutenção |");
+
+                // Return the second part (index 1)
+                return parts[1].trim(); // trim to remove any leading/trailing spaces
+            }
+
+            // If "Maintenance |" is not found, return the original name
+            return name;
+        },
+
+
     },
     computed: {
         evenNumbers: function () {
             console.log(this.call)
-            return this.call.filter(item => item.name.find("Cha"));
-            // return this.call.filter(item => item.name.startsWith("Chamado"));
-            // return this.call.filter(function (cal) {
-            // return cal.name == "Outro"
+            // Create a set of 'chamado' IDs for faster lookup
+            const chamadoIds = new Set(this.called.map(i => i.id));
+
+            // Filter 'this.call' array based on conditions
+            //const filteredItems = this.call.filter(item => console.log(item)
+            //{
+            //    return
+                //(
+                //    item.name.startsWith("Manutenção") &&
+                //    (item.closedate === null || item.closedate === "")
+                //);
+            //}
+            //);
+
+            // Filter out items that have the same ID as in 'chamado'
+            const result = this.call.filter(item => !chamadoIds.has(item.id));
+
+            return result;
+
+        },
+        evenReady: function () {
+
+            const inputArray = this.call;
+            function filterItemsStartingWithMaintenance(inputArray) {
+                const filteredItems = [];
+
+            //    inputArray.forEach(item =>
+            //    {
+            //        if (item.name.startsWith("Manutenção")) {
+            //            filteredItems.push(item);
+            //        }
+            //    }
+            //    );
+
+                //const test = filteredItems.filter(item => item.closedate != null || item.closedate != "" || item.status <= 4)
+                const test = inputArray.filter(item => item.status <= 4)
+                return test
+                // return filteredItems;
             }
-        }
+
+            // Assuming 'this.call' is an array of objects with a 'name' property
+            const filteredResults = filterItemsStartingWithMaintenance(this.call);
+
+            // Print the filtered results
+            return filteredResults;
+
+        },
+        filterItemsByCurrentMonth: function () {
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth() + 1; // Months are 0-based, so add 1 to get the current month.
+            const currentYear = currentDate.getFullYear();
+
+            const chamadoIds = new Set(this.called.map(i => i.id));
+
+            // Filter 'this.call' array based on conditions
+            const filteredItems = this.call.filter(item => {
+                //return item.name.startsWith("Manutenção");
+                return item.name;
+            });
+
+            // Filter out items that have the same ID as in 'chamado'
+            const result = filteredItems.filter(item => !chamadoIds.has(item.id));
+
+            this.count = result.filter((record) => {
+                const recordDate = new Date(record.closedate);
+                return (
+                    recordDate.getMonth() + 1 === currentMonth &&
+                    recordDate.getFullYear() === currentYear
+                );
+            }).length;
+
+        },
+        calculateCounts: function() {
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth() + 1; // Months are 0-indexed
+            const currentYear = currentDate.getFullYear();
+
+            const previousMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+            const previousYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+
+            const chamadoIds = new Set(this.call.map(i => i.id));
+
+            // Filter 'this.call' array based on conditions
+            const filteredItems = this.call.filter(item => {
+                return (
+                    item.name.startsWith("Manutenção") &&
+                    (item.closedate !== null || item.closedate !== "") &&
+                    (item.status > 5)
+                );
+            });
+
+
+            // Filter out items that have the same ID as in 'chamado'
+            const result = filteredItems.filter(item => console.log(item));
+
+
+            const currentMonthRecords = filteredItems.filter((record) => {
+                //console.log(record)
+                const recordDate = new Date(record.closedate);
+                return (
+                    recordDate.getMonth() + 1 === currentMonth &&
+                    recordDate.getFullYear() === currentYear
+                );
+            });
+
+            const previousMonthRecords = filteredItems.filter((record) => {
+                const recordDate = new Date(record.closedate);
+                return (
+                    recordDate.getMonth() + 1 === previousMonth &&
+                    recordDate.getFullYear() === previousYear
+                );
+            });
+
+            this.currentMonthCount = currentMonthRecords.length;
+            this.previousMonthCount = previousMonthRecords.length;
+            this.monthDifference = this.currentMonthCount - this.previousMonthCount;
+        },
+        updateMonths: function () {
+            const currentDate = new Date();
+            const currentMonthIndex = currentDate.getMonth();
+
+            // Create an array of month names
+            const monthNames = [
+                'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro',
+            ];
+
+            // Set current month name
+            this.currentMonth = monthNames[currentMonthIndex];
+            console.log(this.currentMonth)
+
+            // Calculate previous month
+            const previousMonthIndex = (currentMonthIndex - 1 + 12) % 12;
+            this.previousMonth = monthNames[previousMonthIndex];
+        },
+    },
+
 
 }
 </script>

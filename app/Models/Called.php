@@ -11,7 +11,7 @@ class Called extends Model
 
     public $table = 'called';
 
-    protected $fillable = ['id', 'glpi', 'pim', 'name', 'phone', 'service', 'status_id', 'technic_id'];
+    protected $fillable = ['id', 'glpi', 'pim', 'name', 'phone', 'service', 'problem', 'status_id', 'technic_id'];
 
     protected $with = ['status', 'technic', 'pmStore', 'islandStore'];
 

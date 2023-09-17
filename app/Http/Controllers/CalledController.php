@@ -26,7 +26,7 @@ class CalledController extends Controller
     {
         $callClose = Called::where('status_id', '>', 4)->get();
         $callOpen = Called::where('status_id', '<', 5)->where('status_id', '!=', 2)->limit(10)->get();
-        $called = Called::where('status_id', 2)->get();
+        $called = Called::where('status_id', 1)->get();
         $status = Status::where('id', '>', 1)->where('id', '<', 5)->get();
         $statusReport = Status::where('id', '>', 4)->where('id', '<', 7)->get();
         $technic = Technic::all();

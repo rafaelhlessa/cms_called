@@ -19,4 +19,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('tickets', [AuthController::class, 'getTickets']);
+//Route::middleware('auth')->group(function () {
+    Route::middleware(['auth', 'verified'])->get('tickets', [AuthController::class, 'getTickets']);
+
+    Route::middleware(['auth', 'verified'])->get('getLogin', [AuthController::class, 'getLogin']);
+
+    Route::middleware(['auth', 'verified'])->get('/loginGlpi', [AuthController::class, 'loginToGLPI']);
+//});
+

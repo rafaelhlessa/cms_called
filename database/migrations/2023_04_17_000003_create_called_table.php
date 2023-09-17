@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('pim', 45)->nullable();
             $table->string('name', 45)->nullable();
             $table->string('phone', 45)->nullable();
+            $table->text('problem');
             $table->text('service');
             $table->boolean('parts');
 
