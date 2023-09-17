@@ -73,7 +73,7 @@ class AuthController extends Controller
             'order' => 'DESC',
             'range' => '0-10000',
             //'start'      => 0,      // start with first item (index 0)
-            //'is_deleted' => 0,      // item is not deleted
+            'is_deleted' => 0,      // item is not deleted
             //'sort'       => 1,      // sort by name
             //'order'      => 'DESC',  // sort direction
             //'reset'      => 'reset',// reset search flag
