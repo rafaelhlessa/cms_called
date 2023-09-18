@@ -71,34 +71,31 @@ class AuthController extends Controller
             'Session-Token' => Auth::user()->sessiontoken,
         ])->withBasicAuth('933270', 'RL327#Hs')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/search/Ticket/?',[
             'order' => 'DESC',
-            'range' => '0-10000',
-            //'start'      => 0,      // start with first item (index 0)
-            'is_deleted' => 0,      // item is not deleted
-            //'sort'       => 1,      // sort by name
+            'range' => '0-30000',
+//            'start'      => 0,      // start with first item (index 0)
+//            'is_deleted' => 0,      // item is not deleted
+//            'sort'       => 1,      // sort by name
             //'order'      => 'DESC',  // sort direction
             //'reset'      => 'reset',// reset search flag
-           'criteria'   => [
+            'criteria'   => [
                 [
                     'field'      => 8,// field index in search options
                     'itemtype'   => 'Ticket',
                     'searchtype' => 'contains',  // type of search
                     'value'      => 'Manutenção',         // value to search
                 ],
-               [
-                   'link'=>       'AND',
-                   'itemtype'=>   'Ticket',
-                   'field'=>      12,
-                   'searchtype'=> 'lessthan',
-                   'value'=>      6
-               ]
+//                [
+//                    'link'=>       'AND',
+//                    'itemtype'=>   'Ticket',
+//                    'field'=>      12,
+//                    'searchtype'=> 'lessthan',
+//                    'value'=>      5
+//                ]
             ],
 
         ]);
 
         $tickets = json_decode($login->getBody(), true);
-        dd($tickets['data']);
-        //dd($tickets);
-        //$tickets = json_decode($login->getBody(), JSON_FORCE_OBJECT);
 
         $status = Status::where('id', '!=', 2)->where('id', '<', 5)->get();
         $technic = Technic::all();
@@ -108,9 +105,9 @@ class AuthController extends Controller
         $called = Called::where('status_id', 1)->get();
 
 
-            return Inertia::render('Cadastros',
+        return Inertia::render('Cadastros',
             [
-                'call' => $tickets,
+                'call' => $tickets['data'],
                 'status' => $status,
                 'technic' => $technic,
                 'statusReport' => $statusReport,
@@ -125,20 +122,21 @@ class AuthController extends Controller
         $pim = explode("PIM - ", $request->name);
 
         // Define the separators
-            $startSeparator = "&lt;/b&gt;&lt;p&gt;";
-            $endSeparator = "&lt;/p&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;12)";
+        $startSeparator = "10) Observações Adicionais : &lt;/b&gt;&lt;p&gt;";
+        $endSeparator = "&lt;/p&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;11)";
 
         // Split the string into an array based on the start separator
-            $parts = explode($startSeparator, $request);
+        $parts = explode($startSeparator, $request['problem']);
 
         // Get the part after the start separator
-            $partAfterStart = end($parts);
+        $partAfterStart = end($parts);
 
         // Split the part after the start separator based on the end separator
-            $finalParts = explode($endSeparator, $partAfterStart);
+        $finalParts = explode($endSeparator, $partAfterStart);
+
 
         // Get the part before the end separator
-            $desiredText = $finalParts[0];
+        $desiredText = $finalParts[0];
 
 
         Called::create([

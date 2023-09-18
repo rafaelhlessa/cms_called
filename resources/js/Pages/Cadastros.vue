@@ -2,21 +2,21 @@
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <div class="p-2 py-6">
-            <dl class="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-0">
+        <div class="p-40 py-6">
+            <dl class="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow lg:grid-cols-3 md:divide-x md:divide-y-0 border border-gray-300">
                 <div class="px-4 py-5 sm:p-6 bg-green-200">
                     <dt class="text-base font-normal text-gray-900">Chamados Encerrados</dt>
                     <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
                         <div class="flex items-baseline text-xl font-semibold text-gray-600">
                             {{currentMonth}}
-                            <span class="ml-2 text-2xl font-semibold rounded-full py-1 px-1 bg-blue-200 text-indigo-600">{{ currentMonthCount }} </span>
+                            <span class="ml-2 text-2xl font-semibold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-600">{{ currentMonthCount }} </span>
                             <span class="ml-2 text-sm font-medium text-gray-500">{{previousMonth}} </span>
-                            <span class="ml-2 text-sm font-semibold rounded-full py-1 px-1 bg-blue-200 text-gray-500">{{previousMonthCount}} </span>
+                            <span class="ml-2 text-sm font-semibold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-500">{{previousMonthCount}} </span>
                         </div>
 
                         <div v-if="currentMonthCount > previousMonthCount" class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
                             <ArrowUpIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
-                            {{monthDifference}}
+                            +{{monthDifference}}
                         </div>
                         <div v-else class="bg-blue-100 text-blue-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
                             <ArrowDownIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
@@ -28,15 +28,20 @@
                 <div class="px-4 py-5 sm:p-6 bg-red-300">
                     <dt class="text-base font-normal text-gray-900">Chamados Abertos</dt>
                     <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-                        <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
-                            Este Mês {{ currentMonthCount }}
-                            <span class="ml-2 text-sm font-medium text-gray-500">Mês Anterior{{ previousMonthCount }}</span>
+                        <div class="flex items-baseline text-xl font-semibold text-gray-600">
+                            {{currentMonth}}
+                            <span class="ml-2 text-2xl font-semibold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-600">{{ currentMonthCountOpen }} </span>
+                            <span class="ml-2 text-sm font-medium text-gray-500">{{previousMonth}} </span>
+                            <span class="ml-2 text-sm font-semibold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-500">{{previousMonthCountOpen}} </span>
                         </div>
 
-                        <div class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
+                        <div v-if="currentMonthCountOpen > previousMonthCountOpen" class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
                             <ArrowUpIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
-
-                            {{monthDifference}}
+                            +{{monthDifferenceOpen}}
+                        </div>
+                        <div v-else class="bg-blue-100 text-blue-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
+                            <ArrowDownIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-blue-500" aria-hidden="true" />
+                            {{monthDifferenceOpen}}
                         </div>
                     </dd>
                 </div>
@@ -44,15 +49,20 @@
                 <div class="px-4 py-5 sm:p-6 bg-amber-500">
                     <dt class="text-base font-normal text-gray-900">Chamados Pendentes</dt>
                     <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-                        <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
-                            Este Mês {{ currentMonthCount }}
-                            <span class="ml-2 text-sm font-medium text-gray-500">Mês Anterior{{ previousMonthCount }}</span>
+                        <div class="flex items-baseline text-xl font-semibold text-gray-600">
+                            {{currentMonth}}
+                            <span class="ml-2 text-2xl font-semibold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-600">{{ currentMonthCountPend }} </span>
+                            <span class="ml-2 text-sm font-medium text-gray-500">{{previousMonth}} </span>
+                            <span class="ml-2 text-sm font-semibold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-500">{{previousMonthCountPend}} </span>
                         </div>
 
-                        <div class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
+                        <div v-if="currentMonthCountPend > previousMonthCountPend" class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
                             <ArrowUpIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
-
-                            {{monthDifference}}
+                            +{{monthDifferencePend}}
+                        </div>
+                        <div v-else class="bg-blue-100 text-blue-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
+                            <ArrowDownIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+                            {{monthDifferencePend}}
                         </div>
                     </dd>
                 </div>
@@ -94,7 +104,7 @@
                                 <li v-for="person in called" :key="person.id"
                                     class="flex flex-col col-span-1 text-center bg-white border divide-y divide-gray-200 rounded-lg shadow-md border-1">
                                     <div class="flex flex-col flex-1 p-8">
-<!--                                         <img class="flex-shrink-0 w-32 h-32 mx-auto rounded-full" :src="person.imageUrl" alt="" />-->
+                                        <!--                                         <img class="flex-shrink-0 w-32 h-32 mx-auto rounded-full" :src="person.imageUrl" alt="" />-->
                                         <h2 class="mt-6 text-sm font-medium text-gray-900">{{ person.technic.name }}</h2>
                                         <dl class="flex flex-col justify-between flex-grow mt-1">
                                             <dt class="sr-only">Title</dt>
@@ -116,7 +126,7 @@
                                     <div>
                                         <div class="flex -mt-px divide-x divide-gray-200">
                                             <button @click="edit1(person), openModal1()"
-                                                class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3">
+                                                    class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3">
                                                 Laudo
                                             </button>
                                             <!-- <div class="flex flex-1 w-0">
@@ -164,30 +174,30 @@
                 <!-- This element is to trick the browser into centering the modal contents. -->
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>​
                 <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                    role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                     role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                     <form>
                         <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
                             <div class="rounded rounded-md ring-1 ring-gray-400">
                                 <div class="grid max-w-2xl grid-cols-1 p-2 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                                     <div class="sm:col-span-3">
                                         <label for="status"
-                                            class="block text-sm font-medium leading-6 text-gray-900">Técnico</label>
+                                               class="block text-sm font-medium leading-6 text-gray-900">Técnico</label>
                                         <div class="mt-2">
                                             <select id="technic_id" name="technic_id" v-model="form.technic_id"
-                                                class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                                    class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                                 <option v-for="option in technic" :key="option.id" :value="option.id">{{
-                                                    option.name }}</option>
+                                                        option.name }}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="sm:col-span-3">
                                         <label for="status"
-                                            class="block text-sm font-medium leading-6 text-gray-900">Status</label>
+                                               class="block text-sm font-medium leading-6 text-gray-900">Status</label>
                                         <div class="mt-2">
                                             <select id="status_id" name="status_id" v-model="form.status_id"
-                                                class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                                    class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                                 <option v-for="option in status" :key="option.id" :value="option.id">{{
-                                                    option.situation }}</option>
+                                                        option.situation }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -195,9 +205,9 @@
                                 <div
                                     class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                                     <button @click="closeModal()" type="button"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
                                     <button @click="update(form), checkForm()" type="button"
-                                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Atribuir</button>
+                                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Atribuir</button>
                                 </div>
                             </div>
                         </div>
@@ -216,7 +226,7 @@
                 <!-- This element is to trick the browser into centering the modal contents. -->
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>​
                 <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                    role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                     role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                     <form @submit.prevent>
                         <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
                             <div class="rounded rounded-md ring-1 ring-gray-400">
@@ -224,16 +234,16 @@
                                     <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                         <div class="col-span-full">
                                             <label for="solution"
-                                                class="block text-sm font-medium leading-6 text-gray-900">Serviços</label>
+                                                   class="block text-sm font-medium leading-6 text-gray-900">Serviços</label>
                                             <div class="mt-2">
                                                 <textarea v-model="form.solution" name="solution" id="solution"
-                                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                                                          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                             </div>
                                         </div>
 
                                         <div class="pb-4">
                                             <button @click.prevent="partsOpen()"
-                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                                 Peças
                                             </button>
                                         </div>
@@ -244,10 +254,10 @@
                                         <div class="sm:col-span-3" v-if="partsOn">
                                             <label for="menu">Escolha um item:</label>
                                             <select id="menu" v-model="selectedItem"
-                                                class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                                    class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                                 <option value="">Escolha a peça</option>
                                                 <option v-for="(item, index) in parts" :key="index" :value="item.id">{{
-                                                    item.description }}
+                                                        item.description }}
                                                     (PM-{{ item.pm_store !== null ? item.pm_store.amount : 'N/A' }} |
                                                     Ilha-{{ item.island_store !== null ? item.island_store.amount : 'N/A'
                                                     }})
@@ -257,14 +267,14 @@
                                         <div class="sm:col-span-3" v-if="partsOn">
                                             <label for="quantity">Quantidade:</label>
                                             <input type="number" id="quantity" v-model.number="quantity" min="1"
-                                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                             <button @click.prevent="addItem">Adicionar Item</button>
                                         </div>
 
                                         <div id="target" class="sm:col-span-6" v-if="partsOn">
                                             <ul>
                                                 <div v-if="partsOn"
-                                                    class="p-2 rounded rounded-md sm:col-span-6 ring-1 ring-gray-400">
+                                                     class="p-2 rounded rounded-md sm:col-span-6 ring-1 ring-gray-400">
                                                     <li v-for="(item, index) in itemList" :key="index">
                                                         {{ item.name }} - Quantidade: {{ item.quantity }}
                                                     </li>
@@ -274,12 +284,12 @@
 
                                         <div class="col-span-full">
                                             <label for="status"
-                                                class="block text-sm font-medium leading-6 text-gray-900">Status</label>
+                                                   class="block text-sm font-medium leading-6 text-gray-900">Status</label>
                                             <div class="mt-2">
                                                 <select id="status_id" name="status_id" v-model="form.status_id"
-                                                    class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                                        class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                                     <option v-for="option in statusReport" :key="option.id"
-                                                        :value="option.id">{{ option.situation }}</option>
+                                                            :value="option.id">{{ option.situation }}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -289,9 +299,9 @@
                                 <div
                                     class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                                     <button @click="closeModal1()" type="button"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
                                     <button @click="report(form)" type="button"
-                                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Atribuir</button>
+                                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Atribuir</button>
                                 </div>
                             </div>
                         </div>
@@ -346,6 +356,14 @@ export default {
             monthDifference: 0,
             currentMonth: '',
             previousMonth: '',
+            previousMonthCountOpen: 0,
+            currentMonthCountOpen: 0,
+            monthDifferenceOpen: 0,
+            previousMonthCountPend: 0,
+            currentMonthCountPend: 0,
+            monthDifferencePend: 0,
+            // currentMonthOpen: '',
+            // previousMonth: '',
         }
     },
     methods: {
@@ -497,24 +515,35 @@ export default {
     },
     computed: {
         evenNumbers: function () {
-            console.log(this.call)
             // Create a set of 'chamado' IDs for faster lookup
             const chamadoIds = new Set(this.called.map(i => i.id));
 
-            // Filter 'this.call' array based on conditions
-            //const filteredItems = this.call.filter(item => console.log(item)
-            //{
-            //    return
-                //(
-                //    item.name.startsWith("Manutenção") &&
-                //    (item.closedate === null || item.closedate === "")
-                //);
-            //}
-            //);
+            const chamado = new Set(this.call.map((i) => ({
+                'name': i[1],
+                'id': i[2],
+                'group': i[8],
+                'status': i[12],
+                'opendate': i[15],
+                'closedate': i[16],
+                'problem': i[21],
+            })));
+
+            const filteredItems = [];
+
+               chamado.forEach(item => {
+                   if (item.name.startsWith("Manutenção") &&
+                       (item.closedate === null || item.closedate === ""))  {
+                       filteredItems.push(item);
+                   }
+               });
 
             // Filter out items that have the same ID as in 'chamado'
-            const result = this.call.filter(item => !chamadoIds.has(item.id));
-
+            const resul = filteredItems.filter(item => !chamadoIds.has(item.id));
+            const result = resul.sort(function (a, b) {
+                // console.log(b.id)
+                return b.id - a.id;
+            })
+            // console.log(resul)
             return result;
 
         },
@@ -524,13 +553,13 @@ export default {
             function filterItemsStartingWithMaintenance(inputArray) {
                 const filteredItems = [];
 
-            //    inputArray.forEach(item =>
-            //    {
-            //        if (item.name.startsWith("Manutenção")) {
-            //            filteredItems.push(item);
-            //        }
-            //    }
-            //    );
+                //    inputArray.forEach(item =>
+                //    {
+                //        if (item.name.startsWith("Manutenção")) {
+                //            filteredItems.push(item);
+                //        }
+                //    }
+                //    );
 
                 //const test = filteredItems.filter(item => item.closedate != null || item.closedate != "" || item.status <= 4)
                 const test = inputArray.filter(item => item.status <= 4)
@@ -552,10 +581,29 @@ export default {
 
             const chamadoIds = new Set(this.called.map(i => i.id));
 
+            const chamado = new Set(this.call.map((i) => ({
+                'name': i[1],
+                'id': i[2],
+                'group': i[8],
+                'status': i[12],
+                'opendate': i[15],
+                'closedate': i[16],
+                'problem': i[21],
+            })));
+
             // Filter 'this.call' array based on conditions
-            const filteredItems = this.call.filter(item => {
-                //return item.name.startsWith("Manutenção");
-                return item.name;
+            // const filteredItems = this.call.filter(item => {
+            //     //return item.name.startsWith("Manutenção");
+            //     return item.name;
+            // });
+
+            const filteredItems = [];
+
+            chamado.forEach(item => {
+                if (item.name.startsWith("Manutenção") &&
+                    (item.closedate === null || item.closedate === ""))  {
+                    filteredItems.push(item);
+                }
             });
 
             // Filter out items that have the same ID as in 'chamado'
@@ -580,26 +628,68 @@ export default {
 
             const chamadoIds = new Set(this.call.map(i => i.id));
 
-            // Filter 'this.call' array based on conditions
-            const filteredItems = this.call.filter(item => {
-                return (
-                    item.name.startsWith("Manutenção") &&
+            const chamado = new Set(this.call.map((i) => ({
+                'name': i[1],
+                'id': i[2],
+                'group': i[8],
+                'status': i[12],
+                'opendate': i[15],
+                'closedate': i[16],
+                'problem': i[21],
+            })));
+
+            const filteredItems = [];
+
+            chamado.forEach(item => {
+                const itemDate = new Date(item.closedate);
+                if (item.name.startsWith("Manutenção") &&
                     (item.closedate !== null || item.closedate !== "") &&
-                    (item.status > 5)
-                );
+                    (item.status > 4) &&
+                    (item.status < 7)) {
+                    filteredItems.push(item);
+                }
             });
 
+            const filteredItemsOpen = [];
 
-            // Filter out items that have the same ID as in 'chamado'
-            const result = filteredItems.filter(item => console.log(item));
+            chamado.forEach(item => {
+                const openDate = new Date(item.opendate);
+                if (item.name.startsWith("Manutenção")) {
+                    filteredItemsOpen.push(item);
+                }
+            });
 
+            const filteredItemsPend = [];
+
+            chamado.forEach(item => {
+                if (item.name.startsWith("Manutenção") &&
+                    (item.status === 4)){
+                    filteredItemsPend.push(item);
+                }
+            });
 
             const currentMonthRecords = filteredItems.filter((record) => {
-                //console.log(record)
                 const recordDate = new Date(record.closedate);
                 return (
                     recordDate.getMonth() + 1 === currentMonth &&
                     recordDate.getFullYear() === currentYear
+                );
+            });
+
+            const currentMonthRecordsOpen = filteredItemsOpen.filter((record) => {
+                const openDate = new Date(record.opendate);
+                return (
+                    openDate.getMonth() + 1 === currentMonth &&
+                    openDate.getFullYear() === currentYear
+                );
+            });
+
+
+            const currentMonthRecordsPend = filteredItemsPend.filter((record) => {
+                const pendDate = new Date(record.opendate);
+                return (
+                    pendDate.getMonth() + 1 === currentMonth &&
+                    pendDate.getFullYear() === currentYear
                 );
             });
 
@@ -611,9 +701,33 @@ export default {
                 );
             });
 
+            const previousMonthRecordsOpen = filteredItemsOpen.filter((record) => {
+                const openDate = new Date(record.opendate);
+                return (
+                    openDate.getMonth() + 1 === previousMonth &&
+                    openDate.getFullYear() === previousYear
+                );
+            });
+
+            const previousMonthRecordsPend = filteredItemsPend.filter((record) => {
+                const pendDate = new Date(record.opendate);
+                return (
+                    pendDate.getMonth() + 1 === previousMonth &&
+                    pendDate.getFullYear() === previousYear
+                );
+            });
+
             this.currentMonthCount = currentMonthRecords.length;
             this.previousMonthCount = previousMonthRecords.length;
             this.monthDifference = this.currentMonthCount - this.previousMonthCount;
+
+            this.currentMonthCountOpen = currentMonthRecordsOpen.length;
+            this.previousMonthCountOpen = previousMonthRecordsOpen.length;
+            this.monthDifferenceOpen = this.currentMonthCountOpen - this.previousMonthCountOpen;
+
+            this.currentMonthCountPend = currentMonthRecordsPend.length;
+            this.previousMonthCountPend = previousMonthRecordsPend.length;
+            this.monthDifferencePend = this.currentMonthCountPend - this.previousMonthCountPend;
         },
         updateMonths: function () {
             const currentDate = new Date();

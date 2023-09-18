@@ -52,7 +52,7 @@ Route::get('/test', function () {
 // Route::get('/cadastros', function () {
 //     return Inertia::render('Cadastros');
 // })->middleware(['auth', 'verified'])->name('cadastros');
-Route::get('/cadastros', [AuthController::class, 'getTickets'])->name('cadastros');
+//Route::get('/cadastros', [AuthController::class, 'getTickets'])->name('cadastros');
 Route::get('/cadastros', [AuthController::class, 'getTickets'])->name('cadastros');
 Route::post('cad', [AuthController::class, 'create']);
 
