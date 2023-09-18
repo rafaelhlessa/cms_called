@@ -113,8 +113,37 @@ class CalledController extends Controller
             'technic_id' => ['required'],
         ]);
 
+        if ($request->close == 1) {
+            Called::findOrFail($id)->update([
+                'status_id' => $calledit['status_id'],
+                'technic_id' => $calledit['technic_id'],
+            ]);
+        }else{
+            Called::findOrFail($id)->update([
+                'status_id' => $calledit['status_id'],
+                'technic_id' => $calledit['technic_id'],
+            ]);
+            return redirect('/called')->with(['message' => 'Alterado status do equipamento!']);
+        }
+
+//        Called::findOrFail($id)->update([
+//            'status_id' => $calledit['status_id'],
+//            'technic_id' => $calledit['technic_id'],
+//        ]);
+//        return redirect('/called')->with(['message' => 'Alterado status do equipamento!']);
+
+    }
+
+    public function closeCall(Request $request, $id)
+    {
+
+        $calledit = $request->validate([
+            'status_id' => ['required'],
+            'technic_id' => ['required'],
+        ]);
+
         Called::findOrFail($id)->update([
-            'status_id' => $calledit['status_id'],
+            'status_id' => 6,
             'technic_id' => $calledit['technic_id'],
         ]);
         return redirect('/called')->with(['message' => 'Alterado status do equipamento!']);

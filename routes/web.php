@@ -32,6 +32,7 @@ Route::get('/', function () {
 Route::get('/dashboard',[CalledController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('call', CalledController::class);
+Route::put('closecall', [CalledController::class, 'closeCall']);
 Route::get('/called', [CalledController::class, 'index'])->name('called');
 Route::post('reportCall', [CalledController::class, 'report']);
 

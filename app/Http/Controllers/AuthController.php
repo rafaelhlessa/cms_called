@@ -70,27 +70,16 @@ class AuthController extends Controller
             'App-Token' => 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1',
             'Session-Token' => Auth::user()->sessiontoken,
         ])->withBasicAuth('933270', 'RL327#Hs')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/search/Ticket/?',[
-            'order' => 'DESC',
-            'range' => '0-30000',
-//            'start'      => 0,      // start with first item (index 0)
+            'order' => 'DESC',      // sort direction
+            'range' => '0-30000',   // range
             'is_deleted' => 0,      // item is not deleted
-//            'sort'       => 1,      // sort by name
-            //'order'      => 'DESC',  // sort direction
-            //'reset'      => 'reset',// reset search flag
             'criteria'   => [
                 [
-                    'field'      => 8,// field index in search options
+                    'field'      => 8,              // field index in search options
                     'itemtype'   => 'Ticket',
-                    'searchtype' => 'contains',  // type of search
-                    'value'      => 'Manutenção',         // value to search
+                    'searchtype' => 'contains',     // type of search
+                    'value'      => 'Manutenção',   // value to search
                 ],
-//                [
-//                    'link'=>       'AND',
-//                    'itemtype'=>   'Ticket',
-//                    'field'=>      12,
-//                    'searchtype'=> 'lessthan',
-//                    'value'=>      5
-//                ]
             ],
 
         ]);

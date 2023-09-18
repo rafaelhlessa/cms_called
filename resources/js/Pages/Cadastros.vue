@@ -101,10 +101,8 @@
                         </div>
                         <div class="flex items-center justify-between pt-3 gap-x-4">
                             <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                                <li v-for="person in called" :key="person.id"
-                                    class="flex flex-col col-span-1 text-center bg-white border divide-y divide-gray-200 rounded-lg shadow-md border-1">
+                                <li v-for="person in called" :key="person.id" class="flex flex-col col-span-1 text-center bg-white border divide-y divide-gray-200 rounded-lg shadow-md border-1">
                                     <div class="flex flex-col flex-1 p-8">
-                                        <!--                                         <img class="flex-shrink-0 w-32 h-32 mx-auto rounded-full" :src="person.imageUrl" alt="" />-->
                                         <h2 class="mt-6 text-sm font-medium text-gray-900">{{ person.technic.name }}</h2>
                                         <dl class="flex flex-col justify-between flex-grow mt-1">
                                             <dt class="sr-only">Title</dt>
@@ -125,17 +123,19 @@
                                     </div>
                                     <div>
                                         <div class="flex -mt-px divide-x divide-gray-200">
-                                            <button @click="edit1(person), openModal1()"
-                                                    class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3">
-                                                Laudo
-                                            </button>
-                                            <!-- <div class="flex flex-1 w-0">
-                                                <a
-                                                    class="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-semibold text-gray-900 border border-transparent rounded-bl-lg gap-x-3">
-                                                    Fechar
-                                                </a>
+                                            <div class="flex flex-1 w-0">
+                                                <button @click="edit1(person), openModal1()"
+                                                        class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3">
+                                                    Ver
+                                                </button>
                                             </div>
-                                            <div class="flex flex-1 w-0 -ml-px"> -->
+                                            <div class="flex flex-1 w-0">
+                                                <button @click="closeCall(person)"
+                                                        class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-semibold text-gray-900 border border-transparent rounded-br-lg gap-x-3">
+                                                    Fechar
+                                                </button>
+                                            </div>
+<!--                                            <div class="flex flex-1 w-0 -ml-px">-->
                                             <!-- <a :href="route('users.edit', police.id)" type="button"  class="p-2 font-medium text-red-600 bg-white border border-gray-200 rounded-md hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2">
                                                         Laudo<span class="sr-only">, {{ police.id }}</span>
                                                 </a> -->
@@ -185,8 +185,9 @@
                                         <div class="mt-2">
                                             <select id="technic_id" name="technic_id" v-model="form.technic_id"
                                                     class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                                <option v-for="option in technic" :key="option.id" :value="option.id">{{
-                                                        option.name }}</option>
+                                                <option v-for="option in technic" :key="option.id" :value="option.id">
+                                                    {{ option.name }}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -196,8 +197,9 @@
                                         <div class="mt-2">
                                             <select id="status_id" name="status_id" v-model="form.status_id"
                                                     class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                                <option v-for="option in status" :key="option.id" :value="option.id">{{
-                                                        option.situation }}</option>
+                                                <option v-for="option in status" :key="option.id" :value="option.id">
+                                                    {{ option.situation }}
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -217,6 +219,98 @@
         </div>
 
         <!-- Modal Laudo Técnico -->
+<!--        <div class="fixed inset-0 z-10 overflow-y-auto ease-out duration-400" v-if="isOpen1">-->
+<!--            <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">-->
+
+<!--                <div class="fixed inset-0 transition-opacity">-->
+<!--                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; This element is to trick the browser into centering the modal contents. &ndash;&gt;-->
+<!--                <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>​-->
+<!--                <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"-->
+<!--                     role="dialog" aria-modal="true" aria-labelledby="modal-headline">-->
+<!--                    <form @submit.prevent>-->
+<!--                        <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">-->
+<!--                            <div class="rounded rounded-md ring-1 ring-gray-400">-->
+<!--                                <div class="px-4 py-6 sm:p-8">-->
+<!--                                    <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">-->
+<!--                                        <div class="col-span-full">-->
+<!--                                            <label for="solution"-->
+<!--                                                   class="block text-sm font-medium leading-6 text-gray-900">Serviços</label>-->
+<!--                                            <div class="mt-2">-->
+<!--                                                <textarea v-model="form.solution" name="solution" id="solution"-->
+<!--                                                          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="pb-4">-->
+<!--                                            <button @click.prevent="partsOpen()"-->
+<!--                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">-->
+<!--                                                Peças-->
+<!--                                            </button>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="sm:col-span-6" v-if="partsOn">-->
+
+<!--                                        </div>-->
+<!--                                        <div class="sm:col-span-3" v-if="partsOn">-->
+<!--                                            <label for="menu">Escolha um item:</label>-->
+<!--                                            <select id="menu" v-model="selectedItem"-->
+<!--                                                    class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">-->
+<!--                                                <option value="">Escolha a peça</option>-->
+<!--                                                <option v-for="(item, index) in parts" :key="index" :value="item.id">{{ item.description }}-->
+<!--                                                    (PM-{{ item.pm_store !== null ? item.pm_store.amount : 'N/A' }} | Ilha-{{ item.island_store !== null ? item.island_store.amount : 'N/A' }})-->
+<!--                                                </option>-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+<!--                                        <div class="sm:col-span-3" v-if="partsOn">-->
+<!--                                            <label for="quantity">Quantidade:</label>-->
+<!--                                            <input type="number" id="quantity" v-model.number="quantity" min="1"-->
+<!--                                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">-->
+<!--                                            <button @click.prevent="addItem">Adicionar Item</button>-->
+<!--                                        </div>-->
+
+<!--                                        <div id="target" class="sm:col-span-6" v-if="partsOn">-->
+<!--                                            <ul>-->
+<!--                                                <div v-if="partsOn"-->
+<!--                                                     class="p-2 rounded rounded-md sm:col-span-6 ring-1 ring-gray-400">-->
+<!--                                                    <li v-for="(item, index) in itemList" :key="index">-->
+<!--                                                        {{ item.name }} - Quantidade: {{ item.quantity }}-->
+<!--                                                    </li>-->
+<!--                                                </div>-->
+<!--                                            </ul>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="col-span-full">-->
+<!--                                            <label for="status"-->
+<!--                                                   class="block text-sm font-medium leading-6 text-gray-900">Status</label>-->
+<!--                                            <div class="mt-2">-->
+<!--                                                <select id="status_id" name="status_id" v-model="form.status_id"-->
+<!--                                                        class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">-->
+<!--                                                    <option v-for="option in statusReport" :key="option.id"-->
+<!--                                                            :value="option.id">{{ option.situation }}</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div-->
+<!--                                    class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">-->
+<!--                                    <button @click="closeModal1()" type="button"-->
+<!--                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>-->
+<!--                                    <button @click="report(form)" type="button"-->
+<!--                                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Atribuir</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <!-- Modal Chamado -->
         <div class="fixed inset-0 z-10 overflow-y-auto ease-out duration-400" v-if="isOpen1">
             <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
 
@@ -225,88 +319,26 @@
                 </div>
                 <!-- This element is to trick the browser into centering the modal contents. -->
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>​
-                <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-3xl shadow-xl sm:my-4 sm:align-middle sm:max-w-lg sm:w-full"
                      role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                    <form @submit.prevent>
-                        <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
-                            <div class="rounded rounded-md ring-1 ring-gray-400">
-                                <div class="px-4 py-6 sm:p-8">
-                                    <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                                        <div class="col-span-full">
-                                            <label for="solution"
-                                                   class="block text-sm font-medium leading-6 text-gray-900">Serviços</label>
-                                            <div class="mt-2">
-                                                <textarea v-model="form.solution" name="solution" id="solution"
-                                                          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                                            </div>
-                                        </div>
-
-                                        <div class="pb-4">
-                                            <button @click.prevent="partsOpen()"
-                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                Peças
-                                            </button>
-                                        </div>
-
-                                        <div class="sm:col-span-6" v-if="partsOn">
-
-                                        </div>
-                                        <div class="sm:col-span-3" v-if="partsOn">
-                                            <label for="menu">Escolha um item:</label>
-                                            <select id="menu" v-model="selectedItem"
-                                                    class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                                <option value="">Escolha a peça</option>
-                                                <option v-for="(item, index) in parts" :key="index" :value="item.id">{{
-                                                        item.description }}
-                                                    (PM-{{ item.pm_store !== null ? item.pm_store.amount : 'N/A' }} |
-                                                    Ilha-{{ item.island_store !== null ? item.island_store.amount : 'N/A'
-                                                    }})
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="sm:col-span-3" v-if="partsOn">
-                                            <label for="quantity">Quantidade:</label>
-                                            <input type="number" id="quantity" v-model.number="quantity" min="1"
-                                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                            <button @click.prevent="addItem">Adicionar Item</button>
-                                        </div>
-
-                                        <div id="target" class="sm:col-span-6" v-if="partsOn">
-                                            <ul>
-                                                <div v-if="partsOn"
-                                                     class="p-2 rounded rounded-md sm:col-span-6 ring-1 ring-gray-400">
-                                                    <li v-for="(item, index) in itemList" :key="index">
-                                                        {{ item.name }} - Quantidade: {{ item.quantity }}
-                                                    </li>
-                                                </div>
-                                            </ul>
-                                        </div>
-
-                                        <div class="col-span-full">
-                                            <label for="status"
-                                                   class="block text-sm font-medium leading-6 text-gray-900">Status</label>
-                                            <div class="mt-2">
-                                                <select id="status_id" name="status_id" v-model="form.status_id"
-                                                        class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                                    <option v-for="option in statusReport" :key="option.id"
-                                                            :value="option.id">{{ option.situation }}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div
-                                    class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <div>
+                        <div class="flex flex-col flex-1 p-4">
+                            <div class="flex flex-col items-start gap-x-8 gap-y-6 rounded-3xl p-4 ring-1 ring-gray-900/10 sm:gap-y-10 sm:p-10 lg:col-span-2 lg:flex-row lg:items-center">
+                                <div class="lg:min-w-0 lg:flex-1">
+                                    <h2 class="text-lg font-semibold leading-8 tracking-tight text-indigo-600">Chamado - ID {{callItem.glpi}}</h2>
+                                    <hr>
+                                    <p class="text-lg font-semibold leading-8 tracking-tight text-gray-600">{{shortName(callItem.name)}}</p>
+                                    <p class="mt-1 text-base leading-7 text-gray-600">{{ callItem.technic.name }}</p>
+                                    <p class="mt-1 text-base leading-7 text-gray-600">{{ callItem.service }}</p>
+                                    <hr>
                                     <button @click="closeModal1()" type="button"
-                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cancelar</button>
-                                    <button @click="report(form)" type="button"
-                                            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Atribuir</button>
+                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Sair
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -318,7 +350,7 @@
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import {ArrowUpIcon, ArrowDownIcon} from "heroicons-vue3/solid";
+import {ArrowUpIcon, ArrowDownIcon, CheckIcon} from "heroicons-vue3/solid";
 
 export default {
     name: "EntranceCreate",
@@ -326,7 +358,8 @@ export default {
         AuthenticatedLayout,
         Head,
         ArrowUpIcon,
-        ArrowDownIcon
+        ArrowDownIcon,
+        CheckIcon
     },
     props: ['data', 'status', 'callClose', 'callOpen', 'technic', 'called', 'call', 'parts', 'statusReport'],
 
@@ -345,6 +378,7 @@ export default {
                 itemList: [],
             },
             callSave: [],
+            callItem: '',
             selectedItem: '',
             quantity: 1,
             itemList: [],
@@ -475,6 +509,7 @@ export default {
             this.quantity = 1;
         },
         edit1: function (data) {
+            this.callItem = Object.assign(data);
             this.form = Object.assign(data);
             this.editMode = true;
             this.openModal1();
@@ -510,6 +545,22 @@ export default {
             // If "Maintenance |" is not found, return the original name
             return name;
         },
+        closeCall: function(c) {
+            console.log(c)
+            c._method = 'PUT';
+
+            // Save the status_id and technic_id fields
+            const payload = {
+                glpi: c.id,
+                status_id: 6,
+                technic_id: c.technic_id,
+                close: 1
+            };
+
+            this.$inertia.put('/call/' + c.id, payload);
+            location.reload()
+
+        }
 
 
     },
@@ -548,30 +599,36 @@ export default {
 
         },
         evenReady: function () {
+            // Create a set of 'chamado' IDs for faster lookup
+            const chamadoIds = new Set(this.called.map(i => i.id));
 
-            const inputArray = this.call;
-            function filterItemsStartingWithMaintenance(inputArray) {
-                const filteredItems = [];
+            const chamado = new Set(this.call.map((i) => ({
+                'name': i[1],
+                'id': i[2],
+                'group': i[8],
+                'status': i[12],
+                'opendate': i[15],
+                'closedate': i[16],
+                'problem': i[21],
+            })));
 
-                //    inputArray.forEach(item =>
-                //    {
-                //        if (item.name.startsWith("Manutenção")) {
-                //            filteredItems.push(item);
-                //        }
-                //    }
-                //    );
+            const filteredItems = [];
 
-                //const test = filteredItems.filter(item => item.closedate != null || item.closedate != "" || item.status <= 4)
-                const test = inputArray.filter(item => item.status <= 4)
-                return test
-                // return filteredItems;
-            }
+            chamado.forEach(item => {
+                if (item.name.startsWith("Manutenção") &&
+                    (item.closedate !== null || item.closedate !== ""))  {
+                    filteredItems.push(item);
+                }
+            });
 
-            // Assuming 'this.call' is an array of objects with a 'name' property
-            const filteredResults = filterItemsStartingWithMaintenance(this.call);
-
-            // Print the filtered results
-            return filteredResults;
+            // Filter out items that have the same ID as in 'chamado'
+            const resul = filteredItems.filter(item => !chamadoIds.has(item.id));
+            const test = resul.sort(function (a, b) {
+                // console.log(b.id)
+                return b.id - a.id;
+            })
+            // console.log(resul)
+            return test;
 
         },
         filterItemsByCurrentMonth: function () {
@@ -747,6 +804,7 @@ export default {
             const previousMonthIndex = (currentMonthIndex - 1 + 12) % 12;
             this.previousMonth = monthNames[previousMonthIndex];
         },
+
     },
 
 
