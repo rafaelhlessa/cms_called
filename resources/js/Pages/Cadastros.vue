@@ -351,6 +351,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import {ArrowUpIcon, ArrowDownIcon, CheckIcon} from "heroicons-vue3/solid";
+import * as Vue from 'vue' // in Vue 3
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 export default {
     name: "EntranceCreate",
