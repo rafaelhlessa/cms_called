@@ -3,7 +3,7 @@
 
     <AuthenticatedLayout>
         <div class="p-40 py-6">
-            <dl class="mt-5 grid grid-cols-1 divide-y divide-gray-100 overflow-hidden rounded-lg bg-white shadow lg:grid-cols-3 md:divide-x md:divide-y-0 border border-gray-300">
+            <dl class="mt-5 grid grid-cols-1 divide-y divide-gray-100 overflow-hidden rounded-lg bg-white shadow lg:grid-cols-3 md:divide-x md:divide-y-0 border border-gray-400">
                 <div class="px-4 py-5 sm:p-6 bg-green-200">
                     <dt class="text-base font-normal text-gray-900">Chamados Abertos</dt>
                     <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
@@ -70,7 +70,7 @@
         </div>
 
         <div class="p-2 py-6">
-            <div class="px-4 py-8 bg-white rounded-lg shadow-2xl">
+            <div class="px-4 py-8 bg-gray-100 rounded-lg shadow-2xl border border-gray-400">
                 <div class="grid grid-cols-12 grid-rows-1 gap-3">
                     <div class="col-span-2 p-4 ring-1 ring-green-300 rounded-3xl xl:p-4">
                         <div class="col-span-3 p-4 ring-1 ring-green-300 bg-green-50 rounded-3xl xl:p-4">
@@ -96,8 +96,8 @@
                         </div>
                     </div>
                     <div class="col-span-8 p-4 ring-1 ring-gray-400 rounded-3xl xl:p-4">
-                        <div class="col-span-3 p-2 ring-1 ring-gray-300 bg-gray-50 rounded-3xl xl:p-2">
-                            <h3 class="text-2xl font-bold text-center">Bancada</h3>
+                        <div class="col-span-3 p-2 ring-1 ring-gray-300 bg-gray-100 rounded-3xl xl:p-2">
+                            <h3 class="text-2xl font-bold text-center text-gray-800">Bancada</h3>
                         </div>
                         <div class="flex items-center justify-between pt-3 gap-x-4">
                             <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
