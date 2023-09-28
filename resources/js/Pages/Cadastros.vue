@@ -584,12 +584,17 @@ export default {
 
             const filteredItems = [];
 
-               chamado.forEach(item => {
-                   if (item.name.startsWith("Manutenção") &&
-                       (item.closedate === null || item.closedate === ""))  {
-                       filteredItems.push(item);
-                   }
-               });
+               // chamado.forEach(item => {
+               //     if (item.name.startsWith("Manutenção") &&
+               //         (item.closedate === null || item.closedate === ""))  {
+               //         filteredItems.push(item);
+               //     }
+               // });
+            chamado.forEach(item => {
+                if (item.name.startsWith("Manutenção") && (item.status <= 2) )  {
+                    filteredItems.push(item);
+                }
+            });
 
             // Filter out items that have the same ID as in 'chamado'
             const resul = filteredItems.filter(item => !chamadoIds.has(item.id));
