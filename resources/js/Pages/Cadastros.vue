@@ -597,7 +597,7 @@ export default {
 
             // Filter out items that have the same ID as in 'chamado'
             const resul = filteredItems.filter(item => !chamadoIds.has(item.id));
-            console.log(resul)
+
             return resul.sort(function (a, b) {
                 // console.log(b.id)
                 return b.id - a.id;
@@ -635,7 +635,7 @@ export default {
 
             // Filter out items that have the same ID as in 'chamado'
             const resul = filteredItems.filter(item => !chamadoIds.has(item.id));
-            // console.log(resul)
+            console.log(resul)
             return resul.sort(function (a, b) {
                 // console.log(b.id)
                 return b.id - a.id;
