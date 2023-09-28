@@ -79,7 +79,6 @@
 
                         <div class="inline">
                             <!--<ul v-for="cal in evenNumbers" :key="cal.name" class="grid grid-cols-1">-->
-                            {{call}}
                             <ul v-for="cal in evenNumbers" :key="cal.name" class="grid grid-cols-1">
                                 <li  v-if="cal.status === 2" @click="creat(cal), edit(cal), openModal()" class="w-full py-2">
                                     <button
