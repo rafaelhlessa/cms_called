@@ -3,29 +3,8 @@
 
     <AuthenticatedLayout>
         <div class="p-40 py-6">
-            <dl class="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow lg:grid-cols-3 md:divide-x md:divide-y-0 border border-gray-300">
+            <dl class="mt-5 grid grid-cols-1 divide-y divide-gray-100 overflow-hidden rounded-lg bg-white shadow lg:grid-cols-3 md:divide-x md:divide-y-0 border border-gray-300">
                 <div class="px-4 py-5 sm:p-6 bg-green-200">
-                    <dt class="text-base font-normal text-gray-900">Chamados Encerrados</dt>
-                    <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-                        <div class="flex items-baseline text-xl font-semibold text-gray-600">
-                            {{currentMonth}}
-                            <span class="ml-2 text-2xl font-semi-bold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-600">{{ currentMonthCount }} </span>
-                            <span class="ml-2 text-sm font-medium text-gray-500">{{previousMonth}} </span>
-                            <span class="ml-2 text-sm font-semi-bold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-500">{{previousMonthCount}} </span>
-                        </div>
-
-                        <div v-if="currentMonthCount > previousMonthCount" class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
-                            <ArrowUpIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
-                            +{{monthDifference}}
-                        </div>
-                        <div v-else class="bg-blue-100 text-blue-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
-                            <ArrowDownIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
-                            {{monthDifference}}
-                        </div>
-                    </dd>
-                </div>
-
-                <div class="px-4 py-5 sm:p-6 bg-red-300">
                     <dt class="text-base font-normal text-gray-900">Chamados Abertos</dt>
                     <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
                         <div class="flex items-baseline text-xl font-semi-bold text-gray-600">
@@ -66,14 +45,35 @@
                         </div>
                     </dd>
                 </div>
+
+                <div class="px-4 py-5 sm:p-6 bg-black">
+                    <dt class="text-base font-normal text-gray-50">Chamados Encerrados</dt>
+                    <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
+                        <div class="flex items-baseline text-xl font-semibold text-gray-100">
+                            {{currentMonth}}
+                            <span class="ml-2 text-2xl font-semi-bold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-600">{{ currentMonthCount }} </span>
+                            <span class="ml-2 text-sm font-medium text-gray-500">{{previousMonth}} </span>
+                            <span class="ml-2 text-sm font-semi-bold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-500">{{previousMonthCount}} </span>
+                        </div>
+
+                        <div v-if="currentMonthCount > previousMonthCount" class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
+                            <ArrowUpIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+                            +{{monthDifference}}
+                        </div>
+                        <div v-else class="bg-blue-100 text-blue-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
+                            <ArrowDownIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+                            {{monthDifference}}
+                        </div>
+                    </dd>
+                </div>
             </dl>
         </div>
 
         <div class="p-2 py-6">
             <div class="px-4 py-8 bg-white rounded-lg shadow-2xl">
                 <div class="grid grid-cols-12 grid-rows-1 gap-3">
-                    <div class="col-span-2 p-4 ring-1 ring-red-300 rounded-3xl xl:p-4">
-                        <div class="col-span-3 p-4 ring-1 ring-red-300 bg-red-50 rounded-3xl xl:p-4">
+                    <div class="col-span-2 p-4 ring-1 ring-green-300 rounded-3xl xl:p-4">
+                        <div class="col-span-3 p-4 ring-1 ring-green-300 bg-green-50 rounded-3xl xl:p-4">
                             <h3 class="text-2xl font-bold text-center">Chamados Abertos</h3>
                         </div>
 
@@ -82,7 +82,7 @@
                             <ul v-for="cal in evenNumbers" :key="cal.name" class="grid grid-cols-1">
                                 <li  v-if="cal.status === 2" @click="creat(cal), edit(cal), openModal()" class="w-full py-2">
                                     <button
-                                        class="w-full px-8 py-2 text-red-500 bg-red-100 border border-red-500 rounded-lg btn">
+                                        class="w-full px-8 py-2 text-green-500 bg-green-100 border border-green-500 rounded-lg btn">
                                         {{cal.id }} - {{ cal.name }}
                                     </button>
                                 </li>
@@ -147,15 +147,21 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-span-2 p-4 ring-1 ring-green-300 rounded-3xl xl:p-4">
-                        <div class="col-span-3 p-4 ring-1 ring-green-300 bg-emerald-50 rounded-3xl xl:p-4">
-                            <h3 class="text-2xl font-bold text-center">Chamados Fechados</h3>
+                    <div class="col-span-2 p-4 ring-1 ring-black rounded-3xl xl:p-4">
+                        <div class="col-span-3 p-4 ring-1 ring-gray-300 bg-black rounded-3xl xl:p-4">
+                            <h3 class="text-2xl font-bold text-gray-50 text-center">Chamados Fechados</h3>
                         </div>
                         <div class="inline">
                             <ul v-for="cal in evenReady" :key="cal.name" class="grid grid-cols-1">
+                                <li v-if="cal.status === 5" class="w-full py-2">
+                                    <button class="w-full px-8 py-2 text-gray-800 border rounded-lg btn border-black">
+                                        {{ cal.id }} - {{ cal.name }}
+                                    </button>
+                                </li>
                                 <li v-if="cal.status === 6" class="w-full py-2">
-                                    <button class="w-full px-8 py-2 text-green-500 bg-green-100 border rounded-lg btn border-emerald-500">
-                                        {{ cal.id }} - {{ cal.name }}</button>
+                                    <button class="w-full px-8 py-2 text-gray-50 bg-black border rounded-lg btn border-gray-50">
+                                        {{ cal.id }} - {{ cal.name }}
+                                    </button>
                                 </li>
                             </ul>
                         </div>
