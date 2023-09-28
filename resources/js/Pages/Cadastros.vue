@@ -560,7 +560,8 @@ export default {
             this.$inertia.put('/call/' + c.id, payload);
             location.reload()
 
-        }
+        },
+
 
 
     },
@@ -666,15 +667,22 @@ export default {
 
             const filteredItems = [];
 
+            // chamado.forEach(item => {
+            //     if (item.name.startsWith("Manutenção") &&
+            //         (item.closedate === null || item.closedate === ""))  {
+            //         filteredItems.push(item);
+            //     }
+            // });
             chamado.forEach(item => {
-                if (item.name.startsWith("Manutenção") &&
-                    (item.closedate === null || item.closedate === ""))  {
+                if (item.group === 'Manutenção' && (item.status <= 2))  {
                     filteredItems.push(item);
                 }
             });
 
+
             // Filter out items that have the same ID as in 'chamado'
             const result = filteredItems.filter(item => !chamadoIds.has(item.id));
+            // const result = filteredItems.filter(item => console.log(item));
 
             this.count = result.filter((record) => {
                 const recordDate = new Date(record.closedate);
@@ -695,6 +703,7 @@ export default {
 
             const chamadoIds = new Set(this.call.map(i => i.id));
 
+            console.log(this.call)
             const chamado = new Set(this.call.map((i) => ({
                 'name': i[1],
                 'id': i[2],
@@ -709,6 +718,7 @@ export default {
 
             chamado.forEach(item => {
                 const itemDate = new Date(item.closedate);
+
                 if (item.name.startsWith("Manutenção") &&
                     (item.closedate !== null || item.closedate !== "") &&
                     (item.status > 4) &&
@@ -735,6 +745,7 @@ export default {
                 }
             });
 
+            // console.log(filteredItems)
             const currentMonthRecords = filteredItems.filter((record) => {
                 const recordDate = new Date(record.closedate);
                 return (
@@ -784,6 +795,7 @@ export default {
                 );
             });
 
+            console.log(currentMonthRecords.length)
             this.currentMonthCount = currentMonthRecords.length;
             this.previousMonthCount = previousMonthRecords.length;
             this.monthDifference = this.currentMonthCount - this.previousMonthCount;

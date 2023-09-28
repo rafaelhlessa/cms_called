@@ -85,7 +85,6 @@ class AuthController extends Controller
         ]);
 
         $tickets = json_decode($login->getBody(), true);
-
         $status = Status::where('id', '!=', 2)->where('id', '<', 5)->get();
         $technic = Technic::all();
         $callClose = Called::where('status_id', '>', 4)->get();
@@ -111,8 +110,9 @@ class AuthController extends Controller
         $pim = explode("PIM - ", $request->name);
 
         // Define the separators
-        $startSeparator = "10) Observações Adicionais : &lt;/b&gt;&lt;p&gt;";
-        $endSeparator = "&lt;/p&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;11)";
+        $startSeparator = ") Observações Adicionais : &lt;/b&gt;&lt;p&gt;";
+//        $halfSeparator = "&lt;/p&gt;&lt;p&gt;";
+        $endSeparator = "&lt;/p&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;";
 
         // Split the string into an array based on the start separator
         $parts = explode($startSeparator, $request['problem']);
