@@ -9,9 +9,9 @@
                     <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
                         <div class="flex items-baseline text-xl font-semibold text-gray-600">
                             {{currentMonth}}
-                            <span class="ml-2 text-2xl font-semibold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-600">{{ currentMonthCount }} </span>
+                            <span class="ml-2 text-2xl font-semi-bold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-600">{{ currentMonthCount }} </span>
                             <span class="ml-2 text-sm font-medium text-gray-500">{{previousMonth}} </span>
-                            <span class="ml-2 text-sm font-semibold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-500">{{previousMonthCount}} </span>
+                            <span class="ml-2 text-sm font-semi-bold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-500">{{previousMonthCount}} </span>
                         </div>
 
                         <div v-if="currentMonthCount > previousMonthCount" class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
@@ -28,11 +28,11 @@
                 <div class="px-4 py-5 sm:p-6 bg-red-300">
                     <dt class="text-base font-normal text-gray-900">Chamados Abertos</dt>
                     <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-                        <div class="flex items-baseline text-xl font-semibold text-gray-600">
+                        <div class="flex items-baseline text-xl font-semi-bold text-gray-600">
                             {{currentMonth}}
-                            <span class="ml-2 text-2xl font-semibold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-600">{{ currentMonthCountOpen }} </span>
+                            <span class="ml-2 text-2xl font-semi-bold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-600">{{ currentMonthCountOpen }} </span>
                             <span class="ml-2 text-sm font-medium text-gray-500">{{previousMonth}} </span>
-                            <span class="ml-2 text-sm font-semibold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-500">{{previousMonthCountOpen}} </span>
+                            <span class="ml-2 text-sm font-semi-bold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-500">{{previousMonthCountOpen}} </span>
                         </div>
 
                         <div v-if="currentMonthCountOpen > previousMonthCountOpen" class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
@@ -49,11 +49,11 @@
                 <div class="px-4 py-5 sm:p-6 bg-amber-500">
                     <dt class="text-base font-normal text-gray-900">Chamados Pendentes</dt>
                     <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-                        <div class="flex items-baseline text-xl font-semibold text-gray-600">
+                        <div class="flex items-baseline text-xl font-semi-bold text-gray-600">
                             {{currentMonth}}
-                            <span class="ml-2 text-2xl font-semibold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-600">{{ currentMonthCountPend }} </span>
+                            <span class="ml-2 text-2xl font-semi-bold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-600">{{ currentMonthCountPend }} </span>
                             <span class="ml-2 text-sm font-medium text-gray-500">{{previousMonth}} </span>
-                            <span class="ml-2 text-sm font-semibold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-500">{{previousMonthCountPend}} </span>
+                            <span class="ml-2 text-sm font-semi-bold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-500">{{previousMonthCountPend}} </span>
                         </div>
 
                         <div v-if="currentMonthCountPend > previousMonthCountPend" class="bg-green-100 text-green-800 inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
@@ -70,7 +70,7 @@
         </div>
 
         <div class="p-2 py-6">
-            <div class="px-4 py-8 bg-white rounded rounded-lg shadow-2xl">
+            <div class="px-4 py-8 bg-white rounded-lg shadow-2xl">
                 <div class="grid grid-cols-12 grid-rows-1 gap-3">
                     <div class="col-span-2 p-4 ring-1 ring-red-300 rounded-3xl xl:p-4">
                         <div class="col-span-3 p-4 ring-1 ring-red-300 bg-red-50 rounded-3xl xl:p-4">
@@ -82,13 +82,13 @@
                             <ul v-for="cal in evenNumbers" :key="cal.name" class="grid grid-cols-1">
                                 <li  v-if="cal.status === 2" @click="creat(cal), edit(cal), openModal()" class="w-full py-2">
                                     <button
-                                        class="w-full px-8 py-2 text-red-500 bg-red-100 border border-red-500 rounded rounded-lg btn">
+                                        class="w-full px-8 py-2 text-red-500 bg-red-100 border border-red-500 rounded-lg btn">
                                         {{cal.id }} - {{ cal.name }}
                                     </button>
                                 </li>
                                 <li  v-if="cal.status === 4" @click="creat(cal), edit(cal), openModal()" class="w-full py-2">
                                     <button
-                                        class="w-full px-8 py-2 text-orange-500 bg-orange-100 border border-orange-500 rounded rounded-lg btn">
+                                        class="w-full px-8 py-2 text-orange-500 bg-orange-100 border border-orange-500 rounded-lg btn">
                                         {{cal.id }} - {{ cal.name }}
                                     </button>
                                 </li>
@@ -154,7 +154,7 @@
                         <div class="inline">
                             <ul v-for="cal in evenReady" :key="cal.name" class="grid grid-cols-1">
                                 <li v-if="cal.status === 6" class="w-full py-2">
-                                    <button class="w-full px-8 py-2 text-green-500 bg-green-100 border rounded rounded-lg btn border-emerald-500">
+                                    <button class="w-full px-8 py-2 text-green-500 bg-green-100 border rounded-lg btn border-emerald-500">
                                         {{ cal.id }} - {{ cal.name }}</button>
                                 </li>
                             </ul>
@@ -177,7 +177,7 @@
                      role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                     <form>
                         <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
-                            <div class="rounded rounded-md ring-1 ring-gray-400">
+                            <div class="rounded-md ring-1 ring-gray-400">
                                 <div class="grid max-w-2xl grid-cols-1 p-2 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                                     <div class="sm:col-span-3">
                                         <label for="status"
@@ -351,9 +351,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import {ArrowUpIcon, ArrowDownIcon, CheckIcon} from "heroicons-vue3/solid";
-import * as Vue from 'vue' // in Vue 3
-import axios from 'axios'
-import VueAxios from 'vue-axios'
+
 
 export default {
     name: "EntranceCreate",
@@ -404,10 +402,9 @@ export default {
         }
     },
     methods: {
-        updateItemValue(event) {
-
-            this.selectedItemValue = event.target.value;
-        },
+        // updateItemValue(event) {
+        //     this.selectedItemValue = event.target.value;
+        // },
         openModal: function () {
             this.isOpen = true;
         },
@@ -426,9 +423,9 @@ export default {
             this.clear();
             this.partsOn = false;
         },
-        partsOpen: function () {
-            this.partsOn = true;
-        },
+        // partsOpen: function () {
+        //     this.partsOn = true;
+        // },
         reset: function () {
             this.form = {
                 status_id: null,
@@ -584,21 +581,25 @@ export default {
 
             const filteredItems = [];
 
-               chamado.forEach(item => {
-                   if (item.name.startsWith("Manutenção") &&
-                       (item.closedate === null || item.closedate === ""))  {
-                       filteredItems.push(item);
-                   }
-               });
+               // chamado.forEach(item => {
+               //     if (item.name.startsWith("Manutenção") &&
+               //         (item.closedate === null || item.closedate === ""))  {
+               //         filteredItems.push(item);
+               //     }
+               // });
+            chamado.forEach(item => {
+                if (item.name.startsWith("Manutenção") && (item.status <= 2) )  {
+                    filteredItems.push(item);
+                }
+            });
 
             // Filter out items that have the same ID as in 'chamado'
             const resul = filteredItems.filter(item => !chamadoIds.has(item.id));
-            const result = resul.sort(function (a, b) {
+            // console.log(resul)
+            return resul.sort(function (a, b) {
                 // console.log(b.id)
                 return b.id - a.id;
-            })
-            // console.log(resul)
-            return result;
+            });
 
         },
         evenReady: function () {
@@ -626,12 +627,11 @@ export default {
 
             // Filter out items that have the same ID as in 'chamado'
             const resul = filteredItems.filter(item => !chamadoIds.has(item.id));
-            const test = resul.sort(function (a, b) {
+            // console.log(resul)
+            return resul.sort(function (a, b) {
                 // console.log(b.id)
                 return b.id - a.id;
-            })
-            // console.log(resul)
-            return test;
+            });
 
         },
         filterItemsByCurrentMonth: function () {
