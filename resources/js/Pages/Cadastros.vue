@@ -567,6 +567,7 @@ export default {
     },
     computed: {
         evenNumbers: function () {
+            try{
             // Create a set of 'chamado' IDs for faster lookup
             const chamadoIds = new Set(this.called.map(i => i.id));
 
@@ -601,6 +602,12 @@ export default {
                 // console.log(b.id)
                 return b.id - a.id;
             });
+            } catch (error) {
+                // Handle the exception here
+                console.error('An error occurred:', error);
+                // You can choose to return a default value or handle the error in a way that makes sense for your application.
+                return [];
+            }
 
         },
         evenReady: function () {
