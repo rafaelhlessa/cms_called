@@ -588,7 +588,7 @@ export default {
                //     }
                // });
             chamado.forEach(item => {
-                if (item.name.startsWith("Manutenção") && (item.status <= 2) )  {
+                if (item.group === 'Manutenção' && (item.status <= 2) )  {
                     filteredItems.push(item);
                 }
             });
