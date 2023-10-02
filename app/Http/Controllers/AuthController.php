@@ -29,7 +29,7 @@ class AuthController extends Controller
     public function loginToGLPI()
     {
         $apiUrl = 'https://suporte.pm.sc.gov.br/apirest.php/initSession/';
-        $AuthToken = 'Uv7qaMuxBhR71xyx2Jc2andq3AjxvzyvcrVd8EZX';
+        $AuthToken = 'VKOXOJWcxVnJVOYRtVQzb7qnTKSOFUCcuzHjHW4F';
         $AppToken = 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1';
 
         if (auth()->check()) {
@@ -39,7 +39,7 @@ class AuthController extends Controller
             $response = Http::withHeaders([
                 'Authorization' => $AuthToken,
                 'App-Token' => $AppToken,
-            ])->withBasicAuth('933270', 'RL327#Hs')->withOptions(['verify' => false])->get($apiUrl);
+            ])->withBasicAuth('cms', '6hybWpJpbjM')->withOptions(['verify' => false])->get($apiUrl);
 
             return response()->json([
                 'message' => 'Session token generated and stored successfully.',
@@ -51,10 +51,15 @@ class AuthController extends Controller
 
     public function getLogin()
     {
+//        $login = Http::withHeaders([
+//            "Authorization" => "OTMzMjcwOlJMMzI3I0hz",
+//            'App-Token' => 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1',
+//        ])->withBasicAuth('933270', 'RL327#Hs')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/initSession/');
+
         $login = Http::withHeaders([
-            "Authorization" => "OTMzMjcwOlJMMzI3I0hz",
+            "Authorization" => "VKOXOJWcxVnJVOYRtVQzb7qnTKSOFUCcuzHjHW4F",
             'App-Token' => 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1',
-        ])->withBasicAuth('933270', 'RL327#Hs')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/initSession/');
+        ])->withBasicAuth('cms', '6hybWpJpbjM')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/initSession/');
 
         $log = json_decode($login, true);
 
@@ -69,7 +74,7 @@ class AuthController extends Controller
             "Authorization" => Auth::user()->authorization,
             'App-Token' => 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1',
             'Session-Token' => Auth::user()->sessiontoken,
-        ])->withBasicAuth('933270', 'RL327#Hs')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/search/Ticket/?',[
+        ])->withBasicAuth('cms', '6hybWpJpbjM')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/search/Ticket/?',[
             'order' => 'DESC',      // sort direction
             'range' => '0-30000',   // range
             'is_deleted' => 0,      // item is not deleted
@@ -83,6 +88,7 @@ class AuthController extends Controller
             ],
 
         ]);
+
 
         $tickets = json_decode($login->getBody(), true);
         $status = Status::where('id', '!=', 2)->where('id', '<', 5)->get();

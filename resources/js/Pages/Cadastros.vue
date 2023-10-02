@@ -3,11 +3,11 @@
 
     <AuthenticatedLayout>
         <div class="p-40 py-6">
-            <dl class="mt-5 grid grid-cols-1 divide-y divide-gray-100 overflow-hidden rounded-lg bg-white shadow lg:grid-cols-3 md:divide-x md:divide-y-0 border border-gray-400">
-                <div class="px-4 py-5 sm:p-6 bg-green-200">
+            <dl v-on="calculateCounts" class="mt-5 grid grid-cols-1 divide-y divide-gray-100 overflow-hidden rounded-lg bg-white shadow lg:grid-cols-3 md:divide-x md:divide-y-0 border border-gray-400">
+                <div v-on="updateMonths" class="px-4 py-5 sm:p-6 bg-green-200">
                     <dt class="text-base font-normal text-gray-900">Chamados Abertos</dt>
                     <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
-                        <div class="flex items-baseline text-xl font-semi-bold text-gray-600">
+                        <div  class="flex items-baseline text-xl font-semi-bold text-gray-600">
                             {{currentMonth}}
                             <span class="ml-2 text-2xl font-semi-bold rounded-lg border border-gray-400 py-1 px-1 bg-gray-200 text-gray-600">{{ currentMonthCountOpen }} </span>
                             <span class="ml-2 text-sm font-medium text-gray-500">{{previousMonth}} </span>
@@ -568,8 +568,6 @@ export default {
 
         },
 
-
-
     },
     computed: {
         evenNumbers: function () {
@@ -605,7 +603,6 @@ export default {
             const resul = filteredItems.filter(item => !chamadoIds.has(item.id));
 
             return resul.sort(function (a, b) {
-                // console.log(b.id)
                 return b.id - a.id;
             });
             } catch (error) {
@@ -641,9 +638,8 @@ export default {
 
             // Filter out items that have the same ID as in 'chamado'
             const resul = filteredItems.filter(item => !chamadoIds.has(item.id));
-            // console.log(resul)
+
             return resul.sort(function (a, b) {
-                // console.log(b.id)
                 return b.id - a.id;
             });
 
@@ -801,7 +797,7 @@ export default {
                 );
             });
 
-            console.log(currentMonthRecords.length)
+
             this.currentMonthCount = currentMonthRecords.length;
             this.previousMonthCount = previousMonthRecords.length;
             this.monthDifference = this.currentMonthCount - this.previousMonthCount;
@@ -813,6 +809,7 @@ export default {
             this.currentMonthCountPend = currentMonthRecordsPend.length;
             this.previousMonthCountPend = previousMonthRecordsPend.length;
             this.monthDifferencePend = this.currentMonthCountPend - this.previousMonthCountPend;
+
         },
         updateMonths: function () {
             const currentDate = new Date();
@@ -826,11 +823,11 @@ export default {
 
             // Set current month name
             this.currentMonth = monthNames[currentMonthIndex];
-            console.log(this.currentMonth)
 
             // Calculate previous month
             const previousMonthIndex = (currentMonthIndex - 1 + 12) % 12;
             this.previousMonth = monthNames[previousMonthIndex];
+
         },
 
     },
