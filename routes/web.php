@@ -30,7 +30,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard',[CalledController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',[ChartController::class, 'getAcquisition'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('call', CalledController::class);
 Route::put('closecall', [CalledController::class, 'closeCall']);
@@ -47,15 +47,8 @@ Route::get('/maintenance', function () {
     return Inertia::render('Maintenance');
 })->middleware(['auth', 'verified'])->name('maintenance');
 
-//Route::get('/charts', function () {
-//    return Inertia::render('Charts');
-//})->middleware(['auth', 'verified'])->name('charts');
 Route::get('/charts', [ChartController::class, 'getAcquisition'])->name('charts');
 
-// Route::get('/cadastros', function () {
-//     return Inertia::render('Cadastros');
-// })->middleware(['auth', 'verified'])->name('cadastros');
-//Route::get('/cadastros', [AuthController::class, 'getTickets'])->name('cadastros');
 Route::get('/cadastros', [AuthController::class, 'getTickets'])->name('cadastros');
 Route::post('cad', [AuthController::class, 'create']);
 

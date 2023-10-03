@@ -20,11 +20,13 @@ class ChartController extends Controller
     public function getAcquisition()
     {
 
-        $login1 = Http::withHeaders([
+        $login = Http::withHeaders([
             "Authorization" => Auth::user()->authorization,
             'App-Token' => 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1',
             'Session-Token' => Auth::user()->sessiontoken,
-        ])->withBasicAuth('cms', '6hybWpJpbjM')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/search/Ticket/?', [
+        ])->withBasicAuth('cms', '6hybWpJpbjM')->withOptions(['verify' => false]);
+
+        $login1 = $login->get('https://suporte.pm.sc.gov.br/apirest.php/search/Ticket/?', [
             'order' => 'DESC',      // sort direction
             'range' => '0-30000',   // range
             'is_deleted' => 0,      // item is not deleted
@@ -39,11 +41,7 @@ class ChartController extends Controller
 
         ]);
 
-        $login2 = Http::withHeaders([
-            "Authorization" => Auth::user()->authorization,
-            'App-Token' => 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1',
-            'Session-Token' => Auth::user()->sessiontoken,
-        ])->withBasicAuth('cms', '6hybWpJpbjM')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/search/Ticket/?', [
+        $login2 = $login->get('https://suporte.pm.sc.gov.br/apirest.php/search/Ticket/?', [
             'order' => 'DESC',      // sort direction
             'range' => '0-30000',   // range
             'is_deleted' => 0,      // item is not deleted
@@ -58,11 +56,7 @@ class ChartController extends Controller
 
         ]);
 
-        $login3 = Http::withHeaders([
-            "Authorization" => Auth::user()->authorization,
-            'App-Token' => 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1',
-            'Session-Token' => Auth::user()->sessiontoken,
-        ])->withBasicAuth('cms', '6hybWpJpbjM')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/search/Ticket/?', [
+        $login3 = $login->get('https://suporte.pm.sc.gov.br/apirest.php/search/Ticket/?', [
             'order' => 'DESC',      // sort direction
             'range' => '0-30000',   // range
             'is_deleted' => 0,      // item is not deleted
@@ -86,68 +80,6 @@ class ChartController extends Controller
                 'acquisition' => $acquisition['data'],
                 'maintenance' => $maintenance['data'],
                 'camera' => $camera['data'],
-            ]);
-    }
-
-    public function getMaintenance()
-    {
-
-        $login = Http::withHeaders([
-            "Authorization" => Auth::user()->authorization,
-            'App-Token' => 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1',
-            'Session-Token' => Auth::user()->sessiontoken,
-        ])->withBasicAuth('cms', '6hybWpJpbjM')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/search/Ticket/?', [
-            'order' => 'DESC',      // sort direction
-            'range' => '0-30000',   // range
-            'is_deleted' => 0,      // item is not deleted
-            'criteria' => [
-                [
-                    'field' => 8,              // field index in search options
-                    'itemtype' => 'Ticket',
-                    'searchtype' => 'contains',     // type of search
-                    'value' => 'Manutenção',   // value to search
-                ],
-            ],
-
-        ]);
-
-
-        $tickets = json_decode($login->getBody(), true);
-
-        return Inertia::render('Charts',
-            [
-                'maintenance' => $tickets['data'],
-            ]);
-    }
-
-    public function getCamera()
-    {
-
-        $login = Http::withHeaders([
-            "Authorization" => Auth::user()->authorization,
-            'App-Token' => 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1',
-            'Session-Token' => Auth::user()->sessiontoken,
-        ])->withBasicAuth('cms', '6hybWpJpbjM')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/search/Ticket/?', [
-            'order' => 'DESC',      // sort direction
-            'range' => '0-30000',   // range
-            'is_deleted' => 0,      // item is not deleted
-            'criteria' => [
-                [
-                    'field' => 8,              // field index in search options
-                    'itemtype' => 'Ticket',
-                    'searchtype' => 'contains',     // type of search
-                    'value' => 'Câmera',   // value to search
-                ],
-            ],
-
-        ]);
-
-        $tickets = json_decode($login->getBody(), true);
-
-
-        return Inertia::render('Charts',
-            [
-                'camera' => $tickets['data'],
             ]);
     }
 
