@@ -47,7 +47,9 @@ Route::get('/maintenance', function () {
     return Inertia::render('Maintenance');
 })->middleware(['auth', 'verified'])->name('maintenance');
 
+//Rotas da Dashboard
 Route::get('/charts', [ChartController::class, 'getAcquisition'])->name('charts');
+
 
 Route::get('/cadastros', [AuthController::class, 'getTickets'])->name('cadastros');
 Route::post('cad', [AuthController::class, 'create']);
