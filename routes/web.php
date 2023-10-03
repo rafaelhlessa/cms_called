@@ -5,6 +5,7 @@ use App\Http\Controllers\CalledController;
 use App\Http\Controllers\PartsController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChartController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,9 +47,10 @@ Route::get('/maintenance', function () {
     return Inertia::render('Maintenance');
 })->middleware(['auth', 'verified'])->name('maintenance');
 
-Route::get('/test', function () {
-    return Inertia::render('TEst');
-})->middleware(['auth', 'verified'])->name('test');
+//Route::get('/charts', function () {
+//    return Inertia::render('Charts');
+//})->middleware(['auth', 'verified'])->name('charts');
+Route::get('/charts', [ChartController::class, 'getAcquisition'])->name('charts');
 
 // Route::get('/cadastros', function () {
 //     return Inertia::render('Cadastros');
