@@ -33,6 +33,10 @@ Route::get('/', function () {
     ]);
 });
 
+Route::middleware([])->group(function () {
+    Route::get('/useVtr/{useVtr}/used', [UseVTRController::class, 'used'])->name('outVtr');
+});
+
 Route::resource('usevtrs', UseVTRController::class);
 Route::get('/useVtr', [UseVTRController::class, 'create'])->name('useVtr');
 Route::get('/useVtr/{useVtr}/used', [UseVTRController::class, 'used'])->name('outVtr');
