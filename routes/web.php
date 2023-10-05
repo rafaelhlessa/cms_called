@@ -7,6 +7,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\CarsController;
+use App\Http\Controllers\DriversController;
+use App\Http\Controllers\UseVTRController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,6 +33,10 @@ Route::get('/', function () {
     ]);
 });
 
+Route::resource('usevtrs', UseVTRController::class);
+Route::get('/useVtr', [UseVTRController::class, 'create'])->name('useVtr');
+Route::get('/useVtr/{useVtr}/used', [UseVTRController::class, 'used'])->name('outVtr');
+
 Route::get('/dashboard',[ChartController::class, 'getAcquisition'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('call', CalledController::class);
@@ -50,6 +56,9 @@ Route::get('/maintenance', function () {
 
 Route::resource('car', CarsController::class);
 Route::get('/cars', [CarsController::class, 'index'])->name('cars');
+
+Route::resource('driver', DriversController::class);
+Route::get('/drivers', [DriversController::class, 'index'])->name('drivers');
 
 //Rotas da Dashboard
 Route::get('/charts', [ChartController::class, 'getAcquisition'])->name('charts');

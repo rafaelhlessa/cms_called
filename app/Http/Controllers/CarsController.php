@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cars;
+use App\Models\Drivers;
+use App\Models\Parts;
+use App\Models\PMStore;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class CarsController extends Controller
@@ -15,7 +19,7 @@ class CarsController extends Controller
     {
         $cars = Cars::all();
 
-        return Inertia::render('P4/Cars',
+        return Inertia::render('P4/ListCars',
             [
                 'cars' => $cars,
             ]);
@@ -26,7 +30,7 @@ class CarsController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('P4/CarsCreate');
     }
 
     /**
@@ -34,7 +38,58 @@ class CarsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $cars = $request->validate([
+                'plate' => ['required'],
+                'brandmodel' => ['required'],
+                'km' => ['required'],
+                'fuel' => ['required'],
+            ]);
+
+
+            Cars::create([
+                'plate' => $cars['plate'],
+                'brandmodel' => $cars['brandmodel'],
+                'km' => $cars['km'],
+                'fuel' => $cars['fuel'],
+                'used' => 1,
+            ]);
+
+
+//            $pmParts = PMStore::where('parts_id', $part->id)->first();
+//
+//            if($pmParts != null){
+//                if(isset($pmParts->amount)){
+//                    $over = $pmParts->amount+$part->amount;
+//
+//                    PMStore::findOrFail($pmParts->id)->update([
+//                        'amount' => $over,
+//
+//                    ]);
+//
+//                }else{
+//                    $over = $part->amount;
+//
+//                    PMStore::create([
+//                        'amount' => $over,
+//                        'parts_id' => $part->id,
+//                    ]);
+//
+//                }
+//            }
+
+
+            DB::commit();
+
+            return redirect('/cars')->with(['message' => 'Novo produto criado com sucesso!']);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return redirect('/cars')->with(['error' => 'Não foi possível registrar produto, tente novamente mais tarde.']);
+        }
     }
 
     /**

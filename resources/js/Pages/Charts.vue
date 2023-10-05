@@ -1,5 +1,5 @@
 <template>
-    <Head title="Charts" />
+    <Head title="CMS" />
 
     <AuthenticatedLayout>
         <div class="p-10">
@@ -68,9 +68,9 @@ export default {
     },
     mounted() {
         // Fetch or generate your data from the `acqui` function
-        this.acquiData = this.acqui();
-        this.maintData = this.mainte();
-        this.camData = this.cam();
+        // this.acquiData = this.acqui();
+        // this.maintData = this.mainte();
+        // this.camData = this.cam();
     },
     computed: {
         acqui: function () {

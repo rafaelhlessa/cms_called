@@ -26,19 +26,19 @@ defineProps<{
                             <Link
                                 v-if="$page.props.auth.user"
                                 :href="route('dashboard')"
-                                class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                                class="rounded-md bg-stone-400 px-3.5 py-2.5 hover:bg-stone-500 text-sm font-semibold text-gray-900 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                             >Sistema</Link>
                             <template v-else>
                                 <Link
                                     :href="route('login')"
-                                    class="rounded-md bg-white px-3.5 py-2.5 hover:bg-gray-400 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                                    class="rounded-md bg-stone-400 px-3.5 py-2.5 hover:bg-stone-500 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                                 >Acessar</Link
                                 >
 
                                 <Link
                                     v-if="canRegister"
                                     :href="route('register')"
-                                    class="rounded-md bg-white px-3.5 py-2.5 hover:bg-gray-400 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                                    class="rounded-md bg-stone-400 px-3.5 py-2.5 hover:bg-stone-500 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                                 >Registrar</Link
                                 >
                             </template>

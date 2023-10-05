@@ -24,56 +24,52 @@
                                 <tr>
                                     <th scope="col"
                                         class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                        Descrição
+                                        Placa
                                     </th>
                                     <th scope="col"
                                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
-                                        Estoque Peças PMSC</th>
+                                        Marca / Modelo</th>
                                     <th scope="col"
                                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
-                                        Estoque Peças Ilha Service</th>
+                                        KM</th>
                                     <th scope="col"
                                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
-                                        Total Em Estoque</th>
-                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                        <span class="sr-only">Exibir</span>
-                                    </th>
+                                        Combustível</th>
+                                    <th scope="col"
+                                        class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
+                                        Em Uso</th>
+                                    <th scope="col"
+                                        class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
+                                        Exibir</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="plan in cars" :key="plan.id">
-                                    <td class="relative py-4 pl-4 pr-3 text-sm border-t border-transparent sm:pl-6">
-                                        <div class="font-medium text-gray-900">
-                                            {{ plan.plade }}
+                                    <td class="relative py-4 pl-4 pr-3 text-sm text-gray-500 border-t border-transparent sm:pl-6">
+                                        <div class="text-lg">
+                                            {{ plan.plate }}
                                         </div>
                                         <div class="absolute right-0 h-px bg-gray-200 -top-px left-6" />
                                     </td>
-                                    <td v-if="plan.pm_store != null"
-                                        class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg">{{ plan.pm_store.brandmodel }}</b></td>
-                                    <td v-else
-                                        class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg">Sem Estoque</b>
-                                    </td>
-                                    <td v-if="plan.island_store != null"
-                                        class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
+                                    <td class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
+                                        <b class="text-lg">{{ plan.brandmodel }}</b></td>
+                                    <td class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
                                         <b class="text-lg">{{ plan.km }}</b></td>
-                                    <td v-else
-                                        class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <b class="text-lg">Sem Estoque</b>
+                                    <td class="border-t border-gray-200 hidden px-3 py-3 text-sm text-gray-500 lg:table-cell">
+                                        <div v-on="getBarColor" class="h-5 bg-gray-300 rounded-full" :style="{ width: plan.fuel + '%', backgroundColor: getBarColor(plan.fuel)}">
+                                            <b class="text-center text-gray-50 mx-2">{{ plan.fuel }}%</b>
+                                        </div>
+
+
                                     </td>
-                                    <td v-if="plan.used > 0"
-                                        class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <span class="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-lg font-medium text-gray-600">{{ plan.km }}</span>
-                                    </td>
-                                    <td v-else
-                                        class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                        <span class="inline-flex items-center rounded-md bg-red-100 px-2 py-1 text-xs font-medium text-red-700">{{ plan.fuel }}</span>
+                                    <td class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
+                                        <b v-if="plan.used === 0" class="px-3 py-3 sm:p-3 bg-green-300 rounded-full">Livre</b>
+                                        <b v-else class="px-3 py-3 sm:p-3 bg-red-300 rounded-full">Em Uso</b>
                                     </td>
                                     <td class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
                                         <!-- class="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white"> -->
-                                        <a :href="route('car.edit', plan.id)" class="inline items-center rounded-md bg-blue-100 px-2 py-1 text-md font-medium text-blue-700 hover-blue-900">
-                                            Adicionar Peça PM<span class="sr-only">{{ plan.id }}</span>
+                                        <a :href="route('car.edit', plan.id)">
+                                            <img className="h-8 w-8 text-white" :src="`/storage/oficial.svg`" alt="Oficial" />
                                         </a>
                                     </td>
                                 </tr>
@@ -103,13 +99,25 @@ export default {
         return {
             editMode: false,
             errors: [],
+            bankValue: 0,
         }
     },
     methods: {
-        total: function (){
-            console.log(this.cars);
+        // Define a method to calculate the bar color based on the value.
+        getBarColor(value) {
+            if (value === 100) {
+                return '#04B404'; // Change to your desired color class
+            } else if (value === 75) {
+                return '#82FA58'; // Change to your desired color class
+            } else if (value === 50) {
+                return '#F7FE2E'; // Change to your desired color class
+            } else if (value === 25) {
+                return '#FE9A2E'; // Change to your desired color class
+            } else {
+                return '#DF0101'; // Change to your desired color class
+            }
         }
-
     },
+
 }
 </script>

@@ -403,8 +403,6 @@ export default {
             previousMonthCountPend: 0,
             currentMonthCountPend: 0,
             monthDifferencePend: 0,
-            // currentMonthOpen: '',
-            // previousMonth: '',
         }
     },
     methods: {
@@ -455,7 +453,7 @@ export default {
             this.openModal();
         },
         checkForm: function (a) {
-            console.log(a)
+            // console.log(a)
             if (this.form.status_id && this.form.technic_id) {
                 return true;
             }
@@ -521,7 +519,7 @@ export default {
             this.openModal1();
         },
         report: function (e) {
-            console.log(e)
+            // console.log(e)
             e._method = 'POST';
 
             // Save the status_id and technic_id fields
@@ -594,13 +592,23 @@ export default {
                //     }
                // });
             chamado.forEach(item => {
-                if (item.group === 'Manutenção' && (item.status <= 2) )  {
+                if (item.group === 'Manutenção' && (item.status <= 3) )  {
                     filteredItems.push(item);
                 }
             });
 
+            console.log(chamadoIds)
+
             // Filter out items that have the same ID as in 'chamado'
-            const resul = filteredItems.filter(item => !chamadoIds.has(item.id));
+            const resul = filteredItems.filter(item => {
+                if(!chamadoIds.has(item.id) && ){
+
+                }!chamadoIds.has(item.id)});
+            // const resul = filteredItems.filter(item => {
+            //
+            //     !chamadoIds.has(item.id)
+            // });
+            console.log(resul)
 
             return resul.sort(function (a, b) {
                 return b.id - a.id;
@@ -661,12 +669,6 @@ export default {
                 'problem': i[21],
             })));
 
-            // Filter 'this.call' array based on conditions
-            // const filteredItems = this.call.filter(item => {
-            //     //return item.name.startsWith("Manutenção");
-            //     return item.name;
-            // });
-
             const filteredItems = [];
 
             // chamado.forEach(item => {
@@ -705,7 +707,7 @@ export default {
 
             const chamadoIds = new Set(this.call.map(i => i.id));
 
-            console.log(this.call)
+            // console.log(this.call)
             const chamado = new Set(this.call.map((i) => ({
                 'name': i[1],
                 'id': i[2],
