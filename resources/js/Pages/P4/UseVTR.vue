@@ -1,11 +1,7 @@
 <template>
     <Head title="Adicionar de Viatura" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Uso da Viatura</h2>
-        </template>
-
+    <div class="bg-gray-600">
         <div class="p-2 py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
@@ -112,8 +108,7 @@
                 </div>
             </div>
         </div>
-
-    </AuthenticatedLayout>
+    </div>
 </template>
 
 <script>
