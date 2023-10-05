@@ -6,6 +6,7 @@ use App\Http\Controllers\PartsController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\CarsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,6 +47,9 @@ Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases'
 Route::get('/maintenance', function () {
     return Inertia::render('Maintenance');
 })->middleware(['auth', 'verified'])->name('maintenance');
+
+Route::resource('car', CarsController::class);
+Route::get('/cars', [CarsController::class, 'index'])->name('cars');
 
 //Rotas da Dashboard
 Route::get('/charts', [ChartController::class, 'getAcquisition'])->name('charts');
