@@ -40,6 +40,9 @@
                                         Em Uso</th>
                                     <th scope="col"
                                         class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
+                                        Motorista</th>
+                                    <th scope="col"
+                                        class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
                                         Exibir</th>
                                 </tr>
                             </thead>
@@ -55,8 +58,8 @@
                                         <b class="text-lg">{{ plan.brandmodel }}</b></td>
                                     <td class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
                                         <b class="text-lg">{{ plan.km }}</b></td>
-                                    <td class="border-t border-gray-200 hidden px-3 py-3 text-sm text-gray-500 lg:table-cell">
-                                        <div v-on="getBarColor" class="h-5 bg-gray-300 rounded-full" :style="{ width: plan.fuel + '%', backgroundColor: getBarColor(plan.fuel)}">
+                                    <td v-on="getFontColor" class="border-t border-gray-200 hidden px-3 py-3 text-sm text-gray-500 lg:table-cell">
+                                        <div v-on="getBarColor" class="h-5 bg-gray-300 rounded-full" :style="{ width: plan.fuel + '%', backgroundColor: getBarColor(plan.fuel), color: getFontColor(plan.fuel)}">
                                             <b class="text-center text-gray-50 mx-2">{{ plan.fuel }}%</b>
                                         </div>
 
@@ -65,6 +68,10 @@
                                     <td class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
                                         <b v-if="plan.used === 0" class="px-3 py-3 sm:p-3 bg-green-300 rounded-full">Livre</b>
                                         <b v-else class="px-3 py-3 sm:p-3 bg-red-300 rounded-full">Em Uso</b>
+                                    </td>
+                                    <td class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
+                                        <b v-if="plan.used === 0" class="px-3 py-3 sm:p-3 bg-green-300 rounded-full">Livre</b>
+                                        <b v-else class="px-3 py-3 sm:p-3 bg-red-300 text-red-800 rounded-2xl">{{plan.driver.name}}</b>
                                     </td>
                                     <td class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
                                         <!-- class="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white"> -->
@@ -110,13 +117,31 @@ export default {
             } else if (value === 75) {
                 return '#82FA58'; // Change to your desired color class
             } else if (value === 50) {
-                return '#F7FE2E'; // Change to your desired color class
+                return '#FFD700'; // Change to your desired color class
             } else if (value === 25) {
                 return '#FE9A2E'; // Change to your desired color class
             } else {
                 return '#DF0101'; // Change to your desired color class
             }
+        },
+        getFontColor(value) {
+            if (value === 100) {
+                return '#E0FFFF'; // Change to your desired color class
+            } else if (value === 75) {
+                return '#696969'; // Change to your desired color class
+            } else if (value === 50) {
+                return '#696969'; // Change to your desired color class
+            } else if (value === 25) {
+                return '#696969'; // Change to your desired color class
+            } else {
+                return '#DF0101'; // Change to your desired color class
+            }
         }
+    },
+    created () {
+        setTimeout(function() {
+            location.reload();
+        }, 600000);
     },
 
 }

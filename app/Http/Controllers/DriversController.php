@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Cars;
 use App\Models\Drivers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Session;
 use Inertia\Inertia;
 
 class DriversController extends Controller
@@ -15,6 +17,7 @@ class DriversController extends Controller
      */
     public function index()
     {
+
         $drivers = Drivers::all();
 
         return Inertia::render('P4/Drivers',
@@ -28,7 +31,9 @@ class DriversController extends Controller
      */
     public function create()
     {
-        return Inertia::render('P4/Users');
+
+            return Inertia::render('P4/Users');
+
     }
 
     /**
@@ -37,6 +42,8 @@ class DriversController extends Controller
     public function store(Request $request)
     {
         try {
+
+
             DB::beginTransaction();
 
             $driver = $request->validate([
@@ -61,7 +68,9 @@ class DriversController extends Controller
 
             return redirect('/drivers')->with(['error' => 'Não foi possível registrar produto, tente novamente mais tarde.']);
         }
+
     }
+
 
     /**
      * Display the specified resource.

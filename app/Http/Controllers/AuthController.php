@@ -69,7 +69,7 @@ class AuthController extends Controller
 
     public function getTickets()
     {
-
+        if (Auth::user()->admin != 0){
         $login = Http::withHeaders([
             "Authorization" => Auth::user()->authorization,
             'App-Token' => 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1',
@@ -109,6 +109,9 @@ class AuthController extends Controller
                 'callOpen' => $callOpen,
                 'called' => $called,
             ]);
+        } else {
+            return redirect('/cars');
+        }
     }
 
     public function create(Request $request)

@@ -17,9 +17,16 @@ return new class extends Migration
             $table->string('plate', 8);
             $table->string('brandmodel', 200);
             $table->integer('km');
-            $table->integer('fuel' );
+            $table->integer('fuel');
             $table->boolean('used');
-            $table->string('qrcode', 200);
+            $table->string('qrcode', 200)->nullable();
+            $table->index(["drivers_id"]);
+
+            $table->foreignId('drivers_id')
+                ->nullable()
+                ->references('id')->on('drivers')
+                ->onDelete('no action')
+                ->onUpdate('no action');
             $table->timestamps();
         });
     }

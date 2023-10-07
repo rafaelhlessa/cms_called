@@ -130,12 +130,12 @@ export default {
         Head,
         vueMask
     },
-    props: ['errors', 'car', 'driver', 'usedvtr'],
+    props: ['error', 'car', 'driver', 'usedvtr'],
 
     data() {
         return {
             editMode: false,
-            errors: [],
+            error: [],
             form: {
                 vtr_id: '',
                 kmstart: '',

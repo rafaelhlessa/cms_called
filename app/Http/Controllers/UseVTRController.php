@@ -37,14 +37,12 @@ class UseVTRController extends Controller
         try {
             DB::beginTransaction();
 
-
             $usedVtr = $request->validate([
                 'kmstart' => ['required'],
                 'fuel' => ['required'],
                 'drivers_id' => ['required'],
                 'vtr_id' => ['required']
             ]);
-
 
             $used = UsedVtr::create([
                 'cars_id' => $usedVtr['vtr_id'],
@@ -59,11 +57,10 @@ class UseVTRController extends Controller
 
             Cars::findOrFail($cars->id)->update([
                         'used' => 1,
+                        'drivers_id' => $usedVtr['drivers_id']
                     ]);
 
             DB::commit();
-
-//            return redirect('/useVtr')->with(['message' => 'Novo produto criado com sucesso!']);
 
         } catch (\Exception $e) {
             DB::rollback();
@@ -101,23 +98,25 @@ class UseVTRController extends Controller
             'fuel' => ['required'],
         ]);
 
+        if ($usededit['kmend'] > $request['kmstart']) {
 
-        UsedVtr::findOrFail($request->id)->update([
-            'kmend' => $usededit['kmend'],
-            'fuel' => $usededit['fuel'],
-            'date_back' => now(),
-        ]);
+            UsedVtr::findOrFail($request->id)->update([
+                'kmend' => $usededit['kmend'],
+                'fuel' => $usededit['fuel'],
+                'date_back' => now(),
+            ]);
 
-
-        Cars::findOrFail($request->vtr_id)->update([
+            Cars::findOrFail($request->vtr_id)->update([
                 'km' => $usededit['kmend'],
                 'fuel' => $usededit['fuel'],
-                'used' => 0
+                'used' => 0,
+                'drivers_id' => null
             ]);
-//            return redirect('/called')->with(['message' => 'Alterado status do equipamento!']);
 
             DB::commit();
 
+
+        }
 //            return redirect('/useVtr')->with(['message' => 'Novo produto criado com sucesso!']);
 
         } catch (\Exception $e) {
@@ -142,7 +141,7 @@ class UseVTRController extends Controller
     {
         $car = Cars::findOrFail($id);
         $driver = Drivers::all();
-        $usedvtr = UsedVtr::where('cars_id', $car->id)->first();
+        $usedvtr = UsedVtr::where('cars_id', $car->id)->orderBy('created_at', 'desc')->first();
 
 
         return Inertia::render('P4/UseVTR',

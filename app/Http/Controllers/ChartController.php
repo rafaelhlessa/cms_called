@@ -19,6 +19,7 @@ class ChartController extends Controller
 
     public function getAcquisition()
     {
+        if (Auth::user()->admin != 0){
 
         $login = Http::withHeaders([
             "Authorization" => Auth::user()->authorization,
@@ -81,6 +82,10 @@ class ChartController extends Controller
                 'maintenance' => $maintenance['data'],
                 'camera' => $camera['data'],
             ]);
+
+        } else {
+            return redirect('/cars');
+        }
     }
 
     /**

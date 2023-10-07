@@ -6,6 +6,7 @@ use App\Models\Cars;
 use App\Models\Drivers;
 use App\Models\Parts;
 use App\Models\PMStore;
+use App\Models\UsedVtr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -18,6 +19,15 @@ class CarsController extends Controller
     public function index()
     {
         $cars = Cars::all();
+        $usedVtr = UsedVtr::with('drivers')->get();
+
+        $used = '';
+
+        foreach ($usedVtr as $u){
+            if ($u->kmend == null){
+                $used = $u;
+            }
+        }
 
         return Inertia::render('P4/ListCars',
             [
@@ -54,7 +64,7 @@ class CarsController extends Controller
                 'brandmodel' => $cars['brandmodel'],
                 'km' => $cars['km'],
                 'fuel' => $cars['fuel'],
-                'used' => 1,
+                'used' => 0,
             ]);
 
 
@@ -97,7 +107,7 @@ class CarsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        dd($id);
     }
 
     /**
@@ -122,5 +132,29 @@ class CarsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function usedVtr(Request $request, string $id)
+    {
+        dd($request, $id);
+    }
+
+    public function vtrs()
+    {
+        $cars = Cars::all();
+        $usedVtr = UsedVtr::with('drivers')->get();
+
+        $used = '';
+
+        foreach ($usedVtr as $u){
+            if ($u->kmend == null){
+                $used = $u;
+            }
+        }
+
+        return Inertia::render('P4/Vtrs',
+            [
+                'cars' => $cars,
+            ]);
     }
 }

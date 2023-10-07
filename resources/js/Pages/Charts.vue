@@ -19,7 +19,7 @@
                     <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-10 text-white sm:mt-20 sm:grid-cols-2 sm:gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                         <div class="flex flex-col gap-y-3 border-l border-white/10 pl-6">
                             <dt style="width: 500px">Aquisições</dt>
-                            <DoughnutChart :chartData="acqui" />
+                            <DoughnutChart :chartData="acqui" :chartOptions="acquiOptions" />
                         </div>
                         <div class="flex flex-col gap-y-3 border-l border-white/10 pl-6">
                             <dt style="width: 500px">Manutenções</dt>
@@ -139,11 +139,31 @@ export default {
                     {
                         data: [currentYearOpen, currentYearPend, currentYearSolut, currentYearClose],
                         backgroundColor: ['#7CFC00', '#FF8C00', '#A9A9A9', '#1C1C1C'],
+                        legend: {
+                            position: 'right',
+                        },
                     },
                 ],
             }
 
 
+
+        },
+        acquiOptions: function () {
+            return {
+                plugins: {
+                    legend: {
+                        display: true, // Set to true to display the legend
+                        position: 'bottom', // Change the position of the legend to 'bottom'
+                        labels: {
+                            color: '#ffffff', // Change the color of the legend text to red
+                            font: {
+                                size: 16, // Change the font size of the legend text to 16
+                            },
+                        },
+                    },
+                },
+            }
         },
         mainte: function () {
             const currentDate = new Date();
@@ -301,7 +321,7 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: #ffffff;
     margin-top: 60px;
 }
 </style>

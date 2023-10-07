@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->id();
-            $table->string('name', 8);
+            $table->string('name', 100);
             $table->string('location', 200);
             $table->string('phone');
             $table->timestamps();
