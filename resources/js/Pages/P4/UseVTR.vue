@@ -1,13 +1,14 @@
 <template>
     <Head title="Adicionar de Viatura" />
 
-    <div class="bg-gray-600">
+    <div>
+    <div class="min-h-screen bg-gray-600 dark:bg-gray-900">
         <div class="p-2 py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                     <div class="grid grid-cols-1 p-4 pt-10 gap-x-8 gap-y-8 md:grid-cols-3">
                         <div class="px-4 sm:px-0">
-                            <h2 class="text-base font-semibold leading-7 text-gray-900">Uso de Viaturas</h2>
+                            <h2 class="text-base font-semibold leading-7 text-gray-900">Uso de Viaturas - DTIC/PMSC</h2>
                             <p class="mt-1 text-sm leading-6 text-gray-600">Formulário de Uso de Viaturas.</p>
                         </div>
 
@@ -108,6 +109,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </template>
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\ChartController;
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\DriversController;
 use App\Http\Controllers\UseVTRController;
+use App\Http\Controllers\MaintenanceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -61,6 +62,10 @@ Route::get('/maintenance', function () {
 
 Route::resource('car', CarsController::class);
 Route::get('/cars', [CarsController::class, 'index'])->name('cars');
+
+Route::resource('carMain', MaintenanceController::class);
+Route::get('/carsMaintenance', [MaintenanceController::class, 'index'])->name('carsMaintenance');
+Route::get('/carsMaint/{carsMaint}', [MaintenanceController::class, 'carMaint'])->name('carsMaint');
 
 Route::get('/vtrs', [CarsController::class, 'vtrs'])->name('vtrs');
 Route::get('/cars/{cars}', [UseVTRController::class, 'used'])->name('outVtr');

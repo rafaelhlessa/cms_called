@@ -9,11 +9,11 @@ class Cars extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['plate', 'brandmodel', 'km', 'fuel', 'used', 'qrcode', 'drivers_id'];
+    protected $fillable = ['plate', 'brandmodel', 'km', 'fuel', 'used', 'qrcode', 'drivers_id', 'kmoil', 'operation'];
 
     public $table = 'cars';
 
-    protected $with = ['carsUsed', 'driver'];
+    protected $with = ['carsUsed', 'driver', 'maint'];
 
     public function carsUsed()
     {
@@ -24,4 +24,10 @@ class Cars extends Model
     {
         return $this->belongsTo('App\Models\Drivers', 'drivers_id', 'id');
     }
+
+    public function maint()
+    {
+        return $this->belongsTo('App\Models\Maintenance', 'id', 'cars_id');
+    }
+
 }

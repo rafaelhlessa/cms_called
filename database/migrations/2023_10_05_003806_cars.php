@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('fuel');
             $table->boolean('used');
             $table->string('qrcode', 200)->nullable();
+            $table->integer('kmoil')->nullable();
+            $table->boolean('operation')->nullable();
             $table->index(["drivers_id"]);
 
             $table->foreignId('drivers_id')

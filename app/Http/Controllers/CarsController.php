@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cars;
-use App\Models\Drivers;
-use App\Models\Parts;
-use App\Models\PMStore;
+use App\Models\Maintenance;
 use App\Models\UsedVtr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,15 +17,6 @@ class CarsController extends Controller
     public function index()
     {
         $cars = Cars::all();
-        $usedVtr = UsedVtr::with('drivers')->get();
-
-        $used = '';
-
-        foreach ($usedVtr as $u){
-            if ($u->kmend == null){
-                $used = $u;
-            }
-        }
 
         return Inertia::render('P4/ListCars',
             [
@@ -107,7 +96,15 @@ class CarsController extends Controller
      */
     public function show(string $id)
     {
-        dd($id);
+        $car = Cars::findOrFail($id);
+        $maint = Maintenance::where('cars_id', $id)->get();
+
+        return Inertia::render('P4/VtrView',
+            [
+                'car' => $car,
+                'maint' => $maint,
+            ]
+        );
     }
 
     /**

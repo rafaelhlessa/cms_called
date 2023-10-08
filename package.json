@@ -27,6 +27,8 @@
         "heroicons-vue3": "^1.0.2",
         "inputmask": "^5.0.8",
         "jquery": "^3.7.1",
+        "moment": "^2.29.4",
+        "moment-timezone": "^0.5.43",
         "v-switch-case": "^1.0.3",
         "vue-axios": "^3.5.2",
         "vue-chart-3": "^3.1.8",

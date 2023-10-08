@@ -28,6 +28,7 @@ class AuthController extends Controller
 
     public function loginToGLPI()
     {
+        if (Auth::user()->admin != 0){
         $apiUrl = 'https://suporte.pm.sc.gov.br/apirest.php/initSession/';
         $AuthToken = 'VKOXOJWcxVnJVOYRtVQzb7qnTKSOFUCcuzHjHW4F';
         $AppToken = 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1';
@@ -47,6 +48,9 @@ class AuthController extends Controller
         } else {
             return response()->json(['error' => 'User not authenticated'], 401);
         }
+        } else {
+            return redirect('/cars');
+        }
     }
 
     public function getLogin()
@@ -56,6 +60,7 @@ class AuthController extends Controller
 //            'App-Token' => 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1',
 //        ])->withBasicAuth('933270', 'RL327#Hs')->withOptions(['verify' => false])->get('https://suporte.pm.sc.gov.br/apirest.php/initSession/');
 
+        if (Auth::user()->admin != 0){
         $login = Http::withHeaders([
             "Authorization" => "VKOXOJWcxVnJVOYRtVQzb7qnTKSOFUCcuzHjHW4F",
             'App-Token' => 'wtfAh37wNZiQPpbO6flXxBlJKs32E4mBX28WzkJ1',
@@ -64,7 +69,9 @@ class AuthController extends Controller
         $log = json_decode($login, true);
 
         $token = $log['session_token'];
-
+        } else {
+            return redirect('/cars');
+        }
     }
 
     public function getTickets()
@@ -193,76 +200,76 @@ class AuthController extends Controller
     {
 
         dd($request);
-        $report = $request->validate([
-            'called_id' => ['required'],
-            'status_id' => ['required'],
-            'solution' => ['required'],
-            'technic_id' => ['required'],
-        ]);
-
-        try {
-            DB::beginTransaction();
-
-            $calledReport = ReportCalled::create([
-                'called_id' => $report['called_id'],
-                'status_id' => $report['status_id'],
-                'solution' => $report['solution'],
-                'tech_report' => $request['tech_report'],
-                'technic_id' => $report['technic_id'],
-
-            ]);
-
-            $items = collect($request['item']) ?? null;
-            $items->each(function ($item) use ($calledReport) {
-
-                // dd($item);
-
-                // $part = Parts::with('pmStore')->with('islandStore')->where('parts_id', '=', $item['id'])->get();
-                $storage = Parts::findOrFail($item['id']);
-
-                if ($storage->amount > $item['quantity']) {
-                    $part = Parts::where('amount', '>', 0)->where('id', $item['id'])->first();
-                    $partPm = PMStore::where('amount', '>', 0)->where('parts_id', $item['id'])->first();
-                    $partIsland = IslandStore::where('amount', '>', 0)->where('parts_id', $item['id'])->first();
-                    if ($partPm->amount > $item['quantity']) {
-                        $over = $partPm->amount - $item['quantity'];
-                        $overp = $part->amount - $item['quantity'];
-
-                        echo "Tem mais peça PM do que a quantidade " . $over;
-
-                        PMStore::findOrFail($partPm->id)->update([
-                            'amount' => $over,
-                        ]);
-                        Parts::findOrFail($part->id)->update([
-                            'amount' => $overp,
-                        ]);
-
-                        // dd($partPm->id);
-                    } else {
-                        $saldo = $item['quantity'] - $partPm->amount;
-                        //
-                        echo "Tem menos peça PM do que a quantidade " . $saldo;
-                        dd($partPm->id);
-                        dd($saldo);
-                    }
-
-                    echo "Tem em " . $storage->amount . " estoque";
-                } else {
-
-                    echo "Não tem em estoque";
-                }
-
-                // $partPm = PMStore::where('amount', '>', 0)->where('parts_id', $item['id'])->get();
-                // dd($partPm);
-
-                DB::commit();
-            });
-
-            return redirect('/called')->with(['message' => 'Serviço Realizado!']);
-        } catch (Exception $e) {
-            echo 'Exceção capturada: ', $e->getMessage(), "\n";
-
-            DB::rollback();
-        }
+//        $report = $request->validate([
+//            'called_id' => ['required'],
+//            'status_id' => ['required'],
+//            'solution' => ['required'],
+//            'technic_id' => ['required'],
+//        ]);
+//
+//        try {
+//            DB::beginTransaction();
+//
+//            $calledReport = ReportCalled::create([
+//                'called_id' => $report['called_id'],
+//                'status_id' => $report['status_id'],
+//                'solution' => $report['solution'],
+//                'tech_report' => $request['tech_report'],
+//                'technic_id' => $report['technic_id'],
+//
+//            ]);
+//
+//            $items = collect($request['item']) ?? null;
+//            $items->each(function ($item) use ($calledReport) {
+//
+//                // dd($item);
+//
+//                // $part = Parts::with('pmStore')->with('islandStore')->where('parts_id', '=', $item['id'])->get();
+//                $storage = Parts::findOrFail($item['id']);
+//
+//                if ($storage->amount > $item['quantity']) {
+//                    $part = Parts::where('amount', '>', 0)->where('id', $item['id'])->first();
+//                    $partPm = PMStore::where('amount', '>', 0)->where('parts_id', $item['id'])->first();
+//                    $partIsland = IslandStore::where('amount', '>', 0)->where('parts_id', $item['id'])->first();
+//                    if ($partPm->amount > $item['quantity']) {
+//                        $over = $partPm->amount - $item['quantity'];
+//                        $overp = $part->amount - $item['quantity'];
+//
+//                        echo "Tem mais peça PM do que a quantidade " . $over;
+//
+//                        PMStore::findOrFail($partPm->id)->update([
+//                            'amount' => $over,
+//                        ]);
+//                        Parts::findOrFail($part->id)->update([
+//                            'amount' => $overp,
+//                        ]);
+//
+//                        // dd($partPm->id);
+//                    } else {
+//                        $saldo = $item['quantity'] - $partPm->amount;
+//                        //
+//                        echo "Tem menos peça PM do que a quantidade " . $saldo;
+//                        dd($partPm->id);
+//                        dd($saldo);
+//                    }
+//
+//                    echo "Tem em " . $storage->amount . " estoque";
+//                } else {
+//
+//                    echo "Não tem em estoque";
+//                }
+//
+//                // $partPm = PMStore::where('amount', '>', 0)->where('parts_id', $item['id'])->get();
+//                // dd($partPm);
+//
+//                DB::commit();
+//            });
+//
+//            return redirect('/called')->with(['message' => 'Serviço Realizado!']);
+//        } catch (Exception $e) {
+//            echo 'Exceção capturada: ', $e->getMessage(), "\n";
+//
+//            DB::rollback();
+//        }
     }
 }
