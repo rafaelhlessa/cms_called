@@ -23,7 +23,7 @@
                                         </a>
                                     </div>
                                     <div class="flex-shrink-0">
-                                        <img class="h-full mr-4 text-white" :src="'/storage/'+ car.qrcode" alt="Oficial" />
+                                        <img class="h-full mr-4 text-white" :src="'/storage/'+car.qrcode" alt="Oficial" />
                                     </div>
                                 </div>
                             </div>

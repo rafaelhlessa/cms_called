@@ -22,8 +22,8 @@
                                         <label for="oil" class="block text-sm font-medium leading-6 text-gray-900">Troca de Óleo</label>
                                         <div class="mt-2">
                                             <select id="oil" name="oil"  v-model="form.oil" class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                                <option value="7.000"> Óleo 7.000 KM </option>
-                                                <option value="10.000"> Óleo 10.000 KM </option>
+                                                <option value="7000"> Óleo 7.000 KM </option>
+                                                <option value="10000"> Óleo 10.000 KM </option>
                                             </select>
                                         </div>
                                     </div>

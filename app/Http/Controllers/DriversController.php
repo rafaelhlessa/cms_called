@@ -50,6 +50,7 @@ class DriversController extends Controller
                 'name' => ['required'],
                 'location' => ['required'],
                 'phone' => ['required'],
+                'password' => ['required'],
             ]);
 
 
@@ -57,6 +58,7 @@ class DriversController extends Controller
                 'name' => $driver['name'],
                 'location' => $driver['location'],
                 'phone' => $driver['phone'],
+                'password' => $driver['password']
             ]);
 
             DB::commit();
