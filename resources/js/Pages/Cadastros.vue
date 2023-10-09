@@ -600,10 +600,7 @@ export default {
             console.log(chamadoIds)
 
             // Filter out items that have the same ID as in 'chamado'
-            const resul = filteredItems.filter(item => {
-                if(!chamadoIds.has(item.id) && ){
-
-                }!chamadoIds.has(item.id)});
+            const resul = filteredItems.filter(item => !chamadoIds.has(item.id));
             // const resul = filteredItems.filter(item => {
             //
             //     !chamadoIds.has(item.id)
