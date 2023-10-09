@@ -68,7 +68,7 @@ Route::get('/carsMaintenance', [MaintenanceController::class, 'index'])->name('c
 Route::get('/carsMaint/{carsMaint}', [MaintenanceController::class, 'carMaint'])->name('carsMaint');
 
 Route::get('/vtrs', [CarsController::class, 'vtrs'])->name('vtrs');
-Route::get('/cars/{cars}', [UseVTRController::class, 'used'])->name('outVtr');
+Route::get('/cars/{cars}', [UseVTRController::class, 'used']);
 //Route::get('/cars/{cars}', [CarsController::class, 'usedVtr'])->name('outVtr');
 Route::post('vtrOut', [CarsController::class, 'usedVtr'])->name('vtrOut');
 Route::put('vtrBack', [CarsController::class, 'usedVtr'])->name('vtrBack');
