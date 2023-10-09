@@ -1,5 +1,5 @@
 <template>
-    <Head title="Adicionar de Viatura" />
+    <Head title="Adicionar de Motoristas" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -42,10 +42,17 @@
                                     </div>
 
                                     <div class="sm:col-span-3">
-                                        <label for="km" class="block text-sm font-medium leading-6 text-gray-900">Telefone</label>
+                                        <label for="phone" class="block text-sm font-medium leading-6 text-gray-900">Telefone</label>
                                         <div class="mt-2">
                                             <vue-mask v-model="form.phone" mask="(99) 9 9999-9999" :raw="false" :options="options" placeholder="(48) 9 9999-9999" autofocus class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                             </vue-mask>
+                                        </div>
+                                    </div>
+
+                                    <div class="sm:col-span-3">
+                                        <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Senha</label>
+                                        <div class="mt-2">
+                                            <input type="text" v-model="form.password" name="password" id="password" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +77,7 @@ import vueMask from 'vue-jquery-mask';
 
 
 export default {
-    name: "EntranceCars",
+    name: "DriversCreate",
     components: {
         AuthenticatedLayout,
         Head,
@@ -86,6 +93,7 @@ export default {
                 name: null,
                 location: null,
                 phone: '',
+                password: null,
             },
 
         }
@@ -96,6 +104,7 @@ export default {
                 name: null,
                 location: null,
                 phone: null,
+                password: null,
             }
         },
         save: function (data) {

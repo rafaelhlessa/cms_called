@@ -9,7 +9,7 @@ class Drivers extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'location', 'phone'];
+    protected $fillable = ['name', 'location', 'phone', 'password'];
 
     public $table = 'drivers';
 }

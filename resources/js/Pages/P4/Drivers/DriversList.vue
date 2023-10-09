@@ -1,5 +1,5 @@
 <template>
-    <Head title="Lista de Viaturas" />
+    <Head title="Lista de Motoristas" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -7,7 +7,7 @@
         </template>
 
         <div class="p-2 py-12">
-            <div class="px-4 py-8 bg-white rounded rounded-lg shadow-2xl">
+            <div class="px-4 py-8 bg-white rounded-lg shadow-2xl">
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
@@ -49,21 +49,12 @@
                                     <b class="text-lg">{{ plan.location }}</b></td>
                                 <td class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
                                     <b class="text-lg">{{ plan.phone }}</b></td>
-<!--                                <td class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">-->
-<!--                                    <div v-on="getBarColor" class="h-6 bg-gray-300 rounded-full" :style="{ width: plan.fuel + '%', backgroundColor: getBarColor(plan.fuel)}">-->
-<!--                                        <b class="text-center mx-4">{{ plan.fuel }}%</b>-->
-<!--                                    </div>-->
-
-
-<!--                                </td>-->
-<!--                                <td class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">-->
-<!--                                    <b v-if="plan.used === 0" class="px-3 py-3 sm:p-3 bg-green-200 rounded-full">Não</b>-->
-<!--                                    <b v-else class="px-3 py-3 sm:p-3 bg-red-200 rounded-full">Sim</b>-->
-<!--                                </td>-->
                                 <td class="border-t border-gray-200 hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell">
-                                    <!-- class="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white"> -->
                                     <a :href="route('car.edit', plan.id)">
-                                        <img className="h-8 w-8 text-white" :src="`/storage/oficial.svg`" alt="Oficial" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
+                                            <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
+                                        </svg>
+
                                     </a>
                                 </td>
                             </tr>
@@ -82,7 +73,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
 export default {
-    name: "EntranceCreate",
+    name: "DriversList",
     components: {
         AuthenticatedLayout,
         Head
@@ -96,20 +87,6 @@ export default {
         }
     },
     methods: {
-        // // Define a method to calculate the bar color based on the value.
-        // getBarColor(value) {
-        //     if (value === 100) {
-        //         return '#04B404'; // Change to your desired color class
-        //     } else if (value === 75) {
-        //         return '#82FA58'; // Change to your desired color class
-        //     } else if (value === 50) {
-        //         return '#F7FE2E'; // Change to your desired color class
-        //     } else if (value === 25) {
-        //         return '#FE9A2E'; // Change to your desired color class
-        //     } else {
-        //         return '#DF0101'; // Change to your desired color class
-        //     }
-        // }
     },
 
 }

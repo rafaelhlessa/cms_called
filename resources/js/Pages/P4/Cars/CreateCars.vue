@@ -76,7 +76,7 @@ import vueMask from 'vue-jquery-mask';
 
 
 export default {
-    name: "EntranceCars",
+    name: "CreateCars",
     components: {
         AuthenticatedLayout,
         Head,

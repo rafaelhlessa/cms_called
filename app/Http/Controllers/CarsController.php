@@ -18,7 +18,7 @@ class CarsController extends Controller
     {
         $cars = Cars::all();
 
-        return Inertia::render('P4/ListCars',
+        return Inertia::render('P4/Cars/ListCars',
             [
                 'cars' => $cars,
             ]);
@@ -29,7 +29,7 @@ class CarsController extends Controller
      */
     public function create()
     {
-        return Inertia::render('P4/CarsCreate');
+        return Inertia::render('P4/Cars/CreateCars');
     }
 
     /**
@@ -56,30 +56,6 @@ class CarsController extends Controller
                 'used' => 0,
             ]);
 
-
-//            $pmParts = PMStore::where('parts_id', $part->id)->first();
-//
-//            if($pmParts != null){
-//                if(isset($pmParts->amount)){
-//                    $over = $pmParts->amount+$part->amount;
-//
-//                    PMStore::findOrFail($pmParts->id)->update([
-//                        'amount' => $over,
-//
-//                    ]);
-//
-//                }else{
-//                    $over = $part->amount;
-//
-//                    PMStore::create([
-//                        'amount' => $over,
-//                        'parts_id' => $part->id,
-//                    ]);
-//
-//                }
-//            }
-
-
             DB::commit();
 
             return redirect('/cars')->with(['message' => 'Novo produto criado com sucesso!']);
@@ -99,7 +75,7 @@ class CarsController extends Controller
         $car = Cars::findOrFail($id);
         $maint = Maintenance::where('cars_id', $id)->get();
 
-        return Inertia::render('P4/VtrView',
+        return Inertia::render('P4/Cars/ShowCars',
             [
                 'car' => $car,
                 'maint' => $maint,
@@ -131,23 +107,9 @@ class CarsController extends Controller
         //
     }
 
-    public function usedVtr(Request $request, string $id)
-    {
-        dd($request, $id);
-    }
-
     public function vtrs()
     {
         $cars = Cars::all();
-        $usedVtr = UsedVtr::with('drivers')->get();
-
-        $used = '';
-
-        foreach ($usedVtr as $u){
-            if ($u->kmend == null){
-                $used = $u;
-            }
-        }
 
         return Inertia::render('P4/Vtrs',
             [

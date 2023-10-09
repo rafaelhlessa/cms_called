@@ -1,5 +1,5 @@
 <template>
-    <Head title="Adicionar de Viatura" />
+    <Head title="Viatura" />
 
     <div>
     <div class="min-h-screen bg-gray-600 dark:bg-gray-900">
@@ -58,7 +58,8 @@
                             </div>
                             <div class="flex items-center justify-end px-4 py-4 border-t gap-x-6 border-gray-900/10 sm:px-8">
                                 <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancelar</button>
-                                <button type="button" @click="save(form)" class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Usar VTR</button>
+<!--                                <button type="button" @click="save(form), showAlert" class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Usar VTR</button>-->
+                                <button type="button" @click="passwordAlert(form)" class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Usar VTR</button>
                             </div>
                         </form>
                         <form v-if="car.used === 1" class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
@@ -102,7 +103,7 @@
                             </div>
                             <div class="flex items-center justify-end px-4 py-4 border-t gap-x-6 border-gray-900/10 sm:px-8">
                                 <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancelar</button>
-                                <button type="button" @click="update(form)" class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Devolver VTR</button>
+                                <button type="button" @click="passwordAlert2(form)" class="px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Devolver VTR</button>
                             </div>
                         </form>
                     </div>
@@ -117,7 +118,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import vueMask from 'vue-jquery-mask';
-import drivers from "@/Pages/P4/Drivers.vue";
+import drivers from "@/Pages/P4/Drivers/DriversList.vue";
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 
 export default {
@@ -130,7 +133,8 @@ export default {
     components: {
         AuthenticatedLayout,
         Head,
-        vueMask
+        vueMask,
+        VueSweetalert2
     },
     props: ['error', 'car', 'driver', 'usedvtr'],
 
@@ -160,42 +164,42 @@ export default {
                 drivers_id: null,
             }
         },
-        save: function (data) {
-            console.log(data)
-
-            const payload = {
-                vtr_id: this.car.id,
-                kmstart: this.car.km,
-                fuel: this.car.fuel,
-                drivers_id: data.drivers_id
-            };
-
-            this.$inertia.post('/usevtrs', payload)
-
-            this.reset();
-            this.editMode = false;
-        },
+        // save: function (data) {
+        //     console.log(data)
+        //
+        //     const payload = {
+        //         vtr_id: this.car.id,
+        //         kmstart: this.car.km,
+        //         fuel: this.car.fuel,
+        //         drivers_id: data.drivers_id
+        //     };
+        //
+        //     this.$inertia.post('/usevtrs', payload)
+        //
+        //     this.reset();
+        //     this.editMode = false;
+        // },
         edit: function (data) {
             this.form = Object.assign(data);
             this.editMode = true;
         },
-        update: function (a) {
-            a._method = 'PUT';
-
-            // Save the status_id and technic_id fields
-            const payload = {
-                id: this.usedvtr.id,
-                vtr_id: this.car.id,
-                kmstart: this.car.km,
-                kmend: a.kmend,
-                fuel: a.fuel,
-            };
-
-            this.$inertia.put('/usevtrs/' + a.id, payload);
-            this.reset();
-            // location.reload()
-
-        },
+        // update: function (a) {
+        //     a._method = 'PUT';
+        //
+        //     // Save the status_id and technic_id fields
+        //     const payload = {
+        //         id: this.usedvtr.id,
+        //         vtr_id: this.car.id,
+        //         kmstart: this.car.km,
+        //         kmend: a.kmend,
+        //         fuel: a.fuel,
+        //     };
+        //
+        //     this.$inertia.put('/usevtrs/' + a.id, payload);
+        //     this.reset();
+        //     // location.reload()
+        //
+        // },
         getBarColor(value) {
             if (value === 100) {
                 return '#04B404'; // Change to your desired color class
@@ -208,6 +212,95 @@ export default {
             } else {
                 return '#DF0101'; // Change to your desired color class
             }
+        },
+        passwordAlert(form) {
+            // Use sweetalert2
+
+            let correctPassword = '';
+            this.driver.forEach(item => {
+                if (item.id === this.form.drivers_id)  {
+                    correctPassword = item.password;
+                }
+            });
+
+            this.$swal.fire({
+                title: this.car.brandmodel +' - '+ this.car.plate ,
+                html: `<input type="password" id="password" class="swal2-input" placeholder="Senha">`,
+                                    confirmButtonText: 'Entrar',
+                                    focusConfirm: false,
+                                    preConfirm: () => {const password = this.$swal.getPopup().querySelector('#password').value
+                                        if (!password) {
+                                            this.$swal.showValidationMessage(`Entre com sua Senha`)
+                                        }
+                                        return { password: password }
+                                    }
+                                }).then((result) => {
+
+                                    if (result.value.password === correctPassword) {
+                                        console.log('Entrou no if')
+                                        this.$swal.fire('Viatura liberada para o uso!', 'Obrigado', 'success');
+                                        const payload = {
+                                            vtr_id: this.car.id,
+                                            kmstart: this.car.km,
+                                            fuel: this.car.fuel,
+                                            drivers_id: this.form.drivers_id
+                                        };
+                                        console.log(payload)
+
+                                        this.$inertia.post('/usevtrs', payload)
+
+                                        // this.reset();
+                                        // this.editMode = false;
+
+                                    } else if (result.value.password !== undefined) {
+                                        console.log('teste')
+                                        this.$swal.fire('Senha Errada', 'Tente novamente', 'error');
+                                    }
+            })
+
+        },
+        passwordAlert2(a){
+            let correctPassword = '';
+            this.driver.forEach(item => {
+                if (item.id === this.car.drivers_id)  {
+                    correctPassword = item.password;
+                }
+            });
+
+            this.$swal.fire({
+                title: this.car.brandmodel +' - '+ this.car.plate ,
+                html: `<input type="password" id="password" class="swal2-input" placeholder="Senha">`,
+                confirmButtonText: 'Entrar',
+                focusConfirm: false,
+                preConfirm: () => {const password = this.$swal.getPopup().querySelector('#password').value
+                    if (!password) {
+                        this.$swal.showValidationMessage(`Entre com sua Senha`)
+                    }
+                    return { password: password }
+                }
+            }).then((result) => {
+
+                if (result.value.password === correctPassword) {
+                    console.log('Entrou no if')
+                    this.$swal.fire('Viatura devolvida!', 'Obrigado', 'success');
+                    a._method = 'PUT';
+
+                    const payload = {
+                        id: this.usedvtr.id,
+                        vtr_id: this.car.id,
+                        kmstart: this.car.km,
+                        kmend: a.kmend,
+                        fuel: a.fuel,
+                    };
+
+                    this.$inertia.put('/usevtrs/' + a.id, payload);
+                    this.reset();
+
+                } else if (result.value.password !== undefined) {
+                    console.log('teste')
+                    this.$swal.fire('Senha Errada', 'Tente novamente', 'error');
+                }
+            })
         }
     },
 }

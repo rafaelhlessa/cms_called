@@ -36,6 +36,7 @@ class MaintenanceController extends Controller
         try {
             DB::beginTransaction();
 
+
             $carsMaint = $request->validate([
                 'factory_id' => ['required'],
                 'active' => ['required'],
@@ -43,17 +44,21 @@ class MaintenanceController extends Controller
             ]);
 
             Maintenance::create([
-                'cars_id' => $request['cars_id'],
+                'cars_id' => $request['car_id'],
                 'factory_id' => $carsMaint['factory_id'],
                 'active' => $carsMaint['active'],
                 'drivers_id' => $carsMaint['drivers_id'],
                 'description' => $request['description'],
                 'oil' => $request['oil'],
                 'icon' => 'WrenchIcon',
-                'iconBackground' => 'bg-red-500'
+                'iconBackground' => 'bg-red-500',
+                'service' => $request['service'],
+                'forecast' => now(),
+                'cost' => $request['cost']
             ]);
 
-            $cars = Cars::where('id', $request['cars_id'])->first();
+            $cars = Cars::where('id', $request['car_id'])->first();
+
 
             if ($request['oil'] === null){
                 $oil = $cars->kmoil;
@@ -61,7 +66,7 @@ class MaintenanceController extends Controller
                 $oil = $request['oil']+$cars->km;
             }
 
-            Cars::findOrFail($request['cars_id'])->update([
+            Cars::findOrFail($request['car_id'])->update([
                     'kmoil' => $oil,
                     'operation' => $carsMaint['active']
             ]);
@@ -69,12 +74,13 @@ class MaintenanceController extends Controller
 
             DB::commit();
 
-            return redirect('/cars')->with(['message' => 'Novo produto criado com sucesso!']);
+
+            return redirect('/car/'.$cars->id)->with(['message' => 'Nova manutenção adicionada!']);
 
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
-            return redirect('/cars')->with(['error' => 'Não foi possível registrar produto, tente novamente mais tarde.']);
+
+            return redirect('/car/'.$cars->id)->with(['error' => 'Não foi possível registrar produto, tente novamente mais tarde.']);
         }
     }
 

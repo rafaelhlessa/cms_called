@@ -22,8 +22,8 @@
                                         <label for="oil" class="block text-sm font-medium leading-6 text-gray-900">Troca de Óleo</label>
                                         <div class="mt-2">
                                             <select id="oil" name="oil"  v-model="form.oil" class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                                <option value="7000"> Óleo 7.000 KM </option>
-                                                <option value="10000"> Óleo 10.000 KM </option>
+                                                <option value="7.000"> Óleo 7.000 KM </option>
+                                                <option value="10.000"> Óleo 10.000 KM </option>
                                             </select>
                                         </div>
                                     </div>
@@ -55,6 +55,29 @@
                                         </div>
                                     </div>
 
+                                    <div class="sm:col-span-3">
+                                        <label for="service" class="block text-sm font-medium leading-6 text-gray-900">Tipo de Serviço</label>
+                                        <div class="mt-2">
+                                            <select id="service" name="service" v-model="form.service" class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                                <option value="Troca de Óleo"> Troca de Óleo </option>
+                                                <option value="Troca/Reparo de Pneus"> Troca/Reparo de Pneus </option>
+                                                <option value="Reparo Suspensão"> Reparo Suspensão </option>
+                                                <option value="Reparo Motor"> Reparo Motor </option>
+                                                <option value="Reparo Câmbio"> Reparo Câmbio </option>
+                                                <option value="Reparo Elétrica"> Reparo Elétrica </option>
+                                                <option value="Outro"> Outro Reparo </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+<!--                                    <div class="sm:col-span-3">-->
+<!--                                        <label for="cost" class="block text-sm font-medium leading-6 text-gray-900">Custo do Serviço</label>-->
+<!--                                        <div class="mt-2">-->
+<!--&lt;!&ndash;                                            <money v-model="form.cost" :v-bind="config"></money>&ndash;&gt;-->
+<!--                                            <input type="text" v-model="form.cost" name="cost" id="cost" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+
                                     <div class="sm:col-span-6">
                                         <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Descrição do Serviço</label>
                                         <div class="mt-2">
@@ -79,12 +102,16 @@
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import vueMask from 'vue-jquery-mask';
+import money from 'v-money3';
 
 export default {
     name: "EntranceCreate",
     components: {
         AuthenticatedLayout,
-        Head
+        Head,
+        vueMask,
+        money
     },
     props: ['errors', 'car', 'factorye', 'driver'],
 
@@ -98,8 +125,25 @@ export default {
                 factory_id: null,
                 oil: null,
                 active: null,
-                car_id: this.car.id
+                car_id: this.car.id,
+                service: null,
+                cost: ''
             },
+            config: {
+                prefix: '',
+                suffix: '',
+                thousands: ',',
+                decimal: '.',
+                precision: 2,
+                disableNegative: false,
+                disabled: false,
+                min: null,
+                max: null,
+                allowBlank: false,
+                minimumNumberOfCharacters: 0,
+                shouldRound: true,
+                focusOnRight: false,
+            }
 
         }
     },
@@ -111,19 +155,12 @@ export default {
                 factory_id: null,
                 oil: null,
                 active: null,
+                service: null,
+                cost: null
             }
         },
         save: function (data) {
             console.log(data)
-
-            // const payload = {
-            //     description: data.description,
-            //     drivers_id: data.drivers_id,
-            //     factory_id: data.factory_id,
-            //     oil: data.oil,
-            //     active: data.active,
-            //     cars_id: data.car_id
-            // };
 
             this.$inertia.post('/carMain', data)
 

@@ -1,5 +1,5 @@
 <template>
-    <Head title="Adicionar de Viatura" />
+    <Head title="Viaturas" />
 
     <div>
         <div class="min-h-screen bg-gray-600 dark:bg-gray-900">
@@ -12,10 +12,7 @@
                         </div>
                         <div class="overflow-hidden p-4 bg-white shadow-sm dark:bg-gray-800 sm:rounded-b-lg">
                             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                                <div v-for="car in cars" :key="car.id" class="relative flex items-center m-4 space-x-6 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
-<!--                                    <div class="flex-shrink-0">-->
-<!--                                        <img className="h-8 w-8 mr-4 text-white" :src="`/storage/oficial.svg`" alt="Oficial" />-->
-<!--                                    </div>-->
+                                <div v-for="car in cars" :key="car.id" class="relative flex items-center m-2 space-x-6 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
                                     <div class="min-w-0 ml-4 mb-12 flex-1">
                                         <a :href="route('outVtr', car.id)" class="focus:outline-none">
                                             <span class="absolute inset-0" aria-hidden="true" />

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('forecast')->nullable();
             $table->string('icon')->nullable();
             $table->string('iconBackground')->nullable();
+            $table->string('service', 100)->nullable();
             $table->index(["cars_id"]);
             $table->index(["drivers_id"]);
             $table->index(["factory_id"]);

@@ -20,7 +20,7 @@ class DriversController extends Controller
 
         $drivers = Drivers::all();
 
-        return Inertia::render('P4/Drivers',
+        return Inertia::render('P4/Drivers/DriversList',
             [
                 'drivers' => $drivers,
             ]);
@@ -32,7 +32,7 @@ class DriversController extends Controller
     public function create()
     {
 
-            return Inertia::render('P4/Users');
+            return Inertia::render('P4/Drivers/DriversCreate');
 
     }
 

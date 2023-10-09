@@ -1,5 +1,5 @@
 <template>
-    <Head title="Adicionar de Viatura" />
+    <Head title="Viatura" + car.brandmodel />
 
     <AuthenticatedLayout>
         <template #header>
@@ -7,7 +7,7 @@
         </template>
 
         <div class="flex justify-center p-14 py-12">
-            <div class="px-4 py-8 bg-white rounded rounded-lg shadow-2xl">
+            <div class="px-4 py-8 bg-white rounded-lg shadow-2xl">
                 <div class="overflow-hidden bg-white shadow sm:rounded-lg">
                     <div class="px-4 py-6 sm:px-6 sm:flex sm:items-center">
                         <div class="sm:flex-auto">
@@ -25,8 +25,8 @@
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <div class="text-sm font-medium text-gray-900">{{car.brandmodel}}</div>
                                 <div class="text-sm font-medium text-gray-900">{{car.plate}}</div>
-                                <div v-if="car.km < car.kmoil" class="text-sm font-medium text-gray-900">Troca Óleo com {{car.kmoil}}</div>
-                                <div v-else class="text-md bold font-medium text-gray-700">Passou {{car.km - car.kmoil}} KM da troca.</div>
+                                <div v-if="car.km < car.kmoil" class="text-sm font-medium text-gray-900">Trocar Óleo com {{car.kmoil}} Km.</div>
+                                <div v-else class="text-md bold font-medium text-gray-700">Passou {{car.km - car.kmoil}} Km da troca.</div>
                             </div>
                             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt class="text-sm font-medium text-gray-900">
@@ -66,8 +66,11 @@
                                                         </div>
                                                         <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
                                                             <div>
-                                                                <p class="text-sm text-gray-500">
-                                                                    {{ event.oil }} <a :href="route('carMain.show', event.id)" class="font-medium text-gray-900">Ver Manutenção</a>
+                                                                <p v-if="event.oil !== null" class="text-sm text-gray-500">
+                                                                    {{ event.service }} para {{ event.oil }} Km, <a :href="route('carMain.show', event.id)" class="font-medium bold text-gray-900"> Ver Manutenção</a>
+                                                                </p>
+                                                                <p v-else class="text-sm text-gray-500">
+                                                                    {{ event.service }}, <a :href="route('carMain.show', event.id)" class="font-medium bold text-gray-900"> Ver Manutenção</a>
                                                                 </p>
                                                             </div>
                                                             <div class="whitespace-nowrap text-right text-sm text-gray-500">
@@ -97,11 +100,11 @@ import { WrenchIcon } from '@heroicons/vue/20/solid'
 import moment from 'moment-timezone';
 
 export default {
-    name: "Vtrs",
+    name: "ShowCars",
     components: {
         AuthenticatedLayout,
         Head,
-        WrenchIcon
+        WrenchIcon,
 
     },
     props: ['errors', 'car', 'driver', 'maint'],
@@ -130,8 +133,15 @@ export default {
             console.log(a)
         },
         dateMaint (a){
-            return moment.tz(this.a).format('DD MMM YYYY');
-        }
+            moment.updateLocale('pt', {
+                months : [
+                    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
+                    "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+                ]
+            });
+
+            return moment.tz(this.a, 'America/Sao_Paulo').format('DD MMMM YYYY');
+        },
     },
 
 }
