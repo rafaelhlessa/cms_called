@@ -73,7 +73,7 @@ class CarsController extends Controller
     public function show(string $id)
     {
         $car = Cars::findOrFail($id);
-        $maint = Maintenance::where('cars_id', $id)->get();
+        $maint = Maintenance::where('cars_id', $id)->orderBy('id', 'desc')->get();
 
         return Inertia::render('P4/Cars/ShowCars',
             [

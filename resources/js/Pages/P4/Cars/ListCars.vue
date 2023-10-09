@@ -133,6 +133,7 @@ export default {
     created () {
         setTimeout(function() {
             location.reload();
+        // }, 3000);
         }, 600000);
     },
 

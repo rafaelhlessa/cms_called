@@ -55,7 +55,7 @@
                                 <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                     <div class="flow-root">{{}}
                                         <ul role="list" class="-mb-8">
-                                            <li v-for="(event, eventIdx) in maint" :key="event.id">
+                                            <li v-for="(event, eventIdx) in maint"  :key="event.id">
                                                 <div class="relative pb-8">
                                                     <span v-if="eventIdx !== maint.length - 1" class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
                                                     <div class="relative flex space-x-3">

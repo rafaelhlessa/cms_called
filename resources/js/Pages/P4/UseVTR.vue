@@ -117,9 +117,10 @@
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import {onMounted} from "vue";
 import vueMask from 'vue-jquery-mask';
 import drivers from "@/Pages/P4/Drivers/DriversList.vue";
-import VueSweetalert2 from 'vue-sweetalert2';
+import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 
@@ -134,7 +135,7 @@ export default {
         AuthenticatedLayout,
         Head,
         vueMask,
-        VueSweetalert2
+        Swal
     },
     props: ['error', 'car', 'driver', 'usedvtr'],
 
@@ -152,6 +153,14 @@ export default {
             },
 
         }
+    },
+    setup() {
+        async function getTransactions() {
+            // //...
+            // Swal.fire('Something went wrong.')
+        }
+
+        onMounted(() => getTransactions())
     },
     methods: {
         reset: function () {
@@ -223,14 +232,14 @@ export default {
                 }
             });
 
-            this.$swal.fire({
+            Swal.fire({
                 title: this.car.brandmodel +' - '+ this.car.plate ,
                 html: `<input type="password" id="password" class="swal2-input" placeholder="Senha">`,
                                     confirmButtonText: 'Entrar',
                                     focusConfirm: false,
-                                    preConfirm: () => {const password = this.$swal.getPopup().querySelector('#password').value
+                                    preConfirm: () => {const password = Swal.getPopup().querySelector('#password').value
                                         if (!password) {
-                                            this.$swal.showValidationMessage(`Entre com sua Senha`)
+                                            Swal.showValidationMessage(`Entre com sua Senha`)
                                         }
                                         return { password: password }
                                     }
@@ -238,7 +247,7 @@ export default {
 
                                     if (result.value.password === correctPassword) {
                                         console.log('Entrou no if')
-                                        this.$swal.fire('Viatura liberada para o uso!', 'Obrigado', 'success');
+                                        Swal.fire('Viatura liberada para o uso!', 'Obrigado', 'success');
                                         const payload = {
                                             vtr_id: this.car.id,
                                             kmstart: this.car.km,
@@ -254,7 +263,7 @@ export default {
 
                                     } else if (result.value.password !== undefined) {
                                         console.log('teste')
-                                        this.$swal.fire('Senha Errada', 'Tente novamente', 'error');
+                                        Swal.fire('Senha Errada', 'Tente novamente', 'error');
                                     }
             })
 
@@ -267,14 +276,14 @@ export default {
                 }
             });
 
-            this.$swal.fire({
+            Swal.fire({
                 title: this.car.brandmodel +' - '+ this.car.plate ,
                 html: `<input type="password" id="password" class="swal2-input" placeholder="Senha">`,
                 confirmButtonText: 'Entrar',
                 focusConfirm: false,
-                preConfirm: () => {const password = this.$swal.getPopup().querySelector('#password').value
+                preConfirm: () => {const password = Swal.getPopup().querySelector('#password').value
                     if (!password) {
-                        this.$swal.showValidationMessage(`Entre com sua Senha`)
+                        Swal.showValidationMessage(`Entre com sua Senha`)
                     }
                     return { password: password }
                 }
@@ -282,7 +291,7 @@ export default {
 
                 if (result.value.password === correctPassword) {
                     console.log('Entrou no if')
-                    this.$swal.fire('Viatura devolvida!', 'Obrigado', 'success');
+                    Swal.fire('Viatura devolvida!', 'Obrigado', 'success');
                     a._method = 'PUT';
 
                     const payload = {
@@ -298,7 +307,7 @@ export default {
 
                 } else if (result.value.password !== undefined) {
                     console.log('teste')
-                    this.$swal.fire('Senha Errada', 'Tente novamente', 'error');
+                    Swal.fire('Senha Errada', 'Tente novamente', 'error');
                 }
             })
         }
